@@ -8,7 +8,7 @@ Use it locally:
 npx nexus-agent-kit install
 ```
 
-Use it as a Codex plugin:
+Use it as a Codex and Claude Code plugin:
 
 ```bash
 git clone https://github.com/aayushostwal/nexus.git
@@ -28,7 +28,11 @@ Nexus creates and manages:
 
 ```text
 nexus/
+  .claude-plugin/plugin.json
+  .claude-plugin/marketplace.json
   .codex-plugin/plugin.json
+  commands/
+  agents/
   skills/nexus/SKILL.md
 
 ~/.nexus/
@@ -156,6 +160,32 @@ Codex MCP servers are configured in `~/.codex/config.toml`. The OpenAI Codex con
 - https://github.com/openai/codex/blob/main/docs/config.md
 
 ## Claude Code Usage
+
+Nexus includes a Claude Code plugin manifest:
+
+```text
+.claude-plugin/plugin.json
+```
+
+It also includes a local Claude marketplace:
+
+```text
+.claude-plugin/marketplace.json
+```
+
+After the repo is pushed to GitHub, add the marketplace inside Claude Code:
+
+```text
+/plugin marketplace add aayushostwal/nexus
+/plugin install nexus@nexus-marketplace
+```
+
+For local testing before pushing:
+
+```text
+/plugin marketplace add /Users/aayushostwal/Desktop/aayush/nexus
+/plugin install nexus@nexus-marketplace
+```
 
 Nexus installs Claude Code files to:
 
@@ -337,7 +367,7 @@ If the package name is taken, rename `name` in `package.json` before publishing.
 
 ## Publishing As A Codex Plugin
 
-The repo already contains the required plugin manifest:
+The repo contains the required Codex plugin manifest:
 
 ```text
 .codex-plugin/plugin.json
@@ -366,6 +396,43 @@ git push -u origin main
 ```
 
 After pushing, install from source wherever plugin discovery supports local or GitHub plugin sources.
+
+## Publishing As A Claude Code Plugin
+
+The repo contains the required Claude plugin files:
+
+```text
+.claude-plugin/plugin.json
+.claude-plugin/marketplace.json
+commands/
+agents/
+skills/
+```
+
+Validate locally if your Claude Code version supports plugin validation:
+
+```bash
+claude plugin validate .
+```
+
+Test locally inside Claude Code:
+
+```text
+/plugin marketplace add /Users/aayushostwal/Desktop/aayush/nexus
+/plugin install nexus@nexus-marketplace
+```
+
+After pushing to GitHub:
+
+```text
+/plugin marketplace add aayushostwal/nexus
+/plugin install nexus@nexus-marketplace
+```
+
+Official Claude Code plugin docs:
+
+- Plugins: https://code.claude.com/docs/en/plugins
+- Plugin marketplaces: https://code.claude.com/docs/en/plugin-marketplaces
 
 ## GitHub Repo Setup
 

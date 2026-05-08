@@ -1,0 +1,24 @@
+{
+  "name": "nexus-marketplace",
+  "owner": {
+    "name": "Aayush Ostwal",
+    "email": "aayushostwal@Aayushs-MacBook-Pro.local"
+  },
+  "description": "Nexus plugins for Claude Code agent workflows, TODOs, daily briefs, and MCP guardrails.",
+  "version": "0.1.0",
+  "plugins": [
+    {
+      "name": "nexus",
+      "source": "./",
+      "description": "Shared agent workflows, global TODOs, daily brief commands, and MCP safety policies.",
+      "version": "0.1.0",
+      "category": "productivity",
+      "tags": [
+        "agents",
+        "todos",
+        "mcp",
+        "workflow"
+      ]
+    }
+  ]
+}

@@ -24,8 +24,11 @@
     "node": ">=18"
   },
   "files": [
+    ".claude-plugin",
     ".codex-plugin",
+    "agents",
     "bin",
+    "commands",
     "scripts",
     "skills",
     "templates",
