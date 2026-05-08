@@ -157,6 +157,7 @@ npm run hooks:install
 The hook runs:
 
 ```bash
+npm version minor --no-git-tag-version
 npm run lint
 npm test
 npm pack --dry-run

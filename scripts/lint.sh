@@ -7,6 +7,7 @@ cd "$ROOT_DIR"
 echo "Checking JavaScript syntax"
 node --check bin/nexus.js
 node --check scripts/core.js
+node --check scripts/sync-versions.js
 
 echo "Checking Bash syntax"
 bash -n scripts/lint.sh

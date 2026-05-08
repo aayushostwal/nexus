@@ -4,6 +4,11 @@ set -euo pipefail
 ROOT_DIR="$(git rev-parse --show-toplevel)"
 cd "$ROOT_DIR"
 
+echo "pre-commit: bump minor version"
+npm version minor --no-git-tag-version
+node scripts/sync-versions.js
+git add package.json package-lock.json .codex-plugin/plugin.json .claude-plugin/plugin.json .claude-plugin/marketplace.json 2>/dev/null || true
+
 echo "pre-commit: lint"
 npm run lint
 

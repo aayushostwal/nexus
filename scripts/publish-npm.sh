@@ -68,26 +68,7 @@ package_version() {
 
 sync_plugin_versions() {
   local version="$1"
-  node - "$version" <<'NODE'
-const fs = require("fs");
-const version = process.argv[2];
-const files = [
-  ".codex-plugin/plugin.json",
-  ".claude-plugin/plugin.json",
-  ".claude-plugin/marketplace.json",
-];
-
-for (const file of files) {
-  const json = JSON.parse(fs.readFileSync(file, "utf8"));
-  json.version = version;
-  if (Array.isArray(json.plugins)) {
-    for (const plugin of json.plugins) {
-      if (plugin.name === "nexus") plugin.version = version;
-    }
-  }
-  fs.writeFileSync(file, `${JSON.stringify(json, null, 2)}\n`);
-}
-NODE
+  node scripts/sync-versions.js "$version"
 }
 
 require_clean_git() {
