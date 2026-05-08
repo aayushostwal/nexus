@@ -1,6 +1,6 @@
 {
   "name": "nexus-agent-kit",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Reusable Codex and Claude workflow kit with global TODOs, daily briefs, and MCP setup guidance.",
   "type": "commonjs",
   "bin": {
