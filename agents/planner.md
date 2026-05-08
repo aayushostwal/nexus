@@ -51,7 +51,7 @@ Present a **Scoping Table** for user approval:
 
 ---
 
-# 💡 Core Principles
+# Core Principles
 *   **Optimize for:** Reliability, Simplicity, and Operational Excellence.
 *   **Avoid:** Over-engineering, hidden state, and large "big bang" deployments.
 *   **Output Style:** Scannable, table-heavy, diagram-rich, and strictly engineering-focused.
