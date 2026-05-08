@@ -29,10 +29,13 @@ test("renders grouped todos without color", () => {
 
 test("plugin manifests match package version", () => {
   const packageVersion = require("../package.json").version;
+  const versionCounter = fs.readFileSync("VERSION", "utf8").trim();
   const codex = JSON.parse(fs.readFileSync(".codex-plugin/plugin.json", "utf8"));
   const claude = JSON.parse(fs.readFileSync(".claude-plugin/plugin.json", "utf8"));
   const marketplace = JSON.parse(fs.readFileSync(".claude-plugin/marketplace.json", "utf8"));
+  const expectedVersion = `${packageVersion.split(".")[0]}.${versionCounter}.0`;
 
+  assert.equal(packageVersion, expectedVersion);
   assert.equal(codex.version, packageVersion);
   assert.equal(claude.version, packageVersion);
   assert.equal(marketplace.version, packageVersion);

@@ -155,7 +155,8 @@ npm run hooks:install
 The hook runs:
 
 ```bash
-npm version minor --no-git-tag-version
+node scripts/bump-version.js
+node scripts/sync-versions.js
 npm run lint
 npm test
 npm pack --dry-run
@@ -183,3 +184,25 @@ NPM_TOKEN
 ```
 
 Use an npm Automation token. Normal 2FA-bound tokens can fail in CI with `EOTP`.
+
+## Versioning
+
+Nexus derives the release version from two files:
+
+- `package.json`: source of the major version.
+- `VERSION`: source of the minor version.
+
+The patch version is always `0`. For example, `package.json` version `0.x.x` and `VERSION` value `3` produce:
+
+```text
+0.3.0
+```
+
+Before each local commit, the pre-commit hook increments `VERSION`, derives the full version, and syncs it into:
+
+- `package.json`
+- `.codex-plugin/plugin.json`
+- `.claude-plugin/plugin.json`
+- `.claude-plugin/marketplace.json`
+
+GitHub Actions publishes the committed version and does not push a bot version commit back to `main`.

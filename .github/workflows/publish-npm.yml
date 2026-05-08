@@ -6,7 +6,7 @@ on:
       - main
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   publish:
@@ -16,8 +16,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -25,30 +23,9 @@ jobs:
           node-version: 20
           registry-url: https://registry.npmjs.org
 
-      - name: Configure git author
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-      - name: Prepare version bump
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          scripts/publish-npm.sh --dry-run --bump patch --skip-git-check
-
-      - name: Commit version bump
-        run: |
-          VERSION="$(node -p "require('./package.json').version")"
-          git add package.json .codex-plugin/plugin.json .claude-plugin/plugin.json .claude-plugin/marketplace.json
-          git commit -m "chore: release v${VERSION} [skip ci]"
-
-      - name: Publish committed version
+      - name: Publish
         env:
           # Use an npm Automation token. Classic tokens tied to 2FA will fail with EOTP.
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          scripts/publish-npm.sh --publish
-
-      - name: Push release commit
-        run: |
-          git push
+          scripts/publish-npm.sh --publish --skip-git-check

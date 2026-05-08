@@ -5,7 +5,6 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
 
 MODE="dry-run"
-BUMP=""
 SKIP_GIT_CHECK="false"
 
 usage() {
@@ -13,12 +12,11 @@ usage() {
 Usage:
   scripts/publish-npm.sh --dry-run
   scripts/publish-npm.sh --publish
-  scripts/publish-npm.sh --publish --bump patch
+  scripts/publish-npm.sh --publish
 
 Options:
   --dry-run          Run validation and npm pack dry-run only. Default.
   --publish          Publish to npm after validation.
-  --bump <type>      Bump npm version before validation. Use patch, minor, major, or a semver.
   --skip-git-check   Allow running with a dirty git working tree.
   -h, --help         Show this help.
 EOF
@@ -33,14 +31,6 @@ while [[ $# -gt 0 ]]; do
     --publish)
       MODE="publish"
       shift
-      ;;
-    --bump)
-      BUMP="${2:-}"
-      if [[ -z "$BUMP" ]]; then
-        echo "Missing value for --bump" >&2
-        exit 1
-      fi
-      shift 2
       ;;
     --skip-git-check)
       SKIP_GIT_CHECK="true"
@@ -67,8 +57,7 @@ package_version() {
 }
 
 sync_plugin_versions() {
-  local version="$1"
-  node scripts/sync-versions.js "$version"
+  node scripts/sync-versions.js >/tmp/nexus-version
 }
 
 require_clean_git() {
@@ -130,11 +119,7 @@ echo "Mode: ${MODE}"
 
 require_clean_git
 
-if [[ -n "$BUMP" ]]; then
-  echo "Bumping version: ${BUMP}"
-  npm version "$BUMP" --no-git-tag-version
-  sync_plugin_versions "$(package_version)"
-fi
+sync_plugin_versions
 
 NAME="$(package_name)"
 VERSION="$(package_version)"
