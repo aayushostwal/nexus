@@ -365,6 +365,41 @@ npm publish --access public
 
 If the package name is taken, rename `name` in `package.json` before publishing.
 
+This repo also includes a guarded publish script:
+
+```bash
+npm run publish:dry-run
+npm run publish:npm
+```
+
+The underlying Bash script is:
+
+```bash
+scripts/publish-npm.sh --dry-run
+scripts/publish-npm.sh --publish
+scripts/publish-npm.sh --publish --bump patch
+```
+
+The script checks that the git working tree is clean, optionally bumps the version, syncs plugin manifest versions, runs tests, validates the Claude plugin when `claude` is available, runs `npm pack --dry-run`, verifies npm authentication, checks whether the exact package version already exists, and only then publishes.
+
+## Automatic npm Publishing
+
+The GitHub Actions workflow at `.github/workflows/publish-npm.yml` publishes a new patch version on every push to `main`.
+
+Setup required:
+
+1. Create an npm automation token from your npm account.
+2. Add it to the GitHub repo as `NPM_TOKEN` under Settings -> Secrets and variables -> Actions.
+3. Push to `main`.
+
+On each qualifying push to `main`, the workflow:
+
+- Runs `scripts/publish-npm.sh --dry-run --bump patch --skip-git-check`.
+- Updates `package.json`, `.codex-plugin/plugin.json`, `.claude-plugin/plugin.json`, and `.claude-plugin/marketplace.json`.
+- Commits the version bump locally.
+- Publishes the new npm version.
+- Pushes the version bump back to `main` with `[skip ci]` to prevent a release loop.
+
 ## Publishing As A Codex Plugin
 
 The repo contains the required Codex plugin manifest:

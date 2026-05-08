@@ -1,0 +1,53 @@
+name: Publish npm
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    if: ${{ github.actor != 'github-actions[bot]' && !contains(github.event.head_commit.message, '[skip ci]') }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+
+      - name: Configure git author
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Prepare version bump
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          scripts/publish-npm.sh --dry-run --bump patch --skip-git-check
+
+      - name: Commit version bump
+        run: |
+          VERSION="$(node -p "require('./package.json').version")"
+          git add package.json .codex-plugin/plugin.json .claude-plugin/plugin.json .claude-plugin/marketplace.json
+          git commit -m "chore: release v${VERSION} [skip ci]"
+
+      - name: Publish committed version
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          scripts/publish-npm.sh --publish
+
+      - name: Push release commit
+        run: |
+          git push

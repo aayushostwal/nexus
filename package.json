@@ -8,6 +8,8 @@
     "nexus-agent-kit": "bin/nexus.js"
   },
   "scripts": {
+    "publish:dry-run": "bash scripts/publish-npm.sh --dry-run",
+    "publish:npm": "bash scripts/publish-npm.sh --publish",
     "test": "node --test"
   },
   "keywords": [
@@ -18,7 +20,7 @@
     "todo",
     "workflow"
   ],
-  "author": "",
+  "author": "Aayush Ostwal <aayushostwal99@gmail.com>",
   "license": "MIT",
   "engines": {
     "node": ">=18"
