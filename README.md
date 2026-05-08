@@ -95,19 +95,16 @@ Safety rules:
 
 ### Skills
 
-Nexus ships a reusable skill at:
+Nexus ships reusable skills:
 
-```text
-skills/nexus/SKILL.md
-```
-
-The skill teaches agents how to:
-
-- Use the Nexus TODO workflow.
-- Produce concise operational responses.
-- Run daily briefs from configured tools.
-- Apply MCP approval rules.
-- Use cost-aware context loading.
+| Skill | Purpose |
+| --- | --- |
+| `nexus` | Shared TODO, daily brief, response format, MCP safety, and cost-aware context rules. |
+| `nexus-planning` | Structured production planning for AI, DevOps, cloud, backend, and multi-domain engineering work. |
+| `nexus-tutorial` | Executable tutorial generation with reproducibility, diagrams, code examples, and troubleshooting. |
+| `nexus-debugging-cicd` | CI/CD failure investigation for GitHub Actions, Jenkins, and release pipelines. |
+| `nexus-debugging-codebase` | Codebase bug investigation, root-cause tracing, conventions, race conditions, and verified fixes. |
+| `nexus-debugging-framework` | Framework/tooling debugging for Django, FastAPI, Bazel, Jenkins, and similar systems using current official docs. |
 
 ### Agents
 
@@ -116,6 +113,7 @@ Nexus includes specialized Claude Code agents:
 | Agent | Purpose |
 | --- | --- |
 | `nexus-planner` | Plans scoped engineering or operational work before execution. |
+| `nexus-debugger` | Investigates failures, traces root causes, proposes fixes, and verifies debugging work. |
 | `nexus-reviewer` | Reviews code and workflow changes for correctness, risk, and missing tests. |
 | `nexus-todo-manager` | Maintains global Nexus TODOs and classifies tasks by label. |
 | `nexus-comms-briefing` | Summarizes Slack, Outlook, Jira, and TODO context into a daily brief. |
