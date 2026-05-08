@@ -24,8 +24,10 @@
     "node": ">=18"
   },
   "files": [
+    ".codex-plugin",
     "bin",
     "scripts",
+    "skills",
     "templates",
     "README.md",
     "LICENSE"

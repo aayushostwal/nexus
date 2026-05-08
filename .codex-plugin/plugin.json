@@ -1,0 +1,42 @@
+{
+  "name": "nexus",
+  "version": "0.1.0",
+  "description": "Reusable Codex and Claude workflows with global TODOs, daily briefs, and MCP safety policies.",
+  "author": {
+    "name": "Aayush Ostwal",
+    "email": "aayushostwal@Aayushs-MacBook-Pro.local",
+    "url": "https://github.com/aayushostwal"
+  },
+  "homepage": "https://github.com/aayushostwal/nexus",
+  "repository": "https://github.com/aayushostwal/nexus",
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "claude",
+    "mcp",
+    "agents",
+    "todo",
+    "workflow"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Nexus",
+    "shortDescription": "Shared agent workflows, TODOs, and MCP guardrails.",
+    "longDescription": "Nexus installs reusable Codex and Claude workflow templates, a global markdown TODO system, daily brief prompts, response formatting, cost policy, and MCP safety guidance for Slack, Outlook, Jira, and AWS.",
+    "developerName": "Aayush Ostwal",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/aayushostwal/nexus",
+    "privacyPolicyURL": "https://github.com/aayushostwal/nexus#privacy",
+    "termsOfServiceURL": "https://github.com/aayushostwal/nexus#license",
+    "defaultPrompt": [
+      "Show my Nexus TODOs.",
+      "Add this to Nexus TODOs.",
+      "Run my Nexus daily brief."
+    ],
+    "brandColor": "#0F766E"
+  }
+}

@@ -8,6 +8,14 @@ Use it locally:
 npx nexus-agent-kit install
 ```
 
+Use it as a Codex plugin:
+
+```bash
+git clone https://github.com/aayushostwal/nexus.git
+cd nexus
+npx nexus-agent-kit install
+```
+
 During development from this repo:
 
 ```bash
@@ -19,6 +27,10 @@ node bin/nexus.js install
 Nexus creates and manages:
 
 ```text
+nexus/
+  .codex-plugin/plugin.json
+  skills/nexus/SKILL.md
+
 ~/.nexus/
   TODOS.md
   state.json
@@ -104,6 +116,18 @@ command -v nexus >/dev/null 2>&1 && nexus todos --limit 8
 The output uses ANSI colors unless `NO_COLOR` is set or `--no-color` is passed.
 
 ## Codex Usage
+
+Nexus includes a Codex plugin manifest:
+
+```text
+.codex-plugin/plugin.json
+```
+
+It also exposes a Codex skill:
+
+```text
+skills/nexus/SKILL.md
+```
 
 Nexus installs Codex templates to:
 
@@ -276,6 +300,14 @@ If installed through npm:
 npx nexus-agent-kit@latest update
 ```
 
+If installed as a local Codex plugin from GitHub:
+
+```bash
+cd path/to/nexus
+git pull
+npx nexus-agent-kit update
+```
+
 If working from a cloned repo:
 
 ```bash
@@ -302,6 +334,38 @@ npm publish --access public
 ```
 
 If the package name is taken, rename `name` in `package.json` before publishing.
+
+## Publishing As A Codex Plugin
+
+The repo already contains the required plugin manifest:
+
+```text
+.codex-plugin/plugin.json
+```
+
+Before pushing:
+
+```bash
+npm test
+npm pack --dry-run
+git status --short
+```
+
+Push to GitHub:
+
+```bash
+gh auth login -h github.com
+gh repo create nexus --public --source=. --remote=origin --push
+```
+
+If the repo already exists:
+
+```bash
+git remote add origin git@github.com:aayushostwal/nexus.git
+git push -u origin main
+```
+
+After pushing, install from source wherever plugin discovery supports local or GitHub plugin sources.
 
 ## GitHub Repo Setup
 
