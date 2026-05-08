@@ -1,7 +1,7 @@
 {
   "name": "nexus",
   "version": "0.1.0",
-  "description": "Reusable Codex and Claude workflows with global TODOs, daily briefs, and MCP safety policies.",
+  "description": "Plugin-first Codex and Claude workflows with global TODOs, daily briefs, agents, and MCP safety policies.",
   "author": {
     "name": "Aayush Ostwal",
     "email": "aayushostwal99@gmail.com",
@@ -22,7 +22,7 @@
   "interface": {
     "displayName": "Nexus",
     "shortDescription": "Shared agent workflows, TODOs, and MCP guardrails.",
-    "longDescription": "Nexus installs reusable Codex and Claude workflow templates, a global markdown TODO system, daily brief prompts, response formatting, cost policy, and MCP safety guidance for Slack, Outlook, Jira, and AWS.",
+    "longDescription": "Nexus provides plugin-first Codex and Claude workflows, a global markdown TODO system, daily brief commands, specialized agents, response formatting, cost policy, and MCP safety guidance for Slack, Outlook, Notion, Jira, and AWS.",
     "developerName": "Aayush Ostwal",
     "category": "Productivity",
     "capabilities": [
