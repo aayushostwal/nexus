@@ -388,9 +388,11 @@ The GitHub Actions workflow at `.github/workflows/publish-npm.yml` publishes a n
 
 Setup required:
 
-1. Create an npm automation token from your npm account.
+1. Create an npm **Automation** token from your npm account.
 2. Add it to the GitHub repo as `NPM_TOKEN` under Settings -> Secrets and variables -> Actions.
 3. Push to `main`.
+
+The token must be an npm Automation token if your npm account has 2FA enabled. A normal publish/classic token can fail in CI with `EOTP` because npm asks for a one-time password.
 
 On each qualifying push to `main`, the workflow:
 
@@ -399,6 +401,28 @@ On each qualifying push to `main`, the workflow:
 - Commits the version bump locally.
 - Publishes the new npm version.
 - Pushes the version bump back to `main` with `[skip ci]` to prevent a release loop.
+
+## Pre-commit Hook
+
+Install the local pre-commit hook:
+
+```bash
+npm run hooks:install
+```
+
+The hook runs before each commit:
+
+```bash
+npm run lint
+npm test
+npm pack --dry-run
+```
+
+Bypass only when necessary:
+
+```bash
+git commit --no-verify
+```
 
 ## Publishing As A Codex Plugin
 

@@ -44,6 +44,7 @@ jobs:
 
       - name: Publish committed version
         env:
+          # Use an npm Automation token. Classic tokens tied to 2FA will fail with EOTP.
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           scripts/publish-npm.sh --publish

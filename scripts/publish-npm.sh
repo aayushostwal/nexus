@@ -119,6 +119,7 @@ require_npm_auth() {
   echo "npm authentication is required."
   echo "Run locally: npm login"
   echo "In GitHub Actions: set NPM_TOKEN in repository secrets."
+  echo "If your npm account has 2FA enabled, NPM_TOKEN must be an npm Automation token."
   exit 1
 }
 
@@ -172,5 +173,20 @@ if [[ "$MODE" == "dry-run" ]]; then
   exit 0
 fi
 
-npm publish --access public
+set +e
+npm publish --access public 2>/tmp/nexus-npm-publish.err
+publish_status="$?"
+set -e
+
+if [[ "$publish_status" -ne 0 ]]; then
+  cat /tmp/nexus-npm-publish.err >&2
+  if grep -q "EOTP" /tmp/nexus-npm-publish.err; then
+    echo >&2
+    echo "npm rejected this publish because the token requires a one-time password." >&2
+    echo "GitHub Actions cannot complete interactive OTP prompts." >&2
+    echo "Fix: create an npm Automation token and save it as the GitHub Actions secret NPM_TOKEN." >&2
+  fi
+  exit "$publish_status"
+fi
+
 echo "Published ${NAME}@${VERSION}"

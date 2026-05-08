@@ -8,6 +8,8 @@
     "nexus-agent-kit": "bin/nexus.js"
   },
   "scripts": {
+    "hooks:install": "bash scripts/install-hooks.sh",
+    "lint": "bash scripts/lint.sh",
     "publish:dry-run": "bash scripts/publish-npm.sh --dry-run",
     "publish:npm": "bash scripts/publish-npm.sh --publish",
     "test": "node --test"
