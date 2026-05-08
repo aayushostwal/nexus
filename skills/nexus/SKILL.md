@@ -11,9 +11,9 @@ Nexus provides shared operating rules for Codex and Claude Code sessions.
 
 - Global TODOs: `~/.nexus/TODOS.md`
 - Nexus state: `~/.nexus/state.json`
-- Installed templates: `~/.nexus/templates/`
-- Codex templates: `~/.codex/nexus/`
-- Claude templates: `~/.claude/CLAUDE.nexus.md`, `~/.claude/commands/nexus/`, `~/.claude/agents/nexus/`
+- Plugin agents: `agents/`
+- Plugin commands: `commands/`
+- Tool docs: `docs/tools/`
 
 ## Commands
 
@@ -22,8 +22,7 @@ Use these when the `nexus` CLI is available:
 ```bash
 nexus todos --limit 8
 nexus add "Follow up with finance about Outlook mail"
-nexus install
-nexus update
+nexus install --shell-hook
 ```
 
 ## TODO Handling
@@ -37,7 +36,7 @@ When the user asks to remember, track, add, or follow up on something:
 If the CLI is unavailable, tell the user to run:
 
 ```bash
-npx nexus-agent-kit install
+npx nexus-agent-kit todos
 ```
 
 ## Daily Brief

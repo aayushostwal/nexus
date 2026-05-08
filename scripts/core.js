@@ -4,7 +4,6 @@ const fs = require("fs");
 const os = require("os");
 const path = require("path");
 
-const ROOT = path.resolve(__dirname, "..");
 const HOME = os.homedir();
 const NEXUS_HOME = process.env.NEXUS_HOME || path.join(HOME, ".nexus");
 const TODO_FILE = process.env.NEXUS_TODO_FILE || path.join(NEXUS_HOME, "TODOS.md");
@@ -135,9 +134,6 @@ function formatLabel(label, color) {
 function install(options = {}) {
   ensureNexusHome();
   const messages = [];
-  copyTemplates(messages);
-  installClaudeFiles(messages);
-  installCodexFiles(messages);
   if (options.shellHook) {
     installShellHook(messages);
   } else {
@@ -150,31 +146,7 @@ function install(options = {}) {
 
 function update() {
   ensureNexusHome();
-  const messages = [];
-  copyTemplates(messages);
-  installClaudeFiles(messages);
-  installCodexFiles(messages);
-  messages.push("Nexus templates updated.");
-  return messages;
-}
-
-function copyTemplates(messages) {
-  copyDir(path.join(ROOT, "templates"), path.join(NEXUS_HOME, "templates"));
-  messages.push(`Copied templates to ${path.join(NEXUS_HOME, "templates")}`);
-}
-
-function installClaudeFiles(messages) {
-  const claudeDir = path.join(HOME, ".claude");
-  safeCopy(path.join(ROOT, "templates", "claude", "CLAUDE.md"), path.join(claudeDir, "CLAUDE.nexus.md"));
-  copyDir(path.join(ROOT, "templates", "claude", "commands"), path.join(claudeDir, "commands", "nexus"));
-  copyDir(path.join(ROOT, "templates", "claude", "agents"), path.join(claudeDir, "agents", "nexus"));
-  messages.push("Installed Claude files under ~/.claude with nexus namespacing.");
-}
-
-function installCodexFiles(messages) {
-  const codexDir = path.join(HOME, ".codex", "nexus");
-  copyDir(path.join(ROOT, "templates", "codex"), codexDir);
-  messages.push("Installed Codex files under ~/.codex/nexus.");
+  return ["Nexus is plugin-first. No template update is required.", `Global TODO file: ${TODO_FILE}`];
 }
 
 function installShellHook(messages) {
@@ -192,24 +164,6 @@ function installShellHook(messages) {
 
 function printShellHook() {
   return "command -v nexus >/dev/null 2>&1 && nexus todos --limit 8";
-}
-
-function safeCopy(source, target) {
-  fs.mkdirSync(path.dirname(target), { recursive: true });
-  fs.copyFileSync(source, target);
-}
-
-function copyDir(source, target) {
-  fs.mkdirSync(target, { recursive: true });
-  for (const entry of fs.readdirSync(source, { withFileTypes: true })) {
-    const sourcePath = path.join(source, entry.name);
-    const targetPath = path.join(target, entry.name);
-    if (entry.isDirectory()) {
-      copyDir(sourcePath, targetPath);
-    } else {
-      safeCopy(sourcePath, targetPath);
-    }
-  }
 }
 
 function printHelp() {
