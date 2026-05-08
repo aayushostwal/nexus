@@ -1,0 +1,33 @@
+{
+  "name": "nexus-agent-kit",
+  "version": "0.1.0",
+  "description": "Reusable Codex and Claude workflow kit with global TODOs, daily briefs, and MCP setup guidance.",
+  "type": "commonjs",
+  "bin": {
+    "nexus": "bin/nexus.js",
+    "nexus-agent-kit": "bin/nexus.js"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": [
+    "codex",
+    "claude",
+    "mcp",
+    "agents",
+    "todo",
+    "workflow"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin",
+    "scripts",
+    "templates",
+    "README.md",
+    "LICENSE"
+  ]
+}
