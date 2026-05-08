@@ -1,6 +1,7 @@
 "use strict";
 
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
 const test = require("node:test");
 const { classifyTodo, renderTodos } = require("../scripts/core");
 
@@ -24,4 +25,16 @@ test("renders grouped todos without color", () => {
   assert.match(output, /Fix pytest/);
   assert.match(output, /\[Work\]/);
   assert.match(output, /Send report/);
+});
+
+test("plugin manifests match package version", () => {
+  const packageVersion = require("../package.json").version;
+  const codex = JSON.parse(fs.readFileSync(".codex-plugin/plugin.json", "utf8"));
+  const claude = JSON.parse(fs.readFileSync(".claude-plugin/plugin.json", "utf8"));
+  const marketplace = JSON.parse(fs.readFileSync(".claude-plugin/marketplace.json", "utf8"));
+
+  assert.equal(codex.version, packageVersion);
+  assert.equal(claude.version, packageVersion);
+  assert.equal(marketplace.version, packageVersion);
+  assert.equal(marketplace.plugins[0].version, packageVersion);
 });

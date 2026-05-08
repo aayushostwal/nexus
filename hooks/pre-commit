@@ -6,8 +6,15 @@ cd "$ROOT_DIR"
 
 echo "pre-commit: bump minor version"
 npm version minor --no-git-tag-version
+if [[ ! -f scripts/sync-versions.js ]]; then
+  echo "pre-commit: missing scripts/sync-versions.js" >&2
+  exit 1
+fi
 node scripts/sync-versions.js
-git add package.json package-lock.json .codex-plugin/plugin.json .claude-plugin/plugin.json .claude-plugin/marketplace.json 2>/dev/null || true
+git add package.json .codex-plugin/plugin.json .claude-plugin/plugin.json .claude-plugin/marketplace.json
+if [[ -f package-lock.json ]]; then
+  git add package-lock.json
+fi
 
 echo "pre-commit: lint"
 npm run lint
