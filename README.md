@@ -102,9 +102,7 @@ Nexus ships reusable skills:
 | `nexus` | Shared TODO, daily brief, response format, MCP safety, and cost-aware context rules. |
 | `nexus-planning` | Structured production planning for AI, DevOps, cloud, backend, and multi-domain engineering work. |
 | `nexus-tutorial` | Executable tutorial generation with reproducibility, diagrams, code examples, and troubleshooting. |
-| `nexus-debugging-cicd` | CI/CD failure investigation for GitHub Actions, Jenkins, and release pipelines. |
-| `nexus-debugging-codebase` | Codebase bug investigation, root-cause tracing, conventions, race conditions, and verified fixes. |
-| `nexus-debugging-framework` | Framework/tooling debugging for Django, FastAPI, Bazel, Jenkins, and similar systems using current official docs. |
+| `nexus-debugging` | Debugging router for CI/CD, codebase, and framework/tooling issues. |
 
 ### Agents
 
