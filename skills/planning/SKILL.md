@@ -1,72 +1,161 @@
 ---
 name: nexus-planning
-description: Use when planning, architecting, or scoping production-critical AI, DevOps, cloud, backend, or multi-domain engineering work before implementation.
+description: >
+  Use this skill when planning, architecting, or scoping any production-critical engineering work before
+  implementation begins. Trigger phrases include: "how should I architect X", "plan this feature",
+  "help me scope this", "what's the best approach for", "design this system", "I need a technical plan",
+  "help me think through this", "what are the trade-offs between", "I need an architecture review",
+  "should I use X or Y", "walk me through how to build". Also trigger for AI/LLM stack design,
+  DevOps/cloud architecture, backend system design, or any multi-domain engineering scoping session.
+  When in doubt, use this skill.
 ---
 
 # Nexus Planning Protocol
 
-## Phase 1: Context & Discovery
+Produce a complete, decision-ready technical plan before any implementation begins.
 
-**Goal:** Build a 360 degree technical map.
+---
 
-- **Audit:** Source code patterns, infra-as-code (CDK/TF), CI/CD flows, and recent Git history.
-- **Analysis:** Identify tech debt, bottlenecks, security boundaries, and breaking change risks.
-- **Validation:** Align with existing naming conventions, directory structures, and linting standards.
+## Compatibility
+- Output: Scoping table + Mermaid diagram + trade-off matrix + ordered execution steps
+- Requires: Read access to source code, infra-as-code, CI/CD config, and recent git history
 
-Incomplete info? Ask direct, technical questions. No assumptions.
+---
 
-## Phase 2: Research & Trade-offs
+## Workflow
 
-**Goal:** Validate the "Why" and "How."
+### Step 1 — Context & Discovery
+Build a complete technical map before proposing anything:
+1. Read source code patterns, infra-as-code (CDK/TF), CI/CD flows, and `git log --oneline -20`
+2. Identify tech debt, bottlenecks, security boundaries, and breaking change risks
+3. Confirm alignment with existing naming conventions, directory structures, and linting config
 
-- **Standard Tech:** Evaluate performance, cost, and operational complexity.
-- **AI/LLM Stack:** Analyze token efficiency, latency, tool-calling reliability, and RAG strategy.
-- **Cloud/Infra:** Check IAM scoping, networking (VPC/SG), and disaster recovery.
+If information is missing: ask a direct, specific technical question ("What auth middleware is in use?" not "Tell me about your auth").
 
-## Phase 3: Research TODOs (The Roadmap)
+### Step 2 — Research & Trade-offs
+For each approach being considered, evaluate:
 
-**Goal:** Define the mission.
+| Category | What to assess |
+|----------|---------------|
+| Standard tech | Performance benchmarks, operational cost, maintenance complexity |
+| AI/LLM stack | Token cost per call, latency p95, tool-calling reliability, RAG retrieval quality |
+| Cloud/Infra | IAM scoping, VPC/SG boundaries, disaster recovery RTO, blast radius |
 
-Present a **Scoping Table** for user approval:
+### Step 3 — Scoping Table (Stop & Wait for Approval)
+Present the scoping table and **do not proceed** until the user explicitly approves:
 
 | Task | System Impact | Risk Level | Dependencies | Status |
-| :--- | :--- | :--- | :--- | :--- |
-| [Item] | [Service/File] | [Low/High] | [Upstream] | Proposed |
+|------|---------------|------------|--------------|--------|
+| [Item] | [File/Service changed] | [Low/Med/High + what breaks if it fails] | [Upstream task or team] | Proposed |
 
-Wait for confirmation before implementation.
+### Step 4 — Architecture & Design
+After approval:
+1. Draw a Mermaid diagram — use sequence diagram for flows, ERD for data models, C4 for system-level
+2. Present a trade-off matrix for each major decision:
 
-## Phase 4: Architecture & Design
+| Approach | Latency | Cost | Complexity | Verdict |
+|----------|---------|------|------------|---------|
+| Option A | Low | High | Low | ✅ if budget unconstrained |
+| Option B | Med | Low | Med | ✅ default recommendation |
 
-**Goal:** Visualize the solution.
+3. Define API contracts, schema migrations (reversible vs. destructive), and rollback triggers explicitly
 
-- **Diagrams:** Use **Mermaid** for sequence flows, ERDs, or system architecture.
-- **Strategies:** Compare Approach A vs. B with a trade-off matrix, for example latency vs. cost.
-- **Planning:** Detail API contracts, schema migrations, and rollback triggers.
+### Step 5 — Execution Plan
+Write numbered, ordered implementation steps. Each step must name:
+- The exact file(s) to change
+- The type of change (add function, modify schema, update env config)
+- The dependency on any prior step number
+- The verification command to confirm this step succeeded
 
-## Phase 5: Incremental Execution
+### Step 6 — Validation Criteria
+Define before closing the plan:
+- End-to-end test command that proves the feature works
+- Performance baseline to verify against (if applicable)
+- Rollback condition: "If [specific signal], revert by running [exact command]"
 
-**Goal:** Precise, scoped coding.
+---
 
-- **Rules:** Follow project idioms, maintain backward compatibility, and ensure type safety.
-- **Logic:** Implement robust error handling, structured logging, and observability hooks.
-- **Constraints:** No "magic" code. No unnecessary dependencies.
+## Output Format
 
-## Phase 6: Validation & Testing
+```
+## Plan: [Feature Name]
 
-**Goal:** Ensure production readiness.
+### Scoping Table
+[table]
 
-- **Verify:** End-to-end functionality, unit/integration tests, and edge-case resilience.
-- **Checks:** Run linters, verify performance impact, and validate failure modes such as circuit breakers.
+### Architecture
+[Mermaid diagram]
 
-## Phase 7: Documentation & Pruning
+### Trade-off Matrix
+[table]
 
-**Goal:** Long-term maintainability.
+### Implementation Steps
+1. [File] — [Change type] — Depends on: none — Verify: [command]
+2. [File] — [Change type] — Depends on: step 1 — Verify: [command]
+...
 
-- **Docs:** Update `README.md`, API specs, and runbooks. Do not create new documentation if user asks so.
-- **Cleanup:** Strictly remove dead code, unused imports, and temporary debug logs.
+### Validation
+- E2E test: [command]
+- Performance: [baseline metric]
+- Rollback: if [signal] → [exact command]
+```
 
-## Core Principles
+---
 
-- **Optimize for:** Reliability, simplicity, and operational excellence.
-- **Avoid:** Over-engineering, hidden state, and large "big bang" deployments.
-- **Output Style:** Scannable, table-heavy, diagram-rich, and strictly engineering-focused.
+## Anti-Patterns
+- Never begin implementation before the scoping table is explicitly approved by the user.
+- Never use vague risk levels — state what specifically breaks if the risk materializes.
+- Never produce a plan without a rollback condition for any task marked High risk.
+- Never write a step that says "update X appropriately" — name the exact file and the type of change.
+- Never skip the architecture diagram for any change that touches more than one service or module.
+- Never propose a solution before completing Step 1 (Context & Discovery).
+
+---
+
+## Examples
+
+**Input:** "I need to add rate limiting to our FastAPI service."
+
+**Output:**
+```
+## Plan: API Rate Limiting
+
+### Scoping Table
+| Task | System Impact | Risk Level | Dependencies | Status |
+|------|--------------|------------|--------------|--------|
+| Add slowapi middleware | main.py, requirements.txt | Low — breaks app startup if misconfigured | None | Proposed |
+| Per-user rate limits | auth.py, Depends() injection | Med — breaks all authed routes if limiter raises | slowapi installed | Proposed |
+| Redis backend for distributed limits | infra/redis.tf, .env | High — Redis outage = all requests blocked | Redis instance provisioned | Proposed |
+
+### Architecture
+sequenceDiagram
+  Client->>FastAPI: POST /api/data
+  FastAPI->>slowapi: check limit (Redis key: user:{id})
+  slowapi-->>FastAPI: 429 Too Many Requests (if over limit)
+  FastAPI->>Handler: process request (if under limit)
+
+### Trade-off Matrix
+| Approach | Latency | Cost | Complexity | Verdict |
+|----------|---------|------|------------|---------|
+| In-memory limiter | +0ms | $0 | Low — broken across replicas | ❌ not viable multi-instance |
+| Redis-backed limiter | +2ms | ~$15/mo | Med — correct for horizontal scale | ✅ recommended |
+
+### Implementation Steps
+1. requirements.txt — add `slowapi==0.1.9` — Depends on: none — Verify: pip install -r requirements.txt
+2. main.py — wrap app: `app.state.limiter = Limiter(key_func=get_remote_address)` — Depends on: step 1 — Verify: uvicorn starts without error
+3. routes.py — add `@limiter.limit("100/minute")` to /api/data — Depends on: step 2 — Verify: curl 101 times, assert 429 on 101st
+4. infra/redis.tf — add ElastiCache Redis cluster — Depends on: step 3 approved — Verify: terraform plan shows only redis resources
+
+### Validation
+- E2E test: locust -f locustfile.py --headless -u 10 -r 2 --run-time 60s — assert p99 < 50ms, 429 rate > 0%
+- Performance: baseline = 0ms overhead (no rate limiting), target = +2ms max
+- Rollback: if Redis unreachable → set SLOWAPI_BACKEND=memory in .env and restart
+```
+
+---
+
+## Planning Specialization
+- For AI/LLM features: include token cost estimate per call and monthly projection at expected load (e.g., "10k calls/day × 2k tokens × $0.003/1k = $60/mo").
+- For infra changes: include blast radius assessment — which services fail if this component goes down.
+- For schema migrations: specify whether the migration is reversible, zero-downtime, and whether a backfill is needed.
+- For multi-team changes: list which teams must be notified and what approvals are required before Step 5.

@@ -1,66 +1,133 @@
 ---
 name: nexus-tutorial
-description: Use when creating high-quality executable Jupyter Notebook tutorials, AI engineering tutorials, or copy-paste-ready technical learning content.
+description: >
+  Use this skill when creating Jupyter Notebook tutorials, AI engineering walkthroughs, or copy-paste-ready
+  technical learning content. Trigger phrases include: "write a tutorial on X", "create a notebook for Y",
+  "make a Jupyter walkthrough", "I need a step-by-step guide for Z", "build a tutorial notebook",
+  "create an AI tutorial", "write a technical guide with code examples", "show me how to build X with code".
+  Also trigger when the user pastes a topic and asks for educational content with runnable cells, or wants
+  a notebook they can share on GitHub. When in doubt, use this skill.
 ---
 
 # Tutorial Generation Protocol
 
-## Phase 1: Environment & Dependency Blueprint
+Produce complete, executable Jupyter Notebooks that work on the first run.
 
-Every notebook must begin with a **Reproducibility Block**.
+---
 
-- **Venv Setup:** Provide exact shell commands to create and activate a local virtual environment (`python -m venv .venv`).
-- **Dependency Management:** Create a `pip install` cell containing all necessary libraries, for example `langchain`, `openai`, `python-dotenv`.
-- **Kernel Check:** Instructions to ensure the user is using the correct Jupyter kernel.
-- **MakeFile Setup:** So that anyone can use one command to start Jupyter Lab. Also maintain Python version management.
+## Compatibility
+- Language: Python 3.10+
+- Output: `.ipynb` file + `Makefile`
+- Style: PEP 8, GitHub-renderable Markdown, clean saved outputs
 
-## Phase 2: Production-Ready Configuration
+---
 
-- Avoid "script-style" variables. Use the **Twelve-Factor** App methodology.
-- Handle all the cases which may occur in production and clearly mention them.
-- **Schema Validation:** Use **Pydantic** for Settings classes to validate environment variables on startup.
-- **Secret Management:** Implement secure loading with fallbacks and explicit error messages for missing keys.
+## Workflow
 
-## Phase 3: Structural Outline
+### Step 1 — Reproducibility Block
+Begin every notebook with:
+1. Shell commands cell: `python -m venv .venv && source .venv/bin/activate`
+2. `pip install` cell with all required libraries (pin versions: `langchain==0.2.0`)
+3. Kernel check instructions as a Markdown cell
+4. `Makefile` with `make jupyter` target and Python version pin (e.g. `.python-version` file)
 
-Organize the notebook using clear Markdown hierarchies (H1 to H3).
+### Step 2 — Production-Ready Configuration
+1. Create a Pydantic `BaseSettings` class to validate all environment variables on startup
+2. Load secrets with `python-dotenv`; raise an explicit `ValueError` with a helpful message if a key is missing
+3. Document every production failure mode: missing keys, rate limits, model errors, network timeouts
 
-- **Objective:** A brief "What you will build" section.
-- **Prerequisites:** List API keys or hardware requirements, for example "Requires NVIDIA GPU" or "OpenAI API Key".
-- **Architecture Diagram:** Use a Mermaid diagram to explain the flow of the AI Agent or system being taught.
-- **Tone:** Make sure all these tutorials are pedagogically sound, visually structured for GitHub rendering, and technically flawless.
+### Step 3 — Structural Outline
+Create Markdown cells with headers H1–H3:
+- **H1 — Title:** What the tutorial builds in one sentence
+- **H2 — Objective:** One paragraph "what you will build and why"
+- **H2 — Prerequisites:** List exact API keys, GPU requirements, or account setup steps
+- **H2 — Architecture Diagram:** Mermaid diagram showing end-to-end system flow
 
-## Phase 4: Code Implementation (The "No-Assumption" Rule)
+### Step 4 — Code Implementation
+Rules for every code cell:
+- Self-contained or explicitly references previously defined variables
+- Python type hints on all function signatures
+- Comments explain *why* — not *what* (bad: `# create list`, good: `# dedup before sending to avoid API double-charge`)
+- One concept per cell; max ~30 lines per cell — split into functions if longer
+- Never hardcode credentials; always use `settings.api_key` from the Pydantic config
 
-- **Working Code:** Every code block must be self-contained or reference previously defined variables.
-- **Type Hinting:** Mandatory Python type hints for all function signatures.
-- **Comment Density:** Use professional, concise comments to explain *why* a specific logic is used, not just *what* it does.
-- **Modular Design:** Break complex agent logic into small, testable functions or classes.
-- **Environment Variables:** Always use `python-dotenv` for sensitive keys. Never hardcode credentials.
+### Step 5 — Explanatory Narrative
+Between every pair of code cells, add a Markdown cell that:
+1. States the "why" behind the implementation choice (e.g., "We use a ReAct loop here because it lets the agent decide when to call tools vs. answer directly")
+2. Describes the expected output when the cell runs
+3. Lists one or two common errors with their fixes (e.g., "RateLimitError → add `time.sleep(1)` between calls")
 
-## Phase 5: Explanatory Narrative
+### Step 6 — GitHub Optimization & Cleanup
+1. Save notebook with clean, representative outputs (no error cells, no partial outputs)
+2. Use bold text and tables in Markdown cells for key terms — they render on GitHub's notebook viewer
+3. Add a final cleanup cell: close connections, delete temp files, spin down local model instances
 
-- **Between Cells:** Provide "The Why." Explain the underlying AI concepts, for example "Why we use a ReAct loop here".
-- **Expected Output:** Describe what the user should see when they run a cell, especially for long-running LLM calls.
-- **Troubleshooting Tips:** Include a "Common Errors" section for API rate limits or version mismatches.
+---
 
-## Phase 6: GitHub Optimization & Cleanup
+## Output Format
 
-- **Clear Outputs:** Ensure the notebook is saved with clean, representative outputs.
-- **Markdown Linting:** Use tables and bold text for key terms to ensure readability on GitHub's notebook viewer.
-- **Cleanup:** Add a final cell to close connections, delete temp files, or spin down local model instances if applicable.
+A complete `.ipynb` file with this cell sequence:
+```
+[Setup: venv + pip install]
+[Config: dotenv + Pydantic BaseSettings]
+[H1: Title + one-sentence summary]
+[H2: Objective]
+[H2: Prerequisites]
+[H2: Architecture Diagram (Mermaid)]
+[H2: Step 1 — Name]
+  [Markdown: why + expected output + common errors]
+  [Code cell]
+[H2: Step N — Name] × N steps
+[H2: Cleanup]
+```
 
-## Implementation Standards
+Plus a `Makefile`:
+```makefile
+jupyter:
+	source .venv/bin/activate && jupyter lab
+```
 
-- **Language:** Python 3.10+
-- **Style:** PEP 8 compliant code within cells.
-- **Formatting:** Use `f-strings` for logging and clear print statements to track agent "thought" processes.
-- **Visuals:** Trigger image generation prompts for complex architectural concepts to aid learner mental models.
+---
 
-## Initial Action
+## Anti-Patterns
+- Never hardcode API keys, tokens, or credentials in any cell — use `python-dotenv` + Pydantic.
+- Never write a code cell longer than ~30 lines — split into named functions.
+- Never skip the reproducibility block — a notebook without setup instructions cannot be shared.
+- Never omit expected output description before a long-running LLM call — readers don't know if it's working.
+- Never use vague prerequisites like "install the usual libraries" — list every package with its version.
+- Never leave error cells in a saved notebook — clear all outputs and re-run clean before saving.
 
-When a topic is provided, for example "Creating AI Agents":
+---
 
-1. Search for the latest stable API versions of the tools involved.
-2. Draft the setup steps and the architecture diagram first.
-3. Validate logic before presenting the final notebook cells.
+## Examples
+
+**Input:** "Write a tutorial on building a ReAct agent with LangChain and OpenAI."
+
+**Output structure:**
+```
+[pip install langchain==0.2.0 openai==1.30.0 python-dotenv pydantic-settings]
+[Pydantic: class Settings(BaseSettings): openai_api_key: str]
+[H1: Build a ReAct Agent with LangChain]
+[H2: Objective — build a tool-using agent that reasons before acting]
+[H2: Prerequisites — OpenAI API key, Python 3.10+]
+[H2: Architecture — Mermaid: User → Agent Loop → Tool Call / Direct Answer → User]
+[H2: Step 1 — Define Tools]
+  [Why: tools give the agent the ability to act in the world beyond text]
+  [Code: @tool def search(query: str) -> str: ...]
+[H2: Step 2 — Initialize Agent]
+  [Why: ReAct = Reason + Act, enables multi-step problem solving]
+  [Code: agent = create_react_agent(llm, tools, prompt)]
+[H2: Step 3 — Run and Inspect Traces]
+  [Why: tracing the chain of thought reveals whether the agent is reasoning correctly]
+  [Code: result = agent.invoke({"input": "What is the capital of France?"})]
+[H2: Cleanup — close any open clients]
+```
+
+---
+
+## Tutorial Specialization
+- Before writing any code, search for the latest stable version of all libraries used.
+- For AI agent tutorials: always include a Mermaid sequence diagram showing the agent decision loop.
+- For API tutorials: include an auth flow cell and a rate-limit retry example with exponential backoff.
+- Use `f-strings` for all logging and print statements so readers can trace agent thought processes.
+- For long-running cells: add a `%%time` magic and note typical expected duration.

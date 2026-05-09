@@ -206,6 +206,83 @@ If any check fails, fix it before presenting.
 
 ---
 
+## Output Format
+
+Deliver the finished skill as a ready-to-copy Markdown code block:
+
+```markdown
+---
+name: nexus-{skill-name}
+description: >
+  [5+ trigger phrases, output type mentioned, edge cases, ends with "When in doubt, use this skill."]
+---
+
+# {Skill Name}
+
+[One-sentence purpose statement.]
+
+---
+
+## Compatibility
+...
+
+## Workflow
+### Step 1 — ...
+### Step 2 — ...
+
+## Output Format
+...
+
+## Anti-Patterns
+...
+
+## Examples
+**Input:** ...
+**Output:** ...
+
+## {Domain} Specialization
+...
+```
+
+After delivering the skill, state which checklist items were verified and which (if any) require user input to complete.
+
+---
+
+## Anti-Patterns
+- Never skip Phase 1 (requirements gathering) — a skill built on assumed requirements will miss its trigger conditions.
+- Never write a step that says "handle appropriately", "use best practices", or "be careful" — specify the exact action.
+- Never write a description that is a single sentence — it will not trigger reliably.
+- Never create a new skill without first checking if an existing skill can be extended (Phase 2 atomicity check).
+- Never deliver a SKILL.md without an example input → output pair — the example is the ground truth for behavior.
+- Never exceed 500 lines in SKILL.md — move overflow detail to `resources/references/`.
+
+---
+
+## Examples
+
+**Input:** "Write me a skill for doing code reviews on pull requests."
+
+**Phase 1 answers inferred from request:**
+- Q1: Enable Claude to review PRs for bugs, style issues, security holes, and missing tests
+- Q2: Triggers: "review this PR", "check my code", "look at my diff", "review these changes"
+- Q3: Output: structured Markdown review with severity-tagged findings
+
+**Phase 2:** Check if `nexus:review-branch` already covers this → it does for branch-level review, but not PR-specific GitHub integration → create new skill.
+
+**Delivered skill fragment:**
+```markdown
+---
+name: nexus-pr-review
+description: >
+  Use this skill when reviewing a pull request for bugs, regressions, style issues, or missing tests.
+  Trigger phrases: "review this PR", "check my diff", "look at these changes", "what's wrong with this code",
+  "give me feedback on my PR", "is this code ready to merge". Also trigger when the user pastes a GitHub
+  PR URL or a raw diff and asks for feedback. When in doubt, use this skill.
+---
+```
+
+---
+
 ## Core Principles
 
 - **Atomic transaction**: A skill should do one thing well. If it needs to do two things, make two skills.
