@@ -197,8 +197,8 @@ You can expand the Nexus engine by connecting more MCP-backed tools. The docs in
 ## Usage in real life:
 | Title | Labels | Screenshots |
 | --- | --- | --- |
-| Slack TODO Aggregator | Slack, TODOs, Productivity | ![Slack TODO Aggregator](assets/slack_todo.png) |
-| Article to Instagram Short Script Conversion | Content, Instagram, Shorts | ![Article to Instagram Short Script Conversion](assets/shorts.png) |
+| Slack TODO Aggregator | ![Slack](https://img.shields.io/badge/Slack-4A154B?style=flat) ![TODOs](https://img.shields.io/badge/TODOs-14B8A6?style=flat) ![Productivity](https://img.shields.io/badge/Productivity-2563EB?style=flat) | ![Slack TODO Aggregator](assets/slack_todo.png) |
+| Article to Instagram Short Script Conversion | ![Content](https://img.shields.io/badge/Content-F59E0B?style=flat) ![Instagram](https://img.shields.io/badge/Instagram-E1306C?style=flat) ![Shorts](https://img.shields.io/badge/Shorts-FF0000?style=flat) | ![Article to Instagram Short Script Conversion](assets/shorts.png) |
 
 ## Development
 
