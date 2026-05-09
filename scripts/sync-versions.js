@@ -5,6 +5,7 @@ const fs = require("node:fs");
 
 const packageJsonPath = "package.json";
 const files = [
+  ".agents/plugins/marketplace.json",
   ".codex-plugin/plugin.json",
   ".claude-plugin/plugin.json",
   ".claude-plugin/marketplace.json",

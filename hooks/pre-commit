@@ -7,7 +7,7 @@ cd "$ROOT_DIR"
 echo "pre-commit: bump minor version"
 node scripts/bump-version.js
 node scripts/sync-versions.js
-git add package.json .codex-plugin/plugin.json .claude-plugin/plugin.json .claude-plugin/marketplace.json
+git add package.json .agents/plugins/marketplace.json .codex-plugin/plugin.json .claude-plugin/plugin.json .claude-plugin/marketplace.json
 if [[ -f package-lock.json ]]; then
   git add package-lock.json
 fi

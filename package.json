@@ -26,6 +26,7 @@
     "node": ">=18"
   },
   "files": [
+    ".agents",
     ".claude-plugin",
     ".codex-plugin",
     "agents",
