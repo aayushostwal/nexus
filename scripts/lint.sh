@@ -7,13 +7,12 @@ cd "$ROOT_DIR"
 echo "Checking JavaScript syntax"
 node --check bin/nexus.js
 node --check scripts/core.js
-node --check scripts/bump-version.js
 node --check scripts/sync-versions.js
+node --check scripts/semantic-release-sync.js
 node --check scripts/validate-codex-plugin.js
 
 echo "Checking Bash syntax"
 bash -n scripts/lint.sh
-bash -n scripts/publish-npm.sh
 
 echo "Checking JSON files"
 node - <<'NODE'

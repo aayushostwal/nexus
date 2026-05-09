@@ -4,18 +4,6 @@ set -euo pipefail
 ROOT_DIR="$(git rev-parse --show-toplevel)"
 cd "$ROOT_DIR"
 
-echo "pre-commit: bump VERSION minor counter"
-if [[ ! -f scripts/sync-versions.js ]]; then
-  echo "pre-commit: missing scripts/sync-versions.js" >&2
-  exit 1
-fi
-node scripts/bump-version.js
-node scripts/sync-versions.js
-git add VERSION package.json .codex-plugin/plugin.json .claude-plugin/plugin.json .claude-plugin/marketplace.json
-if [[ -f package-lock.json ]]; then
-  git add package-lock.json
-fi
-
 echo "pre-commit: lint"
 npm run lint
 

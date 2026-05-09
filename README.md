@@ -153,8 +153,6 @@ npm run hooks:install
 The hook runs:
 
 ```bash
-node scripts/bump-version.js
-node scripts/sync-versions.js
 npm run lint
 npm test
 npm pack --dry-run
@@ -162,45 +160,35 @@ npm pack --dry-run
 
 ## Release
 
-Manual npm publish:
+Semantic release dry run:
 
 ```bash
-npm run publish:dry-run
-npm run publish:npm
+npm run release:dry-run
 ```
 
-Automatic npm publishing is configured in:
+Automatic releases are handled by semantic-release in:
 
 ```text
-.github/workflows/publish-npm.yml
+.github/workflows/release.yml
 ```
 
-Required GitHub secret:
+Required GitHub secrets:
 
 ```text
 NPM_TOKEN
+GITHUB_TOKEN
 ```
 
 Use an npm Automation token. Normal 2FA-bound tokens can fail in CI with `EOTP`.
 
 ## Versioning
 
-Nexus derives the release version from two files:
+semantic-release is the single source of truth for Nexus versions.
 
-- `package.json`: source of the major version.
-- `VERSION`: source of the minor version.
+During a release it updates `package.json` and `package-lock.json`, then syncs the same version into:
 
-The patch version is always `0`. For example, `package.json` version `0.x.x` and `VERSION` value `3` produce:
-
-```text
-0.3.0
-```
-
-Before each local commit, the pre-commit hook increments `VERSION`, derives the full version, and syncs it into:
-
-- `package.json`
 - `.codex-plugin/plugin.json`
 - `.claude-plugin/plugin.json`
 - `.claude-plugin/marketplace.json`
 
-GitHub Actions publishes the committed version and does not push a bot version commit back to `main`.
+That sync happens in `scripts/semantic-release-sync.js` during the semantic-release `prepare` step, and the release commit is written back to `main` by `@semantic-release/git`.

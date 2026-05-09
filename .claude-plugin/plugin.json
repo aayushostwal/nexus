@@ -1,6 +1,6 @@
 {
   "name": "nexus",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Reusable Claude Code workflows with global TODOs, daily briefs, specialized agents, and MCP safety policies.",
   "author": {
     "name": "Aayush Ostwal",
