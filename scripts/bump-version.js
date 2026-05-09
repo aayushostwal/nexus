@@ -30,6 +30,7 @@ function bumpMinor(version) {
   }
 
   const major = Number.parseInt(match[1], 10);
-  const minor = Number.parseInt(match[2], 10) + 1;
-  return `${major}.${minor}.0`;
+  const minor = Number.parseInt(match[2], 10);
+  const fix = Number.parseInt(match[3], 10) + 1;
+  return `${major}.${minor}.${fix}`;
 }
