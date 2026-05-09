@@ -55,38 +55,29 @@ This is a direct repo install. Users need the repo slug `aayushostwal/nexus`; pu
 /reload-plugins
 ```
 
-## What It Does
+## What Nexus Does In Your Terminal
 
-Once installed, Nexus changes how your terminal assistant works:
+Nexus is most valuable when the work is ambiguous, technical, or operationally risky. It gives your terminal assistant stronger defaults for planning, debugging, review, and connected-tool workflows.
 
-- Adds a shared operating style for Codex and Claude Code sessions.
-- Maintains a global TODO file at `~/.nexus/TODOS.md`.
-- Supports daily briefs built from TODOs and configured MCP tools.
-- Provides specialized agents for planning, debugging, review, tutorials, and communications summaries.
-- Routes common requests through reusable skills instead of relying on one-off prompting.
-- Enforces approval-first safety rules for Slack, Outlook, Jira, AWS, and other connected systems.
+## In Your Terminal
 
-### In Your Terminal
-
-You can use Nexus in a few common ways:
-
-| Workflow | What happens |
+| Workflow | What Nexus actually improves |
 | --- | --- |
-| TODO tracking | The assistant classifies work and stores it in `~/.nexus/TODOS.md`. |
-| Daily brief | The assistant reads TODO state and optionally connected tools to summarize what needs attention. |
-| Planning | Large or risky work gets scoped before implementation. |
-| Debugging | Failures are routed into CI/CD, codebase, or framework debugging flows. |
-| Review | Code review focuses on bugs, regressions, and missing tests. |
-| Tutorials | The assistant can generate executable notebook-style technical walkthroughs. |
-| Content | The repo includes a short-form content writing skill for YouTube Shorts. |
+| Planning | Converts vague feature requests, infra changes, and architecture ideas into structured implementation plans with scope, risk, dependencies, validation, and rollback thinking before code changes begin. |
+| Debugging | Routes failures into the right debugging track so the assistant investigates root cause instead of guessing. |
+| CI/CD debugging | Helps diagnose broken GitHub Actions, deploy failures, missing dependencies, environment drift, version mismatches, and pipeline regressions with a verify-the-fix workflow. |
+| Codebase debugging | Works through failing tests, runtime exceptions, regressions, and app-level bugs using an evidence-first approach. |
+| Framework and tooling debugging | Handles issues in frameworks, package managers, build tools, and local dev tooling by separating tool failures from app-code failures. |
+| Review | Pushes code review toward bugs, regressions, missing tests, and operational risk instead of surface-level summaries. |
+| Daily execution | Maintains TODOs, builds daily briefs, and uses connected tools like Slack, Outlook, Jira, Notion, and AWS within approval-first safety rules. |
 
-### Commands
+### Example Use Cases
 
-| Command | File | Purpose |
-| --- | --- | --- |
-| `/add-todo` | [commands/add-todo.md](commands/add-todo.md) | Add a classified item to the Nexus TODO system. |
-| `/daily-brief` | [commands/daily-brief.md](commands/daily-brief.md) | Build a daily brief from TODOs and configured tools. |
-| `/review-branch` | [commands/review-branch.md](commands/review-branch.md) | Review current branch changes with findings first. |
+- Plan a production feature before implementation.
+- Debug a failing CI pipeline after a dependency or config change.
+- Investigate why a deploy works locally but fails in GitHub Actions.
+- Review a branch for correctness and missing tests.
+- Build a daily brief from TODOs and connected work systems.
 
 ## Agents
 
@@ -107,39 +98,47 @@ Skills are grouped below by role so it is easier to understand what the plugin a
 
 ### Core Operations
 
-| Skill | File | Purpose |
-| --- | --- | --- |
-| `nexus` | [skills/nexus/SKILL.md](skills/nexus/SKILL.md) | Shared operating rules, TODO workflows, daily briefs, and MCP safety behavior. |
+| Skill | Category | File | Purpose |
+| --- | --- | --- | --- |
+| `nexus` | ![Operations](https://img.shields.io/badge/Operations-0F766E?style=flat) | [skills/nexus/SKILL.md](skills/nexus/SKILL.md) | Shared operating rules, TODO workflows, daily briefs, and MCP safety behavior. |
 
 ### Planning And Research
 
-| Skill | File | Purpose |
-| --- | --- | --- |
-| `nexus-planning` | [skills/planning/SKILL.md](skills/planning/SKILL.md) | Produces structured engineering plans before implementation begins. |
-| `nexus-exploring` | [skills/exploring/SKILL.md](skills/exploring/SKILL.md) | Researches technology options, compares trade-offs, and routes toward planning or implementation. |
+| Skill | Category | File | Purpose |
+| --- | --- | --- | --- |
+| `nexus-planning` | ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) ![Planning](https://img.shields.io/badge/Planning-1D4ED8?style=flat) | [skills/planning/SKILL.md](skills/planning/SKILL.md) | Produces structured engineering plans before implementation begins. |
+| `nexus-exploring` | ![Exploration](https://img.shields.io/badge/Exploration-7C3AED?style=flat) ![Research](https://img.shields.io/badge/Research-6D28D9?style=flat) | [skills/exploring/SKILL.md](skills/exploring/SKILL.md) | Researches technology options, compares trade-offs, and routes toward planning or implementation. |
 
 ### Debugging
 
-| Skill | File | Purpose |
-| --- | --- | --- |
-| `nexus-debugging` | [skills/debugging/SKILL.md](skills/debugging/SKILL.md) | Routes debugging work into CI/CD, codebase, or framework-specific flows. |
-| `debugging-common` | [skills/debugging/common.md](skills/debugging/common.md) | Shared debugging rules, output patterns, and checklists. |
-| `debugging-ci-cd` | [skills/debugging/ci-cd.md](skills/debugging/ci-cd.md) | CI/CD-focused debugging playbook. |
-| `debugging-codebase` | [skills/debugging/codebase.md](skills/debugging/codebase.md) | Application and code regression debugging playbook. |
-| `debugging-frameworks` | [skills/debugging/frameworks.md](skills/debugging/frameworks.md) | Framework and tooling-specific debugging playbook. |
+| Skill | Category | File | Purpose |
+| --- | --- | --- | --- |
+| `nexus-debugging` | ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) | [skills/debugging/SKILL.md](skills/debugging/SKILL.md) | Routes debugging work into CI/CD, codebase, or framework-specific flows. |
+| `debugging-common` | ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) | [skills/debugging/common.md](skills/debugging/common.md) | Shared debugging rules, output patterns, and checklists. |
+| `debugging-ci-cd` | ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) ![CI/CD](https://img.shields.io/badge/CI%2FCD-EA580C?style=flat) | [skills/debugging/ci-cd.md](skills/debugging/ci-cd.md) | CI/CD-focused debugging playbook. |
+| `debugging-codebase` | ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) | [skills/debugging/codebase.md](skills/debugging/codebase.md) | Application and code regression debugging playbook. |
+| `debugging-frameworks` | ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) ![Tooling](https://img.shields.io/badge/Tooling-4B5563?style=flat) | [skills/debugging/frameworks.md](skills/debugging/frameworks.md) | Framework and tooling-specific debugging playbook. |
 
 ### Education And Documentation
 
-| Skill | File | Purpose |
-| --- | --- | --- |
-| `nexus-tutorial` | [skills/tutorial/SKILL.md](skills/tutorial/SKILL.md) | Creates executable Jupyter-style tutorials with reproducible setup. |
-| `skill-writer` | [skills/skill-writer.md/SKILL.md](skills/skill-writer.md/SKILL.md) | Helps create or improve new `SKILL.md` workflows. |
+| Skill | Category | File | Purpose |
+| --- | --- | --- | --- |
+| `nexus-tutorial` | ![Teaching](https://img.shields.io/badge/Teaching-059669?style=flat) ![Documentation](https://img.shields.io/badge/Documentation-0EA5E9?style=flat) | [skills/tutorial/SKILL.md](skills/tutorial/SKILL.md) | Creates executable Jupyter-style tutorials with reproducible setup. |
+| `skill-writer` | ![Documentation](https://img.shields.io/badge/Documentation-0EA5E9?style=flat) ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) | [skills/skill-writer.md/SKILL.md](skills/skill-writer.md/SKILL.md) | Helps create or improve new `SKILL.md` workflows. |
 
 ### Content And Social
 
-| Skill | File | Purpose |
+| Skill | Category | File | Purpose |
+| --- | --- | --- | --- |
+| `nexus-shorts` | ![Socials](https://img.shields.io/badge/Socials-E11D48?style=flat) ![Content](https://img.shields.io/badge/Content-F59E0B?style=flat) | [skills/shorts/SKILL.md](skills/shorts/SKILL.md) | Converts ideas, notes, or technical content into YouTube Shorts scripts. |
+
+## Commands
+
+| Command | File | Purpose |
 | --- | --- | --- |
-| `nexus-shorts` | [skills/shorts/SKILL.md](skills/shorts/SKILL.md) | Converts ideas, notes, or technical content into YouTube Shorts scripts. |
+| `/add-todo` | [commands/add-todo.md](commands/add-todo.md) | Add a classified item to the Nexus TODO system. |
+| `/daily-brief` | [commands/daily-brief.md](commands/daily-brief.md) | Build a daily brief from TODOs and configured tools. |
+| `/review-branch` | [commands/review-branch.md](commands/review-branch.md) | Review current branch changes with findings first. |
 
 ## Tool Setup Guides
 
