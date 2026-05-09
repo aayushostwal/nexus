@@ -5,13 +5,13 @@
     "email": "aayushostwal99@gmail.com"
   },
   "description": "Nexus plugins for AI terminal planning, CI/CD debugging, reusable agent workflows, TODOs, and MCP guardrails.",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "plugins": [
     {
       "name": "nexus",
       "source": "./",
       "description": "Planning, CI/CD debugging, reusable agent workflows, global TODOs, daily briefs, and MCP safety policies.",
-      "version": "0.4.3",
+      "version": "0.4.4",
       "category": "productivity",
       "tags": [
         "agents",

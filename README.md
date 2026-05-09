@@ -196,6 +196,7 @@ You can expand the Nexus engine by connecting more MCP-backed tools. The docs in
 
 ## Usage in real life:
 * Slack TODO Aggregator:
+
 ![alt text](assets/slack_todo.png)
 
 
