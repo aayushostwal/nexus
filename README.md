@@ -7,25 +7,25 @@ Instead of re-explaining how you want the assistant to operate in every new repo
 ## Connect
 
 <p align="center">
-  <a href="https://www.linkedin.com/in/aayush-ostwal/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" style="margin: 0 4px"/></a>
-  <a href="https://x.com/ostwal_aayush"><img src="https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white" style="margin: 0 4px"/></a>
-  <a href="https://www.youtube.com/@AayushOstwal"><img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" style="margin: 0 4px"/></a>
-  <a href="https://github.com/aayushostwal"><img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" style="margin: 0 4px"/></a>
-  <a href="https://medium.com/@aayushostwal"><img src="https://img.shields.io/badge/Medium-12100E?style=for-the-badge&logo=medium&logoColor=white" style="margin: 0 4px"/></a>
-  <a href="https://aayushostwal2.substack.com"><img src="https://img.shields.io/badge/Substack-FF6719?style=for-the-badge&logo=substack&logoColor=white" style="margin: 0 4px"/></a>
+  <a href="https://www.linkedin.com/in/aayush-ostwal/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white" style="margin: 0 4px"/></a>
+  <a href="https://x.com/ostwal_aayush"><img src="https://img.shields.io/badge/X-000000?style=flat&logo=x&logoColor=white" style="margin: 0 4px"/></a>
+  <a href="https://www.youtube.com/@AayushOstwal"><img src="https://img.shields.io/badge/YouTube-FF0000?style=flat&logo=youtube&logoColor=white" style="margin: 0 4px"/></a>
+  <a href="https://github.com/aayushostwal"><img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white" style="margin: 0 4px"/></a>
+  <a href="https://medium.com/@aayushostwal"><img src="https://img.shields.io/badge/Medium-12100E?style=flat&logo=medium&logoColor=white" style="margin: 0 4px"/></a>
+  <a href="https://aayushostwal2.substack.com"><img src="https://img.shields.io/badge/Substack-FF6719?style=flat&logo=substack&logoColor=white" style="margin: 0 4px"/></a>
 </p>
 
 <div align="center">
 <p>I regularly write about AI, DevOps, Cloud Infrastructure, and Software Engineering. Subscribe to get practical guides, deep dives, and updates.</p>
 <a href="https://aayushostwal2.substack.com/subscribe?next=https%3A%2F%2Fsubstack.com%2F%40aayushostwal2&utm_source=profile-page&utm_medium=web&utm_campaign=substack_profile&just_signed_up=true">
-<img src="https://img.shields.io/badge/Subscribe%20to%20Newsletter-4F7DF3?style=for-the-badge&logo=substack&logoColor=white" />
+<img src="https://img.shields.io/badge/Subscribe%20to%20Newsletter-4F7DF3?style=flat&logo=substack&logoColor=white" />
 </a>
 </div>
 
 <div align="center">
 <p>If this project is useful and you want to support more open-source AI engineering work, you can sponsor it on GitHub.</p>
 <a href="https://github.com/sponsors/aayushostwal">
-  <img src="https://img.shields.io/badge/GitHub%20Sponsors-EA4AAA?style=for-the-badge&logo=githubsponsors&logoColor=white" />
+  <img src="https://img.shields.io/badge/GitHub%20Sponsors-EA4AAA?style=flat&logo=githubsponsors&logoColor=white" />
 </a>
 </div>
 
