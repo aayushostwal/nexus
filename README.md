@@ -57,12 +57,14 @@ This is a direct repo install. Users need the repo slug `aayushostwal/nexus`; pu
 
 ## What Nexus Does In Your Terminal
 
-Nexus is most valuable when the work is ambiguous, technical, or operationally risky. It gives your terminal assistant stronger defaults for planning, debugging, review, and connected-tool workflows.
+Nexus is most valuable when the work is ambiguous, technical, or operationally risky. It gives your terminal assistant stronger defaults for coordination, exploration, planning, debugging, review, and connected-tool workflows.
 
 ## In Your Terminal
 
 | Workflow | What Nexus actually improves |
 | --- | --- |
+| Coordination | Breaks complex work into a dependency graph, separates critical-path tasks from independent work, and routes subtasks to the right specialist agents for parallel execution where safe. |
+| Exploration | Helps determine the right approach when the goal is known but the implementation path is still unclear, producing options, trade-offs, and a recommendation before detailed planning starts. |
 | Planning | Converts vague feature requests, infra changes, and architecture ideas into structured implementation plans with scope, risk, dependencies, validation, and rollback thinking before code changes begin. |
 | Debugging | Routes failures into the right debugging track so the assistant investigates root cause instead of guessing. |
 | CI/CD debugging | Helps diagnose broken GitHub Actions, deploy failures, missing dependencies, environment drift, version mismatches, and pipeline regressions with a verify-the-fix workflow. |
@@ -73,6 +75,8 @@ Nexus is most valuable when the work is ambiguous, technical, or operationally r
 
 ### Example Use Cases
 
+- Coordinate a multi-agent implementation by identifying which tasks can run in parallel.
+- Compare approaches for modifying an existing build, deployment, or architecture flow.
 - Plan a production feature before implementation.
 - Debug a failing CI pipeline after a dependency or config change.
 - Investigate why a deploy works locally but fails in GitHub Actions.
@@ -85,6 +89,8 @@ Nexus ships focused agent definitions that can be reused inside supported termin
 
 | Agent | Category | Purpose |
 | --- | --- | --- |
+| [`nexus-coordinator`](agents/coordinator.md) | ![Coordination](https://img.shields.io/badge/Coordination-0F766E?style=flat) ![Parallelism](https://img.shields.io/badge/Parallelism-0891B2?style=flat) | Decomposes work into a dependency graph, identifies parallel tasks, and routes subtasks to specialist agents. |
+| [`nexus-explorer`](agents/explorer.md) | ![Exploration](https://img.shields.io/badge/Exploration-7C3AED?style=flat) ![Research](https://img.shields.io/badge/Research-6D28D9?style=flat) | Compares viable approaches and recommends a path before detailed planning begins. |
 | [`nexus-planner`](agents/planner.md) | ![Planning](https://img.shields.io/badge/Planning-1D4ED8?style=flat) ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) | Produces approval-first technical plans for production work. |
 | [`nexus-debugger`](agents/debugger.md) | ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) ![CI/CD](https://img.shields.io/badge/CI%2FCD-EA580C?style=flat) | Investigates failures, identifies root cause, and verifies fixes. |
 | [`nexus-reviewer`](agents/reviewer.md) | ![Review](https://img.shields.io/badge/Review-7C3AED?style=flat) ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) | Reviews code and workflows for bugs, regressions, and risk. |
@@ -106,14 +112,14 @@ Skills are grouped below by role so it is easier to understand what the plugin a
 
 | Skill | Category | Purpose |
 | --- | --- | --- |
-| [`nexus-planning`](skills/planning/SKILL.md) | ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) ![Planning](https://img.shields.io/badge/Planning-1D4ED8?style=flat) | Produces structured engineering plans before implementation begins. |
-| [`nexus-exploring`](skills/exploring/SKILL.md) | ![Exploration](https://img.shields.io/badge/Exploration-7C3AED?style=flat) ![Research](https://img.shields.io/badge/Research-6D28D9?style=flat) | Researches technology options, compares trade-offs, and routes toward planning or implementation. |
+| [`nexus-planning`](skills/planning/SKILL.md) | ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) ![Planning](https://img.shields.io/badge/Planning-1D4ED8?style=flat) | Turns an intended technical change into scope, ordered steps, dependencies, risks, validation, and rollout. |
+| [`nexus-exploring`](skills/exploring/SKILL.md) | ![Exploration](https://img.shields.io/badge/Exploration-7C3AED?style=flat) ![Research](https://img.shields.io/badge/Research-6D28D9?style=flat) | Determines the right approach when the goal is clear but the design or implementation strategy is still uncertain. |
 
 ### Debugging
 
 | Skill | Category | Purpose |
 | --- | --- | --- |
-| [`nexus-debugging`](skills/debugging/SKILL.md) | ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) | Routes debugging work into CI/CD, codebase, or framework-specific flows. |
+| [`nexus-debugging`](skills/debugging/SKILL.md) | ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) | Investigates failures and regressions with root-cause analysis, narrow fixes, verification, and prevention guidance. |
 | [`debugging-common`](skills/debugging/common.md) | ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) | Shared debugging rules, output patterns, and checklists. |
 | [`debugging-ci-cd`](skills/debugging/ci-cd.md) | ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) ![CI/CD](https://img.shields.io/badge/CI%2FCD-EA580C?style=flat) | CI/CD-focused debugging playbook. |
 | [`debugging-codebase`](skills/debugging/codebase.md) | ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) | Application and code regression debugging playbook. |
