@@ -153,6 +153,8 @@ npm run hooks:install
 The hook runs:
 
 ```bash
+node scripts/bump-version.js
+node scripts/sync-versions.js
 npm run lint
 npm test
 npm pack --dry-run
@@ -160,35 +162,26 @@ npm pack --dry-run
 
 ## Release
 
-Semantic release dry run:
-
-```bash
-npm run release:dry-run
-```
-
-Automatic releases are handled by semantic-release in:
+npm publishing is handled by:
 
 ```text
-.github/workflows/release.yml
+.github/workflows/publish-npm.yml
 ```
 
-Required GitHub secrets:
+Required GitHub secret:
 
 ```text
 NPM_TOKEN
-GITHUB_TOKEN
 ```
-
-Use an npm Automation token. Normal 2FA-bound tokens can fail in CI with `EOTP`.
 
 ## Versioning
 
-semantic-release is the single source of truth for Nexus versions.
+Plugin manifest versions should match `package.json`.
 
-During a release it updates `package.json` and `package-lock.json`, then syncs the same version into:
+Before each commit, the pre-commit hook increments the minor version in `package.json`, resets the patch version to `0`, updates `package-lock.json`, and syncs the same version into:
 
 - `.codex-plugin/plugin.json`
 - `.claude-plugin/plugin.json`
 - `.claude-plugin/marketplace.json`
 
-That sync happens in `scripts/semantic-release-sync.js` during the semantic-release `prepare` step, and the release commit is written back to `main` by `@semantic-release/git`.
+If you need to re-sync manifests manually, use `node scripts/sync-versions.js`.

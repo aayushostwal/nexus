@@ -10,8 +10,6 @@
   "scripts": {
     "hooks:install": "bash scripts/install-hooks.sh",
     "lint": "bash scripts/lint.sh",
-    "release": "semantic-release",
-    "release:dry-run": "semantic-release --dry-run",
     "test": "node --test"
   },
   "keywords": [
@@ -38,10 +36,5 @@
     "skills",
     "README.md",
     "LICENSE"
-  ],
-  "devDependencies": {
-    "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/git": "^10.0.1",
-    "semantic-release": "^25.0.3"
-  }
+  ]
 }
