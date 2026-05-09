@@ -1,6 +1,6 @@
 # Nexus Agent Kit
 
-Nexus Agent Kit is a plugin-first workflow layer for Codex and Claude Code. It packages reusable skills, specialized agents, terminal commands, and MCP safety conventions so your AI sessions behave consistently across planning, debugging, TODO tracking, tutorials, and tool-connected work.
+Nexus Agent Kit is a plugin-first AI terminal workspace for Codex and Claude Code. It packages reusable skills, specialized agents, terminal commands, and MCP safety conventions so your AI sessions behave consistently across planning, CI/CD debugging, code review, TODO tracking, tutorials, and tool-connected work.
 
 Instead of re-explaining how you want the assistant to operate in every new repo or terminal, you install Nexus once and get a shared operating model for engineering work.
 
@@ -83,14 +83,14 @@ Nexus is most valuable when the work is ambiguous, technical, or operationally r
 
 Nexus ships focused agent definitions that can be reused inside supported terminals.
 
-| Agent | File | Purpose |
-| --- | --- | --- |
-| `nexus-planner` | [agents/planner.md](agents/planner.md) | Produces approval-first technical plans for production work. |
-| `nexus-debugger` | [agents/debugger.md](agents/debugger.md) | Investigates failures, identifies root cause, and verifies fixes. |
-| `nexus-reviewer` | [agents/reviewer.md](agents/reviewer.md) | Reviews code and workflows for bugs, regressions, and risk. |
-| `nexus-todo-manager` | [agents/todo-manager.md](agents/todo-manager.md) | Maintains and classifies global Nexus TODOs. |
-| `nexus-comms-briefing` | [agents/comms-briefing.md](agents/comms-briefing.md) | Summarizes Slack, Outlook, Jira, and TODO context into a daily brief. |
-| `tutorial-architect` | [agents/tutorial.md](agents/tutorial.md) | Creates executable tutorial-style notebooks and learning flows. |
+| Agent | Purpose |
+| --- | --- |
+| [`nexus-planner`](agents/planner.md) | Produces approval-first technical plans for production work. |
+| [`nexus-debugger`](agents/debugger.md) | Investigates failures, identifies root cause, and verifies fixes. |
+| [`nexus-reviewer`](agents/reviewer.md) | Reviews code and workflows for bugs, regressions, and risk. |
+| [`nexus-todo-manager`](agents/todo-manager.md) | Maintains and classifies global Nexus TODOs. |
+| [`nexus-comms-briefing`](agents/comms-briefing.md) | Summarizes Slack, Outlook, Jira, and TODO context into a daily brief. |
+| [`tutorial-architect`](agents/tutorial.md) | Creates executable tutorial-style notebooks and learning flows. |
 
 ## Skills
 
@@ -134,11 +134,15 @@ Skills are grouped below by role so it is easier to understand what the plugin a
 
 ## Commands
 
-| Command | File | Purpose |
-| --- | --- | --- |
-| `/add-todo` | [commands/add-todo.md](commands/add-todo.md) | Add a classified item to the Nexus TODO system. |
-| `/daily-brief` | [commands/daily-brief.md](commands/daily-brief.md) | Build a daily brief from TODOs and configured tools. |
-| `/review-branch` | [commands/review-branch.md](commands/review-branch.md) | Review current branch changes with findings first. |
+| Command | Purpose |
+| --- | --- |
+| [`/add-todo`](commands/add-todo.md) | Add a classified item to the Nexus TODO system. |
+| [`/daily-brief`](commands/daily-brief.md) | Build a daily brief from TODOs and configured tools. |
+| [`/review-branch`](commands/review-branch.md) | Review current branch changes with findings first. |
+
+### References:
+* Managing Your TODOs:
+![alt text](assets/todos.png)
 
 ## Tool Setup Guides
 
@@ -146,11 +150,11 @@ Nexus is designed to work well with MCP-connected tools, but it does not ship cr
 
 | Tool | Guide |
 | --- | --- |
-| Microsoft / Outlook | [docs/tools/microsoft.md](docs/tools/microsoft.md) |
-| Slack | [docs/tools/slack.md](docs/tools/slack.md) |
-| Notion | [docs/tools/notion.md](docs/tools/notion.md) |
-| Jira / Atlassian | [docs/tools/jira.md](docs/tools/jira.md) |
-| AWS | [docs/tools/aws.md](docs/tools/aws.md) |
+| [Microsoft / Outlook](docs/tools/microsoft.md) | Microsoft Graph setup and permission guidance. |
+| [Slack](docs/tools/slack.md) | Slack MCP connection and token scope guidance. |
+| [Notion](docs/tools/notion.md) | Notion MCP and internal integration setup guidance. |
+| [Jira / Atlassian](docs/tools/jira.md) | Atlassian Rovo MCP and API token setup guidance. |
+| [AWS](docs/tools/aws.md) | AWS profile, role, and least-privilege MCP guidance. |
 
 Safety defaults used by the repo:
 
@@ -174,13 +178,13 @@ You can expand the Nexus engine by connecting more MCP-backed tools. The docs in
 
 ### Available Tool Guides
 
-| Tool | File | What it adds to Nexus |
-| --- | --- | --- |
-| Microsoft / Outlook | [docs/tools/microsoft.md](docs/tools/microsoft.md) | Mail and calendar context for daily briefs and workflow assistance. |
-| Slack | [docs/tools/slack.md](docs/tools/slack.md) | Workspace search, channel context, thread retrieval, and approved messaging workflows. |
-| Notion | [docs/tools/notion.md](docs/tools/notion.md) | Access to pages, databases, and workspace knowledge. |
-| Jira / Atlassian | [docs/tools/jira.md](docs/tools/jira.md) | Issue, sprint, board, and project context for engineering workflows. |
-| AWS | [docs/tools/aws.md](docs/tools/aws.md) | Cloud status, logs, metrics, and infrastructure context with approval gates for changes. |
+| Tool | What it adds to Nexus |
+| --- | --- |
+| [Microsoft / Outlook](docs/tools/microsoft.md) | Mail and calendar context for daily briefs and workflow assistance. |
+| [Slack](docs/tools/slack.md) | Workspace search, channel context, thread retrieval, and approved messaging workflows. |
+| [Notion](docs/tools/notion.md) | Access to pages, databases, and workspace knowledge. |
+| [Jira / Atlassian](docs/tools/jira.md) | Issue, sprint, board, and project context for engineering workflows. |
+| [AWS](docs/tools/aws.md) | Cloud status, logs, metrics, and infrastructure context with approval gates for changes. |
 
 ### Recommended Integration Pattern
 
@@ -189,6 +193,11 @@ You can expand the Nexus engine by connecting more MCP-backed tools. The docs in
 - Give each tool the minimum scope needed.
 - Validate read access before enabling write capabilities.
 - Keep write actions explicitly user-approved.
+
+## Usage in real life:
+* Slack TODO Aggregator:
+![alt text](assets/slack_todo.png)
+
 
 ## Development
 
@@ -222,3 +231,7 @@ node scripts/sync-versions.js
 ## License
 
 This project is licensed under the MIT License. See [LICENSE](LICENSE) for the full text.
+
+## SEO / GEO Tags
+
+`codex plugin`, `claude code plugin`, `ai terminal workflow`, `developer ai assistant`, `ci cd debugging`, `github actions debugging`, `terminal agents`, `mcp tools`, `model context protocol`, `ai coding workflow`, `engineering planning`, `developer productivity`, `prompt engineering`, `tool-connected ai`, `slack mcp`, `notion mcp`, `jira mcp`, `aws mcp`, `ai todo manager`, `daily brief automation`

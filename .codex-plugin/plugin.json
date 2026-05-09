@@ -1,7 +1,7 @@
 {
   "name": "nexus",
-  "version": "0.4.2",
-  "description": "Plugin-first Codex and Claude workflows with global TODOs, daily briefs, agents, and MCP safety policies.",
+  "version": "0.4.3",
+  "description": "Plugin-first AI terminal workflows for Codex and Claude Code with planning, CI/CD debugging, reusable agents, TODOs, and MCP safety policies.",
   "author": {
     "name": "Aayush Ostwal",
     "email": "aayushostwal99@gmail.com",
@@ -16,13 +16,17 @@
     "mcp",
     "agents",
     "todo",
-    "workflow"
+    "workflow",
+    "ai terminal",
+    "ci cd debugging",
+    "developer productivity",
+    "tool integrations"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Nexus",
-    "shortDescription": "Shared agent workflows, TODOs, and MCP guardrails.",
-    "longDescription": "Nexus provides plugin-first Codex and Claude workflows, a global markdown TODO system, daily brief commands, specialized agents, response formatting, cost policy, and MCP safety guidance for Slack, Outlook, Notion, Jira, and AWS.",
+    "shortDescription": "Planning, CI/CD debugging, TODOs, agents, and MCP guardrails.",
+    "longDescription": "Nexus provides plugin-first AI terminal workflows for Codex and Claude Code, including structured planning, CI/CD and codebase debugging flows, a global markdown TODO system, daily brief commands, specialized agents, response formatting, and MCP safety guidance for Slack, Outlook, Notion, Jira, and AWS.",
     "developerName": "Aayush Ostwal",
     "category": "Productivity",
     "capabilities": [
