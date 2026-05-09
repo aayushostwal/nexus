@@ -199,7 +199,9 @@ You can expand the Nexus engine by connecting more MCP-backed tools. The docs in
 
 ![alt text](assets/slack_todo.png)
 
+** Article to Instagram Short Script Conversion
 
+![alt text](assets/shorts.png)
 ## Development
 
 Run the local checks with:
