@@ -1,6 +1,6 @@
 # Nexus Agent Kit
 
-Nexus Agent Kit is a plugin-first AI terminal workspace for Codex and Claude Code. It packages reusable skills, specialized agents, terminal commands, and MCP safety conventions so your AI sessions behave consistently across planning, CI/CD debugging, code review, TODO tracking, tutorials, and tool-connected work.
+Nexus Agent Kit is a plugin-first AI terminal workspace for Codex and Claude Code. It packages reusable skills, specialized agents, terminal commands, and MCP safety conventions so your AI sessions behave consistently across planning, CI/CD debugging, code review, TODO tracking, infrastructure design, tutorials, and tool-connected work.
 
 Instead of re-explaining how you want the assistant to operate in every new repo or terminal, you install Nexus once and get a shared operating model for engineering work.
 
@@ -57,9 +57,7 @@ This is a direct repo install. Users need the repo slug `aayushostwal/nexus`; pu
 
 ## What Nexus Does In Your Terminal
 
-Nexus is most valuable when the work is ambiguous, technical, or operationally risky. It gives your terminal assistant stronger defaults for coordination, exploration, planning, debugging, review, and connected-tool workflows.
-
-## In Your Terminal
+Nexus is most valuable when the work is ambiguous, technical, or operationally risky. It gives your terminal assistant stronger defaults for coordination, exploration, planning, debugging, infrastructure design, review, and connected-tool workflows.
 
 | Workflow | What Nexus actually improves |
 | --- | --- |
@@ -71,6 +69,9 @@ Nexus is most valuable when the work is ambiguous, technical, or operationally r
 | Codebase debugging | Works through failing tests, runtime exceptions, regressions, and app-level bugs using an evidence-first approach. |
 | Framework and tooling debugging | Handles issues in frameworks, package managers, build tools, and local dev tooling by separating tool failures from app-code failures. |
 | Review | Pushes code review toward bugs, regressions, missing tests, and operational risk instead of surface-level summaries. |
+| Infrastructure design | Scans a codebase to detect app type, databases, queues, and auth — then produces a professional HLD with a Mermaid diagram, cost estimate, trade-off matrix, and deployment strategy for AWS, GCP, or Azure. |
+| Infrastructure evaluation | Reads existing Terraform, Kubernetes, docker-compose, and CI/CD files, scores them against reliability, security, cost, and observability criteria, and produces a dual-timeline improvement plan. |
+| Free infrastructure alternatives | Maps every paid cloud service to free, cheap, or self-hosted replacements with tier groupings, production-readiness ratings, and specific migration steps. |
 | Daily execution | Maintains TODOs, builds daily briefs, and uses connected tools like Slack, Outlook, Jira, Notion, and AWS within approval-first safety rules. |
 
 ### Example Use Cases
@@ -81,6 +82,9 @@ Nexus is most valuable when the work is ambiguous, technical, or operationally r
 - Debug a failing CI pipeline after a dependency or config change.
 - Investigate why a deploy works locally but fails in GitHub Actions.
 - Review a branch for correctness and missing tests.
+- Design a production AWS or GCP architecture from a codebase with a cost estimate and Mermaid HLD.
+- Audit existing Terraform or Kubernetes setup for SPOFs, security gaps, and cost waste.
+- Find free or self-hosted alternatives to Firebase, Heroku, Auth0, Datadog, and other paid services.
 - Build a daily brief from TODOs and connected work systems.
 
 ## Agents
@@ -115,6 +119,15 @@ Skills are grouped below by role so it is easier to understand what the plugin a
 | [`nexus-planning`](skills/planning/SKILL.md) | ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) ![Planning](https://img.shields.io/badge/Planning-1D4ED8?style=flat) | Turns an intended technical change into scope, ordered steps, dependencies, risks, validation, and rollout. |
 | [`nexus-exploring`](skills/exploring/SKILL.md) | ![Exploration](https://img.shields.io/badge/Exploration-7C3AED?style=flat) ![Research](https://img.shields.io/badge/Research-6D28D9?style=flat) | Determines the right approach when the goal is clear but the design or implementation strategy is still uncertain. |
 
+### Infrastructure Planning
+
+| Skill | Category | Purpose |
+| --- | --- | --- |
+| [`nexus-infra`](skills/infrastructure/SKILL.md) | ![Infrastructure](https://img.shields.io/badge/Infrastructure-0369A1?style=flat) ![Cloud](https://img.shields.io/badge/Cloud-0EA5E9?style=flat) | Entry point for all infrastructure requests — routes to design, evaluate, or free-alternatives based on what the user needs. |
+| [`nexus-infra-design`](skills/infrastructure/design.md) | ![Infrastructure](https://img.shields.io/badge/Infrastructure-0369A1?style=flat) ![Planning](https://img.shields.io/badge/Planning-1D4ED8?style=flat) | Scans a codebase and produces a professional HLD with Mermaid diagram, component table, cost estimate, and trade-off matrix. |
+| [`nexus-infra-evaluate`](skills/infrastructure/evaluate.md) | ![Infrastructure](https://img.shields.io/badge/Infrastructure-0369A1?style=flat) ![Review](https://img.shields.io/badge/Review-DC2626?style=flat) | Reads existing Terraform, K8s, docker-compose, and CI/CD files to produce a full audit report with short-term and long-term improvement plans. |
+| [`nexus-infra-free-alternatives`](skills/infrastructure/free-alternatives.md) | ![Infrastructure](https://img.shields.io/badge/Infrastructure-0369A1?style=flat) ![Cost](https://img.shields.io/badge/Cost-16A34A?style=flat) | Maps every paid cloud service to free, cheap, or self-hosted alternatives grouped by tier, with migration notes per service. |
+
 ### Debugging
 
 | Skill | Category | Purpose |
@@ -146,21 +159,17 @@ Skills are grouped below by role so it is easier to understand what the plugin a
 | [`/daily-brief`](commands/daily-brief.md) | ![Comms](https://img.shields.io/badge/Comms-DB2777?style=flat) ![Briefing](https://img.shields.io/badge/Briefing-EC4899?style=flat) | Build a daily brief from TODOs and configured tools. |
 | [`/review-branch`](commands/review-branch.md) | ![Review](https://img.shields.io/badge/Review-7C3AED?style=flat) ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) | Review current branch changes with findings first. |
 
-### References:
-* Managing Your TODOs:
-![alt text](assets/todos.png)
-
 ## Tool Setup Guides
 
 Nexus is designed to work well with MCP-connected tools, but it does not ship credentials or external accounts.
 
-| Tool | Guide |
-| --- | --- |
-| [Microsoft / Outlook](docs/tools/microsoft.md) | Microsoft Graph setup and permission guidance. |
-| [Slack](docs/tools/slack.md) | Slack MCP connection and token scope guidance. |
-| [Notion](docs/tools/notion.md) | Notion MCP and internal integration setup guidance. |
-| [Jira / Atlassian](docs/tools/jira.md) | Atlassian Rovo MCP and API token setup guidance. |
-| [AWS](docs/tools/aws.md) | AWS profile, role, and least-privilege MCP guidance. |
+| Tool | Guide | What it adds to Nexus |
+| --- | --- | --- |
+| [Microsoft / Outlook](docs/tools/microsoft.md) | Microsoft Graph setup and permission guidance. | Mail and calendar context for daily briefs and workflow assistance. |
+| [Slack](docs/tools/slack.md) | Slack MCP connection and token scope guidance. | Workspace search, channel context, thread retrieval, and approved messaging workflows. |
+| [Notion](docs/tools/notion.md) | Notion MCP and internal integration setup guidance. | Access to pages, databases, and workspace knowledge. |
+| [Jira / Atlassian](docs/tools/jira.md) | Atlassian Rovo MCP and API token setup guidance. | Issue, sprint, board, and project context for engineering workflows. |
+| [AWS](docs/tools/aws.md) | AWS profile, role, and least-privilege MCP guidance. | Cloud status, logs, metrics, and infrastructure context with approval gates for changes. |
 
 Safety defaults used by the repo:
 
@@ -168,10 +177,6 @@ Safety defaults used by the repo:
 - Ask before sending messages, email, Jira updates, or cloud changes.
 - Keep secrets out of git.
 - Prefer scoped credentials, OAuth, or temporary tokens.
-
-## Add More Tools
-
-You can expand the Nexus engine by connecting more MCP-backed tools. The docs in [docs/tools](docs/tools) describe the recommended setup model, access scope, and safety rules for each integration.
 
 ### How To Extend Nexus
 
@@ -182,25 +187,8 @@ You can expand the Nexus engine by connecting more MCP-backed tools. The docs in
 5. Only add write permissions when your workflow actually needs them.
 6. Keep Nexus approval-first for any external write, send, deploy, or update action.
 
-### Available Tool Guides
+## Usage In Real Life
 
-| Tool | What it adds to Nexus |
-| --- | --- |
-| [Microsoft / Outlook](docs/tools/microsoft.md) | Mail and calendar context for daily briefs and workflow assistance. |
-| [Slack](docs/tools/slack.md) | Workspace search, channel context, thread retrieval, and approved messaging workflows. |
-| [Notion](docs/tools/notion.md) | Access to pages, databases, and workspace knowledge. |
-| [Jira / Atlassian](docs/tools/jira.md) | Issue, sprint, board, and project context for engineering workflows. |
-| [AWS](docs/tools/aws.md) | Cloud status, logs, metrics, and infrastructure context with approval gates for changes. |
-
-### Recommended Integration Pattern
-
-- Use OAuth, SSO, or temporary credentials where possible.
-- Avoid storing secrets in this repository.
-- Give each tool the minimum scope needed.
-- Validate read access before enabling write capabilities.
-- Keep write actions explicitly user-approved.
-
-## Usage in real life:
 | Title | Labels | Screenshots |
 | --- | --- | --- |
 | Slack TODO Aggregator | ![Slack](https://img.shields.io/badge/Slack-4A154B?style=flat) ![TODOs](https://img.shields.io/badge/TODOs-14B8A6?style=flat) ![Productivity](https://img.shields.io/badge/Productivity-2563EB?style=flat) | ![Slack TODO Aggregator](assets/slack_todo.png) |
@@ -241,4 +229,4 @@ This project is licensed under the MIT License. See [LICENSE](LICENSE) for the f
 
 ## SEO / GEO Tags
 
-`codex plugin`, `claude code plugin`, `ai terminal workflow`, `developer ai assistant`, `ci cd debugging`, `github actions debugging`, `terminal agents`, `mcp tools`, `model context protocol`, `ai coding workflow`, `engineering planning`, `developer productivity`, `prompt engineering`, `tool-connected ai`, `slack mcp`, `notion mcp`, `jira mcp`, `aws mcp`, `ai todo manager`, `daily brief automation`
+`codex plugin`, `claude code plugin`, `ai terminal workflow`, `developer ai assistant`, `ci cd debugging`, `github actions debugging`, `terminal agents`, `mcp tools`, `model context protocol`, `ai coding workflow`, `engineering planning`, `developer productivity`, `prompt engineering`, `tool-connected ai`, `slack mcp`, `notion mcp`, `jira mcp`, `aws mcp`, `ai todo manager`, `daily brief automation`, `cloud infrastructure planning`, `aws architecture design`, `gcp architecture`, `azure architecture`, `infrastructure as code review`, `terraform audit`, `kubernetes review`, `hld generator`, `cloud cost estimation`, `free firebase alternative`, `free heroku alternative`, `supabase`, `render railway flyio`, `self-hosted cloud`, `infrastructure skills`, `devops ai assistant`
