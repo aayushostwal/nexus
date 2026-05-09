@@ -1,6 +1,6 @@
 {
   "name": "nexus",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Plugin-first Codex and Claude workflows with global TODOs, daily briefs, agents, and MCP safety policies.",
   "author": {
     "name": "Aayush Ostwal",

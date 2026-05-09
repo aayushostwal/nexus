@@ -98,39 +98,39 @@ Skills are grouped below by role so it is easier to understand what the plugin a
 
 ### Core Operations
 
-| Skill | Category | File | Purpose |
-| --- | --- | --- | --- |
-| `nexus` | ![Operations](https://img.shields.io/badge/Operations-0F766E?style=flat) | [skills/nexus/SKILL.md](skills/nexus/SKILL.md) | Shared operating rules, TODO workflows, daily briefs, and MCP safety behavior. |
+| Skill | Category | Purpose |
+| --- | --- | --- |
+| [`nexus`](skills/nexus/SKILL.md) | ![Operations](https://img.shields.io/badge/Operations-0F766E?style=flat) | Shared operating rules, TODO workflows, daily briefs, and MCP safety behavior. |
 
 ### Planning And Research
 
-| Skill | Category | File | Purpose |
-| --- | --- | --- | --- |
-| `nexus-planning` | ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) ![Planning](https://img.shields.io/badge/Planning-1D4ED8?style=flat) | [skills/planning/SKILL.md](skills/planning/SKILL.md) | Produces structured engineering plans before implementation begins. |
-| `nexus-exploring` | ![Exploration](https://img.shields.io/badge/Exploration-7C3AED?style=flat) ![Research](https://img.shields.io/badge/Research-6D28D9?style=flat) | [skills/exploring/SKILL.md](skills/exploring/SKILL.md) | Researches technology options, compares trade-offs, and routes toward planning or implementation. |
+| Skill | Category | Purpose |
+| --- | --- | --- |
+| [`nexus-planning`](skills/planning/SKILL.md) | ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) ![Planning](https://img.shields.io/badge/Planning-1D4ED8?style=flat) | Produces structured engineering plans before implementation begins. |
+| [`nexus-exploring`](skills/exploring/SKILL.md) | ![Exploration](https://img.shields.io/badge/Exploration-7C3AED?style=flat) ![Research](https://img.shields.io/badge/Research-6D28D9?style=flat) | Researches technology options, compares trade-offs, and routes toward planning or implementation. |
 
 ### Debugging
 
-| Skill | Category | File | Purpose |
-| --- | --- | --- | --- |
-| `nexus-debugging` | ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) | [skills/debugging/SKILL.md](skills/debugging/SKILL.md) | Routes debugging work into CI/CD, codebase, or framework-specific flows. |
-| `debugging-common` | ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) | [skills/debugging/common.md](skills/debugging/common.md) | Shared debugging rules, output patterns, and checklists. |
-| `debugging-ci-cd` | ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) ![CI/CD](https://img.shields.io/badge/CI%2FCD-EA580C?style=flat) | [skills/debugging/ci-cd.md](skills/debugging/ci-cd.md) | CI/CD-focused debugging playbook. |
-| `debugging-codebase` | ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) | [skills/debugging/codebase.md](skills/debugging/codebase.md) | Application and code regression debugging playbook. |
-| `debugging-frameworks` | ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) ![Tooling](https://img.shields.io/badge/Tooling-4B5563?style=flat) | [skills/debugging/frameworks.md](skills/debugging/frameworks.md) | Framework and tooling-specific debugging playbook. |
+| Skill | Category | Purpose |
+| --- | --- | --- |
+| [`nexus-debugging`](skills/debugging/SKILL.md) | ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) | Routes debugging work into CI/CD, codebase, or framework-specific flows. |
+| [`debugging-common`](skills/debugging/common.md) | ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) | Shared debugging rules, output patterns, and checklists. |
+| [`debugging-ci-cd`](skills/debugging/ci-cd.md) | ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) ![CI/CD](https://img.shields.io/badge/CI%2FCD-EA580C?style=flat) | CI/CD-focused debugging playbook. |
+| [`debugging-codebase`](skills/debugging/codebase.md) | ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) | Application and code regression debugging playbook. |
+| [`debugging-frameworks`](skills/debugging/frameworks.md) | ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) ![Tooling](https://img.shields.io/badge/Tooling-4B5563?style=flat) | Framework and tooling-specific debugging playbook. |
 
 ### Education And Documentation
 
-| Skill | Category | File | Purpose |
-| --- | --- | --- | --- |
-| `nexus-tutorial` | ![Teaching](https://img.shields.io/badge/Teaching-059669?style=flat) ![Documentation](https://img.shields.io/badge/Documentation-0EA5E9?style=flat) | [skills/tutorial/SKILL.md](skills/tutorial/SKILL.md) | Creates executable Jupyter-style tutorials with reproducible setup. |
-| `skill-writer` | ![Documentation](https://img.shields.io/badge/Documentation-0EA5E9?style=flat) ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) | [skills/skill-writer.md/SKILL.md](skills/skill-writer.md/SKILL.md) | Helps create or improve new `SKILL.md` workflows. |
+| Skill | Category | Purpose |
+| --- | --- | --- |
+| [`nexus-tutorial`](skills/tutorial/SKILL.md) | ![Teaching](https://img.shields.io/badge/Teaching-059669?style=flat) ![Documentation](https://img.shields.io/badge/Documentation-0EA5E9?style=flat) | Creates executable Jupyter-style tutorials with reproducible setup. |
+| [`skill-writer`](skills/skill-writer.md/SKILL.md) | ![Documentation](https://img.shields.io/badge/Documentation-0EA5E9?style=flat) ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) | Helps create or improve new `SKILL.md` workflows. |
 
 ### Content And Social
 
-| Skill | Category | File | Purpose |
-| --- | --- | --- | --- |
-| `nexus-shorts` | ![Socials](https://img.shields.io/badge/Socials-E11D48?style=flat) ![Content](https://img.shields.io/badge/Content-F59E0B?style=flat) | [skills/shorts/SKILL.md](skills/shorts/SKILL.md) | Converts ideas, notes, or technical content into YouTube Shorts scripts. |
+| Skill | Category | Purpose |
+| --- | --- | --- |
+| [`nexus-shorts`](skills/shorts/SKILL.md) | ![Socials](https://img.shields.io/badge/Socials-E11D48?style=flat) ![Content](https://img.shields.io/badge/Content-F59E0B?style=flat) | Converts ideas, notes, or technical content into YouTube Shorts scripts. |
 
 ## Commands
 
