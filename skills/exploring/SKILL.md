@@ -1,5 +1,5 @@
 ---
-name: nexus-brainstorm
+name: nexus-exploring
 description: >
   Use this skill when the user wants to explore technology options, compare approaches, or decide
   what to use before building something. Trigger phrases include: "I'm not sure what tech to use for X",
@@ -11,7 +11,7 @@ description: >
   context to jump straight into planning or implementation. When in doubt, use this skill.
 ---
 
-# Nexus Brainstorm
+# Nexus Exploring
 
 Research real-world implementations, synthesize trade-offs, and route to implementation or planning.
 
@@ -94,7 +94,7 @@ Is the task > 1 day of work OR touches > 2 services/files OR involves infra/migr
 ## Output Format
 
 ```
-## Brainstorm: [Goal in one sentence]
+## Exploring: [Goal in one sentence]
 
 ### Options
 | Option | Stars | Last Release | Complexity | Best For | Avoid If |
@@ -138,7 +138,7 @@ Is the task > 1 day of work OR touches > 2 services/files OR involves infra/migr
 
 **Output:**
 ```
-## Brainstorm: Add background job queue to FastAPI app
+## Exploring: Add background job queue to FastAPI app
 
 ### Options
 | Option | Stars | Last Release | Complexity | Best For | Avoid If |
