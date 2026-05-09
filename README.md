@@ -195,13 +195,11 @@ You can expand the Nexus engine by connecting more MCP-backed tools. The docs in
 - Keep write actions explicitly user-approved.
 
 ## Usage in real life:
-* Slack TODO Aggregator:
+| Title | Labels | Screenshots |
+| --- | --- | --- |
+| Slack TODO Aggregator | Slack, TODOs, Productivity | ![Slack TODO Aggregator](assets/slack_todo.png) |
+| Article to Instagram Short Script Conversion | Content, Instagram, Shorts | ![Article to Instagram Short Script Conversion](assets/shorts.png) |
 
-![alt text](assets/slack_todo.png)
-
-** Article to Instagram Short Script Conversion
-
-![alt text](assets/shorts.png)
 ## Development
 
 Run the local checks with:
