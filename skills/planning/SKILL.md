@@ -1,13 +1,13 @@
 ---
 name: nexus-planning
 description: >
-  Use this skill when planning, architecting, or scoping any production-critical engineering work before
-  implementation begins. Trigger phrases include: "how should I architect X", "plan this feature",
-  "help me scope this", "what's the best approach for", "design this system", "I need a technical plan",
-  "help me think through this", "what are the trade-offs between", "I need an architecture review",
-  "should I use X or Y", "walk me through how to build". Also trigger for AI/LLM stack design,
-  DevOps/cloud architecture, backend system design, or any multi-domain engineering scoping session.
-  When in doubt, use this skill.
+  Use this skill when the user needs a concrete execution plan for technical work and the direction is
+  already known or can be assumed without much ambiguity. Trigger when the main need is to turn an intended
+  change into scope, ordered steps, dependencies, risks, validation, rollout, and rollback rather than to
+  compare fundamentally different approaches. This applies to production features, infrastructure changes,
+  migrations, architecture updates, and repo-local modifications that need structured delivery planning.
+  The expected output is an actionable implementation plan, not just ideas or options. Prefer exploration
+  first when the core uncertainty is still choosing the approach. When in doubt, use this skill.
 ---
 
 # Nexus Planning Protocol

@@ -1,12 +1,13 @@
 ---
 name: nexus-debugging
 description: >
-  Use this skill when debugging any failure: CI/CD pipeline failures, broken tests, build errors,
-  deployment failures, tooling issues, framework bugs, or codebase regressions. Trigger phrases include:
-  "this is failing", "CI is broken", "tests won't pass", "build failed", "my deploy is failing",
-  "getting an error in", "why is X broken", "help me debug", "I have a stack trace", "error in production",
-  "something regressed", "flaky test", "pipeline is red". Also trigger when the user pastes a stack trace,
-  GitHub Actions log, pytest output, or Docker build error. When in doubt, use this skill.
+  Use this skill when the user's primary problem is that something is failing, broken, regressed, or behaving
+  unexpectedly and they need root-cause analysis rather than design advice. Trigger when the task is to
+  investigate evidence, isolate the source of a failure, explain why it happens, apply the narrowest fix,
+  and verify the result. This applies to CI/CD issues, test failures, runtime errors, deployment problems,
+  framework/tooling breakage, and unexplained regressions in existing systems. The expected output is a debug
+  report with root cause, fix, verification, and prevention, not an implementation plan or option analysis.
+  When in doubt, use this skill.
 ---
 
 # Nexus Debugging

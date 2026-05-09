@@ -22,6 +22,8 @@ Follow `skills/debugging/common.md`, plus:
 - For Jenkins, prefer `jenkins.io/doc`.
 - For GitHub Actions, prefer `docs.github.com`.
 
+And add other links also as per the requirement of the codebase.
+
 ## Investigation Rules
 
 - Check framework conventions before introducing custom workarounds.

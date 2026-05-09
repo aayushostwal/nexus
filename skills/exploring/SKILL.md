@@ -1,14 +1,13 @@
 ---
 name: nexus-exploring
 description: >
-  Use this skill when the user wants to explore technology options, compare approaches, or decide
-  what to use before building something. Trigger phrases include: "I'm not sure what tech to use for X",
-  "what should I use to build X", "help me choose between X and Y", "I want to build X but don't know
-  where to start", "brainstorm approaches for X", "what's the best way to implement X", "research options
-  for X", "I need to pick a tech stack", "what do people use for X", "is X or Y better for my use case",
-  "I don't know if I should use X or Y", "what library should I use". Also trigger when the user
-  describes a goal without a clear solution path, or when they ask "how should I do X" without enough
-  context to jump straight into planning or implementation. When in doubt, use this skill.
+  Use this skill when the user needs help figuring out the right approach to a technical change and the
+  solution path is still unclear. Trigger when the main task is to surface constraints, compare plausible
+  directions, understand trade-offs, or recommend a path forward before detailed execution planning begins.
+  This applies both to new builds and to modifying an existing system when the user knows the goal but not
+  yet the best design or implementation strategy. The expected output is a small set of viable options, a
+  recommendation, and clear reasoning. Prefer this skill before planning whenever approach selection is the
+  primary source of uncertainty. When in doubt, use this skill.
 ---
 
 # Nexus Exploring
