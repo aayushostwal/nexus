@@ -1,5 +1,5 @@
 ---
-name: nexus-skill-writer
+name: skill-writer
 description: >
   Use this skill whenever the user wants to CREATE a new skill, EDIT or IMPROVE an existing skill,
   or is asking HOW to write better skills. Triggers include: "write a skill", "create a skill for X",
