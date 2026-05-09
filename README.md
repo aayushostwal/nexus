@@ -57,25 +57,6 @@ This is a direct repo install. Users need the repo slug `aayushostwal/nexus`; pu
 
 ## What Nexus Does In Your Terminal
 
-Nexus is most valuable when the work is ambiguous, technical, or operationally risky. It gives your terminal assistant stronger defaults for coordination, exploration, planning, debugging, infrastructure design, review, and connected-tool workflows.
-
-| Workflow | What Nexus actually improves |
-| --- | --- |
-| Coordination | Breaks complex work into a dependency graph, separates critical-path tasks from independent work, and routes subtasks to the right specialist agents for parallel execution where safe. |
-| Exploration | Helps determine the right approach when the goal is known but the implementation path is still unclear, producing options, trade-offs, and a recommendation before detailed planning starts. |
-| Planning | Converts vague feature requests, infra changes, and architecture ideas into structured implementation plans with scope, risk, dependencies, validation, and rollback thinking before code changes begin. |
-| Debugging | Routes failures into the right debugging track so the assistant investigates root cause instead of guessing. |
-| CI/CD debugging | Helps diagnose broken GitHub Actions, deploy failures, missing dependencies, environment drift, version mismatches, and pipeline regressions with a verify-the-fix workflow. |
-| Codebase debugging | Works through failing tests, runtime exceptions, regressions, and app-level bugs using an evidence-first approach. |
-| Framework and tooling debugging | Handles issues in frameworks, package managers, build tools, and local dev tooling by separating tool failures from app-code failures. |
-| Review | Pushes code review toward bugs, regressions, missing tests, and operational risk instead of surface-level summaries. |
-| Infrastructure design | Scans a codebase to detect app type, databases, queues, and auth — then produces a professional HLD with a Mermaid diagram, cost estimate, trade-off matrix, and deployment strategy for AWS, GCP, or Azure. |
-| Infrastructure evaluation | Reads existing Terraform, Kubernetes, docker-compose, and CI/CD files, scores them against reliability, security, cost, and observability criteria, and produces a dual-timeline improvement plan. |
-| Free infrastructure alternatives | Maps every paid cloud service to free, cheap, or self-hosted replacements with tier groupings, production-readiness ratings, and specific migration steps. |
-| Daily execution | Maintains TODOs, builds daily briefs, and uses connected tools like Slack, Outlook, Jira, Notion, and AWS within approval-first safety rules. |
-
-### Example Use Cases
-
 - Coordinate a multi-agent implementation by identifying which tasks can run in parallel.
 - Compare approaches for modifying an existing build, deployment, or architecture flow.
 - Plan a production feature before implementation.
