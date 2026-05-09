@@ -83,14 +83,14 @@ Nexus is most valuable when the work is ambiguous, technical, or operationally r
 
 Nexus ships focused agent definitions that can be reused inside supported terminals.
 
-| Agent | Purpose |
-| --- | --- |
-| [`nexus-planner`](agents/planner.md) | Produces approval-first technical plans for production work. |
-| [`nexus-debugger`](agents/debugger.md) | Investigates failures, identifies root cause, and verifies fixes. |
-| [`nexus-reviewer`](agents/reviewer.md) | Reviews code and workflows for bugs, regressions, and risk. |
-| [`nexus-todo-manager`](agents/todo-manager.md) | Maintains and classifies global Nexus TODOs. |
-| [`nexus-comms-briefing`](agents/comms-briefing.md) | Summarizes Slack, Outlook, Jira, and TODO context into a daily brief. |
-| [`tutorial-architect`](agents/tutorial.md) | Creates executable tutorial-style notebooks and learning flows. |
+| Agent | Category | Purpose |
+| --- | --- | --- |
+| [`nexus-planner`](agents/planner.md) | ![Planning](https://img.shields.io/badge/Planning-1D4ED8?style=flat) ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) | Produces approval-first technical plans for production work. |
+| [`nexus-debugger`](agents/debugger.md) | ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) ![CI/CD](https://img.shields.io/badge/CI%2FCD-EA580C?style=flat) | Investigates failures, identifies root cause, and verifies fixes. |
+| [`nexus-reviewer`](agents/reviewer.md) | ![Review](https://img.shields.io/badge/Review-7C3AED?style=flat) ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) | Reviews code and workflows for bugs, regressions, and risk. |
+| [`nexus-todo-manager`](agents/todo-manager.md) | ![Operations](https://img.shields.io/badge/Operations-0F766E?style=flat) ![TODOs](https://img.shields.io/badge/TODOs-14B8A6?style=flat) | Maintains and classifies global Nexus TODOs. |
+| [`nexus-comms-briefing`](agents/comms-briefing.md) | ![Comms](https://img.shields.io/badge/Comms-DB2777?style=flat) ![Briefing](https://img.shields.io/badge/Briefing-EC4899?style=flat) | Summarizes Slack, Outlook, Jira, and TODO context into a daily brief. |
+| [`tutorial-architect`](agents/tutorial.md) | ![Teaching](https://img.shields.io/badge/Teaching-059669?style=flat) ![Documentation](https://img.shields.io/badge/Documentation-0EA5E9?style=flat) | Creates executable tutorial-style notebooks and learning flows. |
 
 ## Skills
 
@@ -134,11 +134,11 @@ Skills are grouped below by role so it is easier to understand what the plugin a
 
 ## Commands
 
-| Command | Purpose |
-| --- | --- |
-| [`/add-todo`](commands/add-todo.md) | Add a classified item to the Nexus TODO system. |
-| [`/daily-brief`](commands/daily-brief.md) | Build a daily brief from TODOs and configured tools. |
-| [`/review-branch`](commands/review-branch.md) | Review current branch changes with findings first. |
+| Command | Category | Purpose |
+| --- | --- | --- |
+| [`/add-todo`](commands/add-todo.md) | ![Operations](https://img.shields.io/badge/Operations-0F766E?style=flat) ![TODOs](https://img.shields.io/badge/TODOs-14B8A6?style=flat) | Add a classified item to the Nexus TODO system. |
+| [`/daily-brief`](commands/daily-brief.md) | ![Comms](https://img.shields.io/badge/Comms-DB2777?style=flat) ![Briefing](https://img.shields.io/badge/Briefing-EC4899?style=flat) | Build a daily brief from TODOs and configured tools. |
+| [`/review-branch`](commands/review-branch.md) | ![Review](https://img.shields.io/badge/Review-7C3AED?style=flat) ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) | Review current branch changes with findings first. |
 
 ### References:
 * Managing Your TODOs:
