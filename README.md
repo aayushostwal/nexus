@@ -12,7 +12,7 @@ Instead of re-explaining how you want the assistant to operate in every new repo
   <a href="https://www.youtube.com/@AayushOstwal"><img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" style="margin: 0 4px"/></a>
   <a href="https://github.com/aayushostwal"><img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" style="margin: 0 4px"/></a>
   <a href="https://medium.com/@aayushostwal"><img src="https://img.shields.io/badge/Medium-12100E?style=for-the-badge&logo=medium&logoColor=white" style="margin: 0 4px"/></a>
-  <a href="https://aayushostwal.substack.com"><img src="https://img.shields.io/badge/Substack-FF6719?style=for-the-badge&logo=substack&logoColor=white" style="margin: 0 4px"/></a>
+  <a href="https://aayushostwal2.substack.com"><img src="https://img.shields.io/badge/Substack-FF6719?style=for-the-badge&logo=substack&logoColor=white" style="margin: 0 4px"/></a>
 </p>
 
 <div align="center">
