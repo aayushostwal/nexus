@@ -6,9 +6,9 @@ export async function GET() {
     <link>https://nexus-agent-kit.vercel.app</link>
     <description>Latest Nexus docs and platform updates.</description>
     <item>
-      <title>Nexus Documentation Portal</title>
-      <link>https://nexus-agent-kit.vercel.app/docs</link>
-      <description>Explore getting started, workflows, guardrails, and orchestration guides.</description>
+      <title>Nexus Skills and Agents Marketplace</title>
+      <link>https://nexus-agent-kit.vercel.app</link>
+      <description>Explore installable skills, specialist agents, and token-efficient AI terminal workflows.</description>
       <pubDate>${new Date().toUTCString()}</pubDate>
     </item>
   </channel>

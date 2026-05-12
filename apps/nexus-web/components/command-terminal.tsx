@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 
 const commands = [
-  "/Nexus Fix production deployment issue",
-  "/Nexus Review this PR",
-  "/Nexus Create release workflow",
-  "/Nexus Optimize architecture"
+  "/nexus:debugging fix production deployment issue",
+  "/nexus:code-review review this PR",
+  "/nexus:reliability create release workflow",
+  "/nexus:token-saving reduce token usage for this task"
 ];
 
 export function CommandTerminal() {

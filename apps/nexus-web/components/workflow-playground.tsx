@@ -71,7 +71,7 @@ export function WorkflowPlayground() {
 
       <div className="mt-4 flex gap-2">
         <Button onClick={run} size="sm">
-          Run Workflow
+          Execute Flow
         </Button>
         <Button onClick={() => setState("idle")} variant="outline" size="sm">
           Reset

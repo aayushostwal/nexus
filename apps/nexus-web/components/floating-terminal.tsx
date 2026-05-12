@@ -16,7 +16,9 @@ export function FloatingTerminal() {
               <X className="size-4 text-zinc-400" />
             </button>
           </div>
-          <p className="rounded-lg border border-zinc-700 bg-zinc-900/80 p-2 font-mono text-xs text-cyan-300">/Nexus Run release readiness gate</p>
+          <p className="rounded-lg border border-zinc-700 bg-zinc-900/80 p-2 font-mono text-xs text-cyan-300">
+            /nexus:reliability run release readiness gate
+          </p>
           <p className="mt-2 text-xs text-zinc-300">
             Tip: Press <span className="font-mono">⌘K</span> for command palette.
           </p>

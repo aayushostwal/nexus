@@ -11,7 +11,7 @@ graph TD
   O --> A2[Debugger Agent]
   O --> A3[DevOps Agent]
   A1 --> S1[(Skill Loader)]
-  A2 --> S2[(Workflow Engine)]
+  A2 --> S2[(Workflow Router)]
   A3 --> S3[(MCP Tool Router)]
   S1 --> M[(Memory Layer)]
   S2 --> M

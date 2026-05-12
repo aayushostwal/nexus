@@ -15,7 +15,7 @@ export function WorkflowGraph() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: idx * 0.08 }}
-            className="rounded-xl border border-zinc-700/80 bg-zinc-900/80 px-4 py-3 text-center font-mono text-sm"
+            className="flex min-h-12 items-center justify-center rounded-xl border border-zinc-700/80 bg-zinc-900/80 px-4 py-3 text-center font-mono text-sm"
           >
             {stage}
           </motion.div>

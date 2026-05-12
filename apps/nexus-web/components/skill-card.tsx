@@ -32,8 +32,10 @@ export function SkillCard({ skill }: { skill: Skill }) {
             <a href={skill.github} target="_blank" rel="noreferrer" className="text-sm text-cyan-300 hover:text-cyan-200">
               Source Code
             </a>
-            <Button variant="ghost" size="sm" className="text-zinc-200">
-              Details <ArrowUpRight className="ml-1 size-4" />
+            <Button asChild variant="ghost" size="sm" className="text-zinc-200">
+              <a href={skill.github} target="_blank" rel="noreferrer">
+                Details <ArrowUpRight className="ml-1 size-4" />
+              </a>
             </Button>
           </div>
         </CardContent>
