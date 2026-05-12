@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+### FEATURES
+
+- Add Nexus Next.js developer platform website ([`0823a70`](https://github.com/aayushostwal/nexus-agent-kit/commit/0823a70f7033e63f6dd10f3c1428d7e50b5d21cf))
+
+## [v1.7.0] - 2026-05-12
+
+### MISCELLANEOUS TASKS
+
+- Bump version to 1.7.0 ([`ca0e341`](https://github.com/aayushostwal/nexus-agent-kit/commit/ca0e341bc2d8ab96c9644a9b8125fb6578a2eef0))
+
 ## [v1.6.0] - 2026-05-12
 
 ### DOCUMENTATION
