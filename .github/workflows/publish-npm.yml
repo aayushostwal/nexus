@@ -1,16 +1,14 @@
-name: Publish npm
+name: Publish npm (disabled — replaced by release.yml)
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
   publish:
-    if: ${{ github.actor != 'github-actions[bot]' && !contains(github.event.head_commit.message, '[skip ci]') }}
+    if: ${{ github.actor != 'github-actions[bot]' }}
     runs-on: ubuntu-latest
 
     steps:
