@@ -4,9 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### BUG FIXES
+
+- Repair theme toggling and improve mobile responsiveness ([`a681909`](https://github.com/aayushostwal/nexus-agent-kit/commit/a6819097129f7dbc2935ce41d08dfc0ff738d9ca))
+
+## [v1.13.0] - 2026-05-12
+
 ### FEATURES
 
 - Update Nexus branding and homepage layout ([`67aefcd`](https://github.com/aayushostwal/nexus-agent-kit/commit/67aefcd0d6d6cc3c0ad35b3c5f1734894d0e3f06))
+
+### MISCELLANEOUS TASKS
+
+- Bump version to 1.13.0 ([`a5ae14e`](https://github.com/aayushostwal/nexus-agent-kit/commit/a5ae14ecbc457ee8b50ca525f56efd97f8206fbf))
 
 ## [v1.12.0] - 2026-05-12
 
