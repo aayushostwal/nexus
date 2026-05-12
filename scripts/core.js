@@ -10,7 +10,7 @@ const TODO_FILE = process.env.NEXUS_TODO_FILE || path.join(NEXUS_HOME, "TODOS.md
 const STATE_FILE = path.join(NEXUS_HOME, "state.json");
 
 const LABEL_RULES = [
-  ["Python", /\b(py|python|pandas|django|flask|fastapi|pytest|notebook|venv)\b/i],
+  ["AI", /\b(ai|llm|model|prompt|inference|agent|embedding|rag|vector|token)\b/i],
   ["Claude", /\b(claude|anthropic|claude code|claude\.md)\b/i],
   ["Codex", /\b(codex|openai|agents\.md|gpt)\b/i],
   ["AWS", /\b(aws|lambda|ecs|eks|s3|cloudwatch|iam|bedrock|ec2|rds)\b/i],
@@ -28,7 +28,7 @@ const LABEL_COLORS = {
   Jira: "34",
   Outlook: "94",
   Personal: "37",
-  Python: "32",
+  AI: "32",
   Slack: "92",
   Work: "31",
   General: "90",

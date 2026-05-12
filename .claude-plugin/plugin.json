@@ -1,6 +1,6 @@
 {
   "name": "nexus",
-  "version": "0.4.17",
+  "version": "0.4.18",
   "description": "Plugin-first Claude Code workflows with planning, CI/CD debugging, reusable agents, TODOs, and MCP safety policies.",
   "author": {
     "name": "Aayush Ostwal",

@@ -3,7 +3,7 @@
   "interface": {
     "displayName": "Nexus Marketplace"
   },
-  "version": "0.4.17",
+  "version": "0.4.18",
   "plugins": [
     {
       "name": "nexus",
@@ -16,7 +16,7 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Productivity",
-      "version": "0.4.17"
+      "version": "0.4.18"
     }
   ]
 }
