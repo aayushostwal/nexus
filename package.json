@@ -28,6 +28,7 @@
     "tool integrations"
   ],
   "author": "Aayush Ostwal <aayushostwal99@gmail.com>",
+  "private": true,
   "license": "MIT",
   "engines": {
     "node": ">=18"
