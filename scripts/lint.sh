@@ -8,11 +8,16 @@ echo "Checking JavaScript syntax"
 node --check bin/nexus.js
 node --check scripts/bump-version.js
 node --check scripts/core.js
+node --check scripts/log-stats.js
+node --check scripts/stats-viewer.js
 node --check scripts/sync-versions.js
 node --check scripts/validate-codex-plugin.js
+node --check .claude/hooks/post-response/log-stats.js
+node --check pre-tool-use/model-router.js
 
 echo "Checking Bash syntax"
 bash -n scripts/lint.sh
+bash -n hooks/pre-commit
 
 echo "Checking JSON files"
 node - <<'NODE'
