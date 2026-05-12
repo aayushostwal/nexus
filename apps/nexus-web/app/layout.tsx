@@ -6,6 +6,14 @@ import { Providers } from "@/components/providers";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://nexus-agent-kit.vercel.app"),
+  icons: {
+    icon: [
+      { url: "/logos/nexus.svg", type: "image/svg+xml" },
+      { url: "/logos/nexus-logo.svg", type: "image/svg+xml" }
+    ],
+    shortcut: "/logos/nexus.svg",
+    apple: "/logos/nexus-logo.svg"
+  },
   title: {
     default: "Nexus | AI Agents Platform",
     template: "%s | Nexus"

@@ -55,7 +55,10 @@ export function ArchitectureDiagram() {
 
   return (
     <div className="h-[78vh] w-full overflow-auto rounded-2xl border border-zinc-700/80 bg-zinc-950/80 p-4">
-      <div className="h-full w-full [&>svg]:h-full [&>svg]:w-full" dangerouslySetInnerHTML={{ __html: svg }} />
+      <div
+        className="flex h-full min-w-fit items-center justify-center [&>svg]:mx-auto [&>svg]:max-h-full [&>svg]:max-w-full [&>svg]:h-auto [&>svg]:w-auto"
+        dangerouslySetInnerHTML={{ __html: svg }}
+      />
     </div>
   );
 }

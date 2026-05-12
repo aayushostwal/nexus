@@ -1,8 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   Braces,
   CircuitBoard,
-  Cpu,
+  Copyright,
   Github,
   Globe,
   Layers,
@@ -18,7 +19,6 @@ import { FloatingTerminal } from "@/components/floating-terminal";
 import { SearchModal } from "@/components/search-modal";
 import { SkillCard } from "@/components/skill-card";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { WorkflowGraph } from "@/components/workflow-graph";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -31,7 +31,8 @@ export default async function HomePage() {
       <header className="sticky top-0 z-30 border-b border-zinc-800/70 bg-zinc-950/70 backdrop-blur-xl">
         <div className="nexus-container flex h-16 items-center justify-between">
           <Link href="/" className="inline-flex items-center gap-2 font-semibold text-zinc-100">
-            <Cpu className="size-5 text-cyan-300" /> Nexus
+            <Image src="/logos/nexus-logo.svg" alt="Nexus logo" width={22} height={22} className="size-[22px]" />
+            Nexus
           </Link>
           <nav className="hidden items-center gap-6 text-sm text-zinc-300 lg:flex">
             <a href="#what-is-nexus" className="hover:text-cyan-300">
@@ -64,7 +65,7 @@ export default async function HomePage() {
 
       <main className="relative z-10">
         <section className="nexus-container relative py-24">
-          <div className="grid items-center gap-12 lg:grid-cols-[1.2fr_1fr]">
+          <div className="grid items-center gap-12">
             <div>
               <Badge className="mb-6">AI Terminal Aggregator</Badge>
               <h1 className="text-balance text-4xl font-semibold leading-tight text-zinc-100 sm:text-5xl lg:text-6xl">
@@ -88,12 +89,15 @@ export default async function HomePage() {
                 </Button>
               </div>
             </div>
-            <div className="relative">
-              <WorkflowGraph />
-              <div className="mt-4 animate-float">
-                <CommandTerminal />
-              </div>
-            </div>
+          </div>
+        </section>
+
+        <section className="nexus-container pb-4">
+          <div className="rounded-2xl border border-zinc-700/70 bg-zinc-900/50 p-4">
+            <p className="mb-3 text-sm text-zinc-400">
+              CLI Commands <code>/nexus:&lt;skill-or-agent&gt;</code>
+            </p>
+            <CommandTerminal />
           </div>
         </section>
 
@@ -110,13 +114,16 @@ export default async function HomePage() {
               <CardContent className="space-y-3">
                 <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">npm i -g nexus-agent-kit</p>
                 <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">
-                  npx codex-marketplace add aayushostwal/nexus --plugin --global
+                  # Install globally
+                  <br />
+                  npx codex-marketplace add aayushostwal/nexus --plugin --global  
+                  
                 </p>
                 <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">
-                  npx codex-marketplace add aayushostwal/nexus --plugin --project
+                  # Install for project
+                  <br />
+                  npx codex-marketplace add aayushostwal/nexus --plugin --project 
                 </p>
-                <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">nexus init</p>
-                <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">/nexus:token-saving reduce prompt context footprint</p>
               </CardContent>
             </Card>
             <Card className="border-zinc-700/80 bg-zinc-900/60">
@@ -132,8 +139,6 @@ export default async function HomePage() {
                   /plugin install nexus@nexus-marketplace
                 </p>
                 <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">/reload-plugins</p>
-                <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">nexus hooks:install</p>
-                <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">/nexus:orchestrator route this incident response workflow</p>
               </CardContent>
             </Card>
           </div>
@@ -192,7 +197,7 @@ export default async function HomePage() {
 
         <section id="agent-system" className="nexus-container py-20">
           <h2 className="text-3xl font-semibold">Agent System</h2>
-          <p className="mt-2 text-zinc-400">CLASSIFY → PLAN → EXECUTE → VERIFY → DELIVER with explicit command patterns and ownership.</p>
+          <p className="mt-2 text-zinc-400">Specialized agents with explicit command patterns, role boundaries, and ownership.</p>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {agentSystem.map((agent, index) => (
               <AgentCard
@@ -216,24 +221,19 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <section id="cli" className="nexus-container py-20">
-          <h2 className="text-3xl font-semibold">CLI Experience</h2>
-          <p className="mt-2 text-zinc-400">
-            Terminal-native commands with skill and agent routing through <code>/nexus:&lt;skill-or-agent&gt;</code>.
-          </p>
-          <div className="mt-6">
-            <CommandTerminal />
-          </div>
-        </section>
-
       </main>
 
       <footer className="border-t border-zinc-800/80 bg-zinc-950/70 py-10">
         <div className="nexus-container flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
-          <div>
-            <p className="text-lg font-semibold text-zinc-100">Nexus</p>
+          <div className="text-center">
+            <p className="inline-flex w-full items-center justify-center gap-2 text-lg font-semibold text-zinc-100">
+              <Image src="/logos/nexus.svg" alt="Nexus wordmark" width={96} height={24} className="h-6 w-auto" />
+            </p>
             <p className="text-sm text-zinc-400">Aggregator of skills and agents for AI terminals.</p>
-            <p className="mt-1 text-sm text-zinc-400">Maintained by Aayush Ostwal.</p>
+            <p className="mt-1 inline-flex w-full items-center justify-center gap-1 text-sm text-zinc-400">
+              <Copyright className="size-3.5" />
+              Maintained by Aayush Ostwal.
+            </p>
           </div>
           <div className="flex flex-wrap items-center gap-4 text-sm text-zinc-300">
             <a href="https://github.com/aayushostwal" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:text-cyan-300">

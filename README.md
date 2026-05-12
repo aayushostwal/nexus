@@ -1,5 +1,9 @@
 # Nexus Agent Kit
 
+<p align="center">
+  <img src="apps/nexus-web/public/logos/nexus.svg" alt="Nexus Logo" width="260" />
+</p>
+
 Nexus Agent Kit is a plugin-first AI terminal workspace for Codex and Claude Code. It packages reusable skills, specialized agents, terminal commands, and MCP safety conventions so your AI sessions behave consistently across planning, CI/CD debugging, code review, TODO tracking, infrastructure design, tutorials, and tool-connected work.
 
 Instead of re-explaining how you want the assistant to operate in every new repo or terminal, you install Nexus once and get a shared operating model for engineering work.
