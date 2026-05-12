@@ -82,6 +82,7 @@ Nexus ships focused agent definitions that can be reused inside supported termin
 | [`nexus-todo-manager`](agents/todo-manager.md) | ![Operations](https://img.shields.io/badge/Operations-0F766E?style=flat) ![TODOs](https://img.shields.io/badge/TODOs-14B8A6?style=flat) | Maintains labeled global TODOs and keeps persistent follow-ups organized. |
 | [`nexus-social-assistant`](agents/social-assistant.md) | ![Comms](https://img.shields.io/badge/Comms-DB2777?style=flat) ![Briefing](https://img.shields.io/badge/Briefing-EC4899?style=flat) | Builds daily briefs from Slack, Outlook, Jira, and Nexus TODO context. |
 | [`nexus-tutorial-architect`](agents/tutorial.md) | ![Teaching](https://img.shields.io/badge/Teaching-059669?style=flat) ![Documentation](https://img.shields.io/badge/Documentation-0EA5E9?style=flat) | Creates executable tutorial notebooks and reproducible learning assets. |
+| [`nexus:fast-editor`](agents/fast-editor.md) | ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) | Minimal, fast agent for small deterministic edits (1–10 lines). No plans, no explanations — just the change. |
 
 ## Skills
 
@@ -99,6 +100,19 @@ Skills are grouped below by role so it is easier to understand what the plugin a
 | --- | --- | --- |
 | [`nexus-planning`](skills/planning/SKILL.md) | ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) ![Planning](https://img.shields.io/badge/Planning-1D4ED8?style=flat) | Turns an intended technical change into scope, ordered steps, dependencies, risks, validation, and rollout. |
 | [`nexus-exploring`](skills/exploring/SKILL.md) | ![Exploration](https://img.shields.io/badge/Exploration-7C3AED?style=flat) ![Research](https://img.shields.io/badge/Research-6D28D9?style=flat) | Determines the right approach when the goal is clear but the design or implementation strategy is still uncertain. |
+
+### Architecture And Design
+
+| Skill | Category | Purpose |
+| --- | --- | --- |
+| [`nexus-architecture`](skills/architecture/SKILL.md) | ![Architecture](https://img.shields.io/badge/Architecture-0369A1?style=flat) ![Design](https://img.shields.io/badge/Design-0891B2?style=flat) | Reads a codebase and produces a structured map of service boundaries, coupling points, and refactoring opportunities. |
+| [`nexus-deployment-safety`](skills/architecture/deployment-safety.md) | ![Architecture](https://img.shields.io/badge/Architecture-0369A1?style=flat) ![Reliability](https://img.shields.io/badge/Reliability-DC2626?style=flat) | Checks a proposed change against deployment history, rollback readiness, and runtime risk factors before rollout. |
+
+### Code Quality
+
+| Skill | Category | Purpose |
+| --- | --- | --- |
+| [`nexus-code-review`](skills/code-review/SKILL.md) | ![Review](https://img.shields.io/badge/Review-7C3AED?style=flat) ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) | Reviews a branch for logic correctness, regression risk, test coverage gaps, and observable behavior changes. |
 
 ### Infrastructure Planning
 
@@ -119,18 +133,51 @@ Skills are grouped below by role so it is easier to understand what the plugin a
 | [`debugging-codebase`](skills/debugging/codebase.md) | ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) | Application and code regression debugging playbook. |
 | [`debugging-frameworks`](skills/debugging/frameworks.md) | ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) ![Tooling](https://img.shields.io/badge/Tooling-4B5563?style=flat) | Framework and tooling-specific debugging playbook. |
 
+### Testing
+
+| Skill | Category | Purpose |
+| --- | --- | --- |
+| [`nexus-testing`](skills/testing/SKILL.md) | ![Testing](https://img.shields.io/badge/Testing-059669?style=flat) ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) | Identifies why tests fail intermittently and produces targeted fixes rather than retry wrappers. |
+
+### Reliability And Release
+
+| Skill | Category | Purpose |
+| --- | --- | --- |
+| [`nexus-reliability`](skills/reliability/SKILL.md) | ![Reliability](https://img.shields.io/badge/Reliability-DC2626?style=flat) ![Operations](https://img.shields.io/badge/Operations-0F766E?style=flat) | Works through an active incident with structured triage, blast radius assessment, and resolution guidance. |
+| [`nexus-release-readiness`](skills/reliability/release-readiness.md) | ![Reliability](https://img.shields.io/badge/Reliability-DC2626?style=flat) ![Planning](https://img.shields.io/badge/Planning-1D4ED8?style=flat) | Checks a release candidate against rollback readiness, monitoring coverage, and known risk factors before shipping. |
+
+### Observability
+
+| Skill | Category | Purpose |
+| --- | --- | --- |
+| [`nexus-observability`](skills/observability/SKILL.md) | ![Observability](https://img.shields.io/badge/Observability-0891B2?style=flat) ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) | Correlates error spikes, latency anomalies, and log patterns across services to surface the most likely failure origin. |
+
+### Performance
+
+| Skill | Category | Purpose |
+| --- | --- | --- |
+| [`nexus-performance`](skills/performance/SKILL.md) | ![Performance](https://img.shields.io/badge/Performance-F59E0B?style=flat) | Entry point for all performance requests — routes to memory, dependency, or profiling tracks based on the symptom. |
+| [`performance-memory-leak`](skills/performance/memory-leak.md) | ![Performance](https://img.shields.io/badge/Performance-F59E0B?style=flat) ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) | Instruments a running process, identifies allocation hot paths, and confirms the fix eliminated the leak. |
+| [`performance-dependency-blast-radius`](skills/performance/dependency-blast-radius.md) | ![Performance](https://img.shields.io/badge/Performance-F59E0B?style=flat) ![Planning](https://img.shields.io/badge/Planning-1D4ED8?style=flat) | Maps which modules are affected by a dependency upgrade before the upgrade is applied. |
+
 ### Education And Documentation
 
 | Skill | Category | Purpose |
 | --- | --- | --- |
 | [`nexus-tutorial`](skills/tutorial/SKILL.md) | ![Teaching](https://img.shields.io/badge/Teaching-059669?style=flat) ![Documentation](https://img.shields.io/badge/Documentation-0EA5E9?style=flat) | Creates executable Jupyter-style tutorials with reproducible setup. |
-| [`skill-writer`](skills/skill-writer.md/SKILL.md) | ![Documentation](https://img.shields.io/badge/Documentation-0EA5E9?style=flat) ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) | Helps create or improve new `SKILL.md` workflows. |
+| [`skill-writer`](skills/skill-writer/SKILL.md) | ![Documentation](https://img.shields.io/badge/Documentation-0EA5E9?style=flat) ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) | Helps create or improve new `SKILL.md` workflows. |
 
 ### Content And Social
 
 | Skill | Category | Purpose |
 | --- | --- | --- |
 | [`nexus-shorts`](skills/shorts/SKILL.md) | ![Socials](https://img.shields.io/badge/Socials-E11D48?style=flat) ![Content](https://img.shields.io/badge/Content-F59E0B?style=flat) | Converts ideas, notes, or technical content into YouTube Shorts scripts. |
+
+### Token Efficiency
+
+| Skill | Category | Purpose |
+| --- | --- | --- |
+| [`nexus-token-saving`](skills/token-saving/SKILL.md) | ![Operations](https://img.shields.io/badge/Operations-0F766E?style=flat) | Best practices to minimize token usage while preserving output quality in Codex and Claude Code sessions. |
 
 ## Commands
 
@@ -139,6 +186,7 @@ Skills are grouped below by role so it is easier to understand what the plugin a
 | [`/add-todo`](commands/add-todo.md) | ![Operations](https://img.shields.io/badge/Operations-0F766E?style=flat) ![TODOs](https://img.shields.io/badge/TODOs-14B8A6?style=flat) | Add a classified item to the Nexus TODO system. |
 | [`/daily-brief`](commands/daily-brief.md) | ![Comms](https://img.shields.io/badge/Comms-DB2777?style=flat) ![Briefing](https://img.shields.io/badge/Briefing-EC4899?style=flat) | Build a daily brief from TODOs and configured tools. |
 | [`/review-branch`](commands/review-branch.md) | ![Review](https://img.shields.io/badge/Review-7C3AED?style=flat) ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) | Review current branch changes with findings first. |
+| [`/stats`](commands/stats.md) | ![Operations](https://img.shields.io/badge/Operations-0F766E?style=flat) | Show token usage and estimated cost stats for Claude and Codex sessions. |
 
 ## Tool Setup Guides
 
