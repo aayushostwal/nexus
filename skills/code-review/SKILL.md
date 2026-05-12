@@ -20,11 +20,11 @@ Semantic PR review — not a style linter. Understand what code is *supposed* to
 
 ### Phase 1 — Context Collection (never skip)
 
-Build a mental model before reading the diff:
+Build a mental model before reading the diff and determine the base branch first. usually repositories have `main` and `master` but you can check the git history of commits.
 
 ```bash
-git diff origin/main...HEAD --stat
-git log origin/main...HEAD --oneline
+git diff origin/{base_branch}...HEAD --stat
+git log origin/{base_branch}...HEAD --oneline
 git log --oneline -10 -- path/to/changed/file.py
 ```
 

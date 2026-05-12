@@ -13,7 +13,7 @@ Work through these in order. Items marked [CRITICAL] cannot be skipped for any s
 
 - [ ] Read the PR title and description — write one sentence summarizing the author's intent
 - [ ] Run `git diff --stat` to see all changed files and line counts
-- [ ] Run `git log origin/main...HEAD --oneline` to see all commits in this PR
+- [ ] Run `git log origin/$BASE_BRANCH...HEAD --oneline` to see all commits in this PR
 - [ ] Identify the "center of gravity" — the 1-3 files containing the core logic change
 - [ ] Note whether the PR description matches the actual files changed (gaps are findings)
 - [ ] Check if the PR is part of a larger feature — are there dependent PRs?
