@@ -6,7 +6,17 @@ All notable changes to this project will be documented in this file.
 
 ### BUG FIXES
 
+- Replace non-existent setModel API with settings.json approach ([`64d8319`](https://github.com/aayushostwal/nexus-agent-kit/commit/64d831970c807b647e9adab77dee625903df1a9e))
+
+## [v1.14.0] - 2026-05-12
+
+### BUG FIXES
+
 - Repair theme toggling and improve mobile responsiveness ([`a681909`](https://github.com/aayushostwal/nexus-agent-kit/commit/a6819097129f7dbc2935ce41d08dfc0ff738d9ca))
+
+### MISCELLANEOUS TASKS
+
+- Bump version to 1.14.0 ([`90caacf`](https://github.com/aayushostwal/nexus-agent-kit/commit/90caacff3e2a7ffc426ff47428376e03725d63b4))
 
 ## [v1.13.0] - 2026-05-12
 
