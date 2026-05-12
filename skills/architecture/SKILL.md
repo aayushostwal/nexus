@@ -13,18 +13,16 @@ description: >
 
 # Nexus Architecture Mapper
 
-Map a codebase's internal structure, identify bounded contexts, score coupling, and produce an
-actionable extraction plan or deployment safety verdict.
+Map internal structure, identify bounded contexts, score coupling, and produce an extraction plan or deployment safety verdict.
 
 ---
 
 ## Compatibility
 - Sub-skills: `skills/architecture/deployment-safety.md`
-- Supporting files: `checklists/architecture-checklist.md`, `heuristics/architecture-heuristics.md`,
-  `anti-patterns/common-mistakes.md`, `validation/output-validation.md`
+- Supporting files: `checklists/architecture-checklist.md`, `heuristics/architecture-heuristics.md`, `anti-patterns/common-mistakes.md`, `validation/output-validation.md`
 - Required tools: Read, Grep, Glob, Bash
 - Output: Mermaid C4 diagram + coupling matrix + extraction candidates + risk assessment
-- Hands off to: `nexus:planning` when the user approves an extraction plan
+- Hands off to: `nexus:planning` when user approves extraction plan
 
 ---
 
@@ -32,238 +30,153 @@ actionable extraction plan or deployment safety verdict.
 
 | User Intent | Track |
 |-------------|-------|
-| "Map this codebase", "what calls what", "bounded contexts", "architecture review" | Architecture Mapping (Steps 1–5 below) |
+| "Map this codebase", "what calls what", "bounded contexts", "architecture review" | Architecture Mapping (Steps 1–5) |
 | "Is this deployment safe", "what breaks if I deploy", "pre-deployment check" | Route to `deployment-safety.md` |
-| Both in one request | Run Architecture Mapping first; then deployment-safety.md for the specific change |
+| Both | Run Architecture Mapping first, then deployment-safety.md |
 
 ---
 
 ## Context Acquisition
 
-Before mapping anything, collect:
-
 | Signal | Where to look |
 |--------|--------------|
 | Directory structure | `find . -type d -not -path '*/.*' -not -path '*/node_modules/*' -not -path '*/__pycache__/*'` |
-| Entry points | `main.py`, `app.py`, `index.ts`, `server.go`, `manage.py`, `wsgi.py`, `asgi.py` |
-| Import graph | `grep -r "from \|import " --include="*.py" -h` or `grep -r "require\|import" --include="*.ts"` |
-| API surface | Route definitions — `@app.route`, `router.get`, `@Controller`, `urlpatterns` |
-| Database schema | Migration files, `models.py`, `schema.prisma`, `*.sql`, entity classes |
-| Shared state | Global singletons, shared caches, cross-module DB models, environment config objects |
-| Config / env | `.env.example`, `settings.py`, `config.yaml`, `application.yml` |
-| Package boundaries | `pyproject.toml`, `package.json` workspaces, `go.mod`, `Cargo.toml` |
+| Entry points | Main application bootstrap files (e.g. `main.*`, `app.*`, `server.*`, `index.*`) |
+| Import graph | Language-appropriate grep for import/require statements across source files |
+| API surface | Route/handler definitions — look for patterns matching the framework's routing convention |
+| Database schema | Migration files, schema definitions, ORM model files, raw SQL |
+| Shared state | Global singletons, shared caches, cross-module DB models, env config objects |
+| Package boundaries | Package manifest files (e.g. `package.json`, `pyproject.toml`, `go.mod`, `Cargo.toml`) |
 
-If information is missing: ask one targeted question ("Where are the route definitions?" not "Describe your codebase").
+If information is missing: ask one targeted question ("Where are the route definitions?").
 
 ---
 
 ## Mapping Workflow
 
-### Step 1 — Codebase Scan: Identify Layers
+### Step 1 — Layer Classification
 
-Read the directory structure and entry points. Classify every top-level directory and package
-into one of these architectural layers:
+| Layer | What belongs here |
+|-------|------------------|
+| **API / Interface** | HTTP handlers, GraphQL resolvers, CLI commands | `routes/`, `api/`, `controllers/` |
+| **Service / Domain** | Business logic, use cases, orchestration | `services/`, `domain/`, `core/` |
+| **Data / Persistence** | ORM models, repositories, migrations | `models/`, `repositories/`, `db/` |
+| **Infrastructure** | Queue clients, S3, email, external APIs | `infra/`, `adapters/`, `clients/` |
+| **Shared / Util** | Logging, auth, config, middleware | `shared/`, `utils/`, `middleware/` |
+| **Worker / Background** | Async tasks, cron jobs, event consumers | `tasks/`, `workers/`, `jobs/` |
 
-| Layer | What belongs here | Examples |
-|-------|------------------|---------|
-| **API / Interface** | HTTP handlers, GraphQL resolvers, CLI commands, gRPC endpoints | `routes/`, `api/`, `controllers/`, `handlers/` |
-| **Service / Domain** | Business logic, domain rules, use cases, orchestration | `services/`, `domain/`, `usecases/`, `core/` |
-| **Data / Persistence** | ORM models, repositories, migrations, raw SQL | `models/`, `repositories/`, `db/`, `migrations/` |
-| **Infrastructure** | Queue clients, S3, email, external APIs, caches | `infra/`, `adapters/`, `clients/`, `integrations/` |
-| **Shared / Util** | Cross-cutting concerns — logging, auth, config, middleware | `shared/`, `utils/`, `middleware/`, `common/` |
-| **Worker / Background** | Async tasks, cron jobs, event consumers | `tasks/`, `workers/`, `jobs/`, `consumers/` |
+Flag any directory that spans multiple layers — that is a coupling signal.
 
-Produce a layer map:
-```
-Layer Map:
-  API:      [directories]
-  Service:  [directories]
-  Data:     [directories]
-  Infra:    [directories]
-  Shared:   [directories]
-  Workers:  [directories]
-```
+### Step 2 — Dependency Graph
 
-Flag any directory that does not fit a single layer — that is a coupling signal.
+For each module, count fan-in (who imports it) and fan-out (who it imports):
 
-### Step 2 — Dependency Graph: Who Imports Whom
-
-For each module/package identified in Step 1, count:
-
-- **Fan-out** (outgoing deps): how many other modules does this module import?
-- **Fan-in** (incoming deps): how many other modules import this module?
-
-Build the dependency table:
-
-| Module | Fan-in | Fan-out | Most-depended-on by | Risk if extracted |
-|--------|--------|---------|--------------------|--------------------|
-| `users/` | 8 | 3 | auth, billing, notifications | High — 8 callers |
-| `billing/` | 2 | 5 | api, workers | Low — 2 callers |
-| `notifications/` | 4 | 2 | users, billing | Medium |
-| `shared/models` | 12 | 0 | everything | Critical — extract last |
+| Module | Fan-in | Fan-out | Risk if extracted |
+|--------|--------|---------|-------------------|
+| `shared/models` | 12 | 0 | Critical — extract last |
+| `users/` | 8 | 3 | High — 8 callers |
+| `billing/` | 2 | 5 | Low — 2 callers |
 
 Rules:
-- Fan-in > 5 = high extraction risk — this module is depended on by too many callers to extract safely
-- Fan-in = 0 = leaf module — extract first (no callers to update)
+- Fan-in > 5 = high extraction risk
+- Fan-in = 0 = leaf module — extract first
 - Imports from `shared/models` or `shared/db` across domain boundaries = shared database anti-pattern
 
 ### Step 3 — Bounded Context Identification
 
-A bounded context is a cluster of modules that:
-1. Change together (co-commit frequently)
-2. Own their data (no shared tables with other clusters)
-3. Have a coherent domain vocabulary (user, order, invoice — not mixed)
-4. Have a clear entry point and interface
+A bounded context: changes together, owns its data, has coherent domain vocabulary, has a clear interface.
 
-Run the co-commit analysis:
 ```bash
 git log --name-only --pretty=format: | grep -v '^$' | sort | uniq -c | sort -rn | head -40
 ```
 
-Look for files that always appear together in commits — they belong in the same context.
+Files that always commit together belong in the same context.
 
-Identify candidate bounded contexts:
-
-```
-Candidate Bounded Contexts:
-  1. [Name] — owns: [modules] — data: [tables] — seam: [how it interfaces with others]
-  2. [Name] — owns: [modules] — data: [tables] — seam: [interface description]
-  ...
-```
-
-Apply the bounded context tests (from `heuristics/architecture-heuristics.md`):
+Tests:
 - Can this context be described in one sentence without mentioning another context's concepts?
-- Does this context own all the database tables it needs, or does it read another context's tables directly?
-- If this context were a separate service, what would it need to call back to the monolith for?
+- Does this context own all the DB tables it needs, or does it read another context's tables directly?
+- If extracted, what would it need to call back to the monolith for?
 
-### Step 4 — Coupling Analysis
+### Step 4 — Coupling Matrix
 
-Score each candidate context pair on a coupling matrix:
+| From \ To | Users | Billing | Notifications | Score |
+|-----------|-------|---------|---------------|-------|
+| Users | — | Direct DB read | Function call | Medium |
+| Billing | Foreign key | — | Event | High |
 
-| From \ To | Users | Billing | Notifications | Orders | Score |
-|-----------|-------|---------|---------------|--------|-------|
-| Users | — | Direct DB read | Function call | None | Medium |
-| Billing | Foreign key | — | Event | Function call | High |
-| Notifications | None | None | — | None | Low |
-| Orders | Function call | Function call | Event | — | High |
-
-Coupling types (worst to best):
-1. **Shared database table** (worst) — two contexts write to the same table
+Coupling types (worst → best):
+1. **Shared database table** — two contexts write to the same table
 2. **Shared ORM model** — two contexts import the same model class
-3. **Direct function call** — synchronous in-process call across context boundaries
-4. **Shared data file / config** — both contexts read the same config object
-5. **REST/HTTP call** — already service-like but still synchronous
-6. **Async event / message** (best) — loosely coupled, fire and forget
+3. **Direct function call** — synchronous in-process call
+4. **Shared config** — both contexts read the same config object
+5. **REST/HTTP call** — synchronous but service-like
+6. **Async event / message** — loosely coupled
 
-Flag any shared-database coupling as a **false boundary** — contexts with shared tables are not
-actually separate, regardless of directory structure.
+Flag shared-database coupling as a **false boundary**.
 
 ### Step 5 — Architecture Output
-
-Produce all three of these:
 
 #### 5a. Mermaid C4 Context Diagram
 
 ```mermaid
 C4Context
   title System Context — [App Name]
-
-  Person(user, "End User", "Interacts via web/mobile")
-  Person(admin, "Admin", "Internal operations")
-
+  Person(user, "End User")
   System_Boundary(monolith, "[App Name] Monolith") {
-    Container(api, "API Layer", "HTTP", "Handles all incoming requests")
-    Container(users, "Users Context", "Python/Django", "Auth, profiles, permissions")
-    Container(billing, "Billing Context", "Python/Django", "Subscriptions, invoices, payments")
-    Container(notifications, "Notifications Context", "Python/Django", "Email, push, in-app")
-    Container(orders, "Orders Context", "Python/Django", "Order lifecycle, fulfillment")
-    ContainerDb(db, "PostgreSQL", "Database", "Single shared database")
+    Container(api, "API Layer", "HTTP")
+    Container(users, "Users Context", "[Tech]")
+    Container(billing, "Billing Context", "[Tech]")
+    ContainerDb(db, "PostgreSQL", "Database")
   }
-
-  System_Ext(stripe, "Stripe", "Payment processing")
-  System_Ext(sendgrid, "SendGrid", "Email delivery")
-
+  System_Ext(stripe, "Stripe")
   Rel(user, api, "HTTPS")
-  Rel(admin, api, "HTTPS")
   Rel(api, users, "calls")
-  Rel(api, billing, "calls")
-  Rel(api, notifications, "calls")
-  Rel(users, db, "reads/writes")
-  Rel(billing, db, "reads/writes")
   Rel(billing, stripe, "API calls")
-  Rel(notifications, sendgrid, "API calls")
 ```
 
-#### 5b. Coupling Matrix (condensed)
+#### 5b. Coupling Matrix
 
 ```
-| Context | Coupling Score (0-10) | Coupled To | Coupling Type |
-|---------|-----------------------|------------|---------------|
-| Notifications | 2 | Users (read-only) | Function call |
-| Orders | 5 | Users, Billing | Direct call + shared model |
-| Billing | 7 | Users, Orders | Shared DB table + FK |
-| Users | 8 | Everything | Shared DB model (imported everywhere) |
+| Context       | Score (0-10) | Coupled To     | Type                        |
+|---------------|--------------|----------------|-----------------------------|
+| Notifications | 2            | Users          | Function call               |
+| Orders        | 5            | Users, Billing | Direct call + shared model  |
+| Billing       | 7            | Users, Orders  | Shared DB + FK              |
+| Users         | 8            | Everything     | Shared DB model             |
 ```
 
-#### 5c. Extraction Candidates (ordered)
-
-List in recommended extraction order — leaves first, core last:
+#### 5c. Extraction Candidates (ordered, leaves first)
 
 ```
-Extraction Order:
-  1. Notifications — coupling score 2, 0 downstream deps, owns its own tables
-     Risk: Low | Effort: 1-2 sprints | Blocker: Email provider config must move with it
-  2. Orders — coupling score 5, depends on Users (can be a sync call to Users service)
-     Risk: Medium | Effort: 2-4 sprints | Blocker: Shared `order_items` table with Billing must be resolved first
-  3. Billing — coupling score 7, deeply coupled to Users via shared DB
-     Risk: High | Effort: 4-8 sprints | Blocker: Shared DB tables with Users must be split; Stripe webhook handling must move
-  4. Users — coupling score 8, the core — extract last
-     Risk: Critical | Effort: 8-12 sprints | Blocker: All other services must be extracted first
+1. Notifications — score 2, 0 downstream deps, owns its tables
+   Risk: Low | Effort: 1-2 sprints | Blocker: Email provider config must move with it
+2. Orders — score 5, depends on Users (sync call acceptable)
+   Risk: Medium | Effort: 2-4 sprints | Blocker: Shared order_items table with Billing
+3. Billing — score 7, deeply coupled to Users via shared DB
+   Risk: High | Effort: 4-8 sprints | Blocker: Shared DB tables must be split first
+4. Users — score 8, the core — extract last
+   Risk: Critical | Effort: 8-12 sprints | Blocker: All others must be extracted first
 ```
 
 ---
 
 ## Strangler Fig Planning
 
-Use the strangler fig pattern when:
-- The monolith is in production and cannot be rewritten from scratch
-- You need to extract functionality incrementally without a big-bang cutover
-- The team wants to reduce risk by running old and new code in parallel
-
-The strangler fig approach for a single context:
+Use when: monolith is in production, extraction must be incremental, team wants parallel rollout.
 
 ```
-Phase 1 — Facade (Week 1-2):
-  Add an HTTP proxy / facade in front of the monolith.
-  Route 100% of traffic to monolith. No behaviour change.
-
-Phase 2 — Dark Launch (Week 3-4):
-  Stand up the new service. Route 100% to monolith, but mirror traffic to new service.
-  Compare responses. Fix divergences. Never serve new service responses to users yet.
-
-Phase 3 — Canary (Week 5-6):
-  Route 5% of traffic to new service. Monitor error rates, latency, data consistency.
-  Increase to 25%, 50%, 75% as confidence grows.
-
-Phase 4 — Cutover (Week 7):
-  Route 100% to new service. Keep monolith code but mark as deprecated.
-  Do not delete monolith code for 30 days — it is your rollback.
-
-Phase 5 — Cleanup (Week 8+):
-  Delete the monolith code path. Remove the facade / feature flag.
-  Decommission the monolith module.
+Phase 1 — Facade (Week 1-2):     Add HTTP proxy. 100% traffic to monolith. No behaviour change.
+Phase 2 — Dark Launch (W 3-4):   Stand up new service. Mirror traffic but never serve responses. Fix divergences.
+Phase 3 — Canary (W 5-6):        Route 5% → 25% → 50% → 75%. Monitor errors, latency, consistency.
+Phase 4 — Cutover (W 7):         100% to new service. Keep monolith code for 30 days as rollback.
+Phase 5 — Cleanup (W 8+):        Delete monolith code path. Remove facade. Decommission module.
 ```
 
-Do not attempt big-bang extraction when:
-- The context has a coupling score above 7
-- Shared database tables exist (resolve those first — see anti-patterns)
-- There are no integration tests covering the extraction boundary
+Do not attempt big-bang extraction when coupling score > 7, shared DB tables exist, or no integration tests cover the boundary.
 
 ---
 
 ## Output Contract
-
-Every architecture mapping session must close with this report:
 
 ```
 ## Architecture Map: [App Name]
@@ -289,10 +202,10 @@ Every architecture mapping session must close with this report:
 ### Risk Assessment
 | Context | Extraction Risk | Primary Blocker |
 |---------|----------------|-----------------|
-| [name] | Low/Med/High | [specific blocker] |
+| [name]  | Low/Med/High   | [specific blocker] |
 
 ### Recommended Next Step
-[One concrete action — "Extract Notifications first using strangler fig. Start with Phase 1 facade." — not a vague recommendation]
+[One concrete action — e.g. "Extract Notifications first using strangler fig. Start with Phase 1 facade."]
 ```
 
 ---
@@ -301,58 +214,10 @@ Every architecture mapping session must close with this report:
 
 Read `anti-patterns/common-mistakes.md` before writing any recommendations.
 
-- Never identify service boundaries by team structure alone — domains trump org charts
-- Never recommend extracting a context with a shared database table without first resolving the shared table
-- Never produce a coupling matrix without verifying actual import relationships — do not guess
-- Never skip the extraction order step — extracting a high-fan-in module first causes cascading failures
-- Never recommend microservices for a system with fewer than 3-5 engineers maintaining it
-- Never mark a context as a "true service boundary" if it imports models from another context's module
+- Never identify boundaries by team structure alone — domains trump org charts
+- Never recommend extracting a context with a shared DB table without resolving the shared table first
+- Never produce a coupling matrix without verifying actual import relationships
+- Never skip extraction order — extracting high-fan-in modules first causes cascading failures
+- Never recommend microservices for a system with fewer than 3-5 engineers
+- Never mark a context as a true boundary if it imports models from another context
 
----
-
-## Examples
-
-**Input:** "Map this Django monolith and tell me where I can extract a service."
-
-**Step 1:** Read directory tree → identify `users/`, `billing/`, `notifications/`, `orders/`, `shared/`
-
-**Step 2:** Run import grep → `notifications/` has fan-in 4, fan-out 2; `shared/models.py` has fan-in 14
-
-**Step 3:** Co-commit analysis → `billing/` and `orders/` always commit together (75% overlap) → they are not ready to split
-
-**Step 4:** Coupling matrix → `notifications/` has only function-call coupling, owns `notification_log` table exclusively
-
-**Output:**
-```
-## Architecture Map: MyDjangoApp
-
-### Extraction Candidates
-1. Notifications — coupling score 2, owns notification_log table, no downstream deps
-   Risk: Low | Effort: 2 sprints | Blocker: None
-
-### Recommended Next Step
-Begin strangler fig Phase 1 for Notifications: add an HTTP facade in front of all
-send_notification() calls. Estimated 1 engineer-week.
-```
-
----
-
-## Architecture Specialization
-
-**For Django monoliths:**
-- Check `INSTALLED_APPS` — each app is a candidate bounded context
-- Check `models.py` in each app — cross-app `ForeignKey` imports = shared database coupling
-- Check `signals.py` — Django signals that cross app boundaries = hidden coupling
-
-**For Node.js / NestJS monorepos:**
-- Check `@Module()` imports — circular module dependencies = tight coupling
-- Check `TypeORM` / `Prisma` entity imports across modules = shared DB coupling
-- Check `EventEmitter` usage — in-process events that should be external messages
-
-**For Go services:**
-- Check `import` cycles — Go's compiler forbids them, but indirect coupling via shared `types` packages is common
-- Check shared `pkg/` or `internal/` packages — high fan-in here = extraction risk
-
-**For Rails apps:**
-- Check `has_many`/`belongs_to` across engines — cross-engine associations = shared DB coupling
-- Check `concerns/` — shared concerns imported everywhere = high coupling signal
