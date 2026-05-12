@@ -6,10 +6,8 @@ import {
   Github,
   Globe,
   Layers,
-  Linkedin,
   Network,
   Search,
-  Twitter,
   Workflow
 } from "lucide-react";
 import { AnimatedBackground } from "@/components/animated-background";
@@ -17,7 +15,6 @@ import { AgentCard } from "@/components/agent-card";
 import { ArchitectureDiagram } from "@/components/architecture-diagram";
 import { CommandTerminal } from "@/components/command-terminal";
 import { FloatingTerminal } from "@/components/floating-terminal";
-import { MCPIntegrationCard } from "@/components/mcp-integration-card";
 import { SearchModal } from "@/components/search-modal";
 import { SkillCard } from "@/components/skill-card";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -25,7 +22,7 @@ import { WorkflowGraph } from "@/components/workflow-graph";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { agentSystem, mcpIntegrations, skills } from "@/lib/content";
+import { agentSystem, skills } from "@/lib/content";
 
 export default async function HomePage() {
   return (
@@ -229,44 +226,6 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <section id="examples" className="nexus-container py-20">
-          <h2 className="text-3xl font-semibold">Examples Showcase</h2>
-          <p className="mt-2 text-zinc-400">Practical commands for skill and agent automation in AI terminals.</p>
-          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {[
-              ["AI Code Review", "/nexus:code-review review PR #428"],
-              ["Autonomous Debugging", "/nexus:debugging resolve api-500 spike"],
-              ["Architecture Mapping", "/nexus:architecture map bounded contexts"],
-              ["Parallel Agent Routing", "/nexus:orchestrator route architect+reviewer+testing"],
-              ["Release Automation", "/nexus:reliability create progressive rollout"],
-              ["Token Budget Control", "/nexus:token-saving reduce token use by 30%"]
-            ].map(([title, code]) => (
-              <Card key={title as string} className="border-zinc-700/80 bg-zinc-900/60">
-                <CardHeader>
-                  <CardTitle className="text-base">{title as string}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">{code as string}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </section>
-
-        <section id="community" className="nexus-container py-20">
-          <h2 className="text-3xl font-semibold">Community & Ecosystem</h2>
-          <p className="mt-2 text-zinc-400">Contribute plugins, share workflows, and extend the Nexus agentic infrastructure.</p>
-          <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {mcpIntegrations.map((item) => (
-              <MCPIntegrationCard key={item.title} title={item.title} description={item.description} command={item.command} />
-            ))}
-            {["Open source contributions", "Plugin marketplace", "Community workflow templates"].map((item) => (
-              <Card key={item} className="border-zinc-700/80 bg-zinc-900/60">
-                <CardContent className="p-5 text-sm text-zinc-300">{item}</CardContent>
-              </Card>
-            ))}
-          </div>
-        </section>
       </main>
 
       <footer className="border-t border-zinc-800/80 bg-zinc-950/70 py-10">
@@ -274,19 +233,11 @@ export default async function HomePage() {
           <div>
             <p className="text-lg font-semibold text-zinc-100">Nexus</p>
             <p className="text-sm text-zinc-400">Aggregator of skills and agents for AI terminals.</p>
+            <p className="mt-1 text-sm text-zinc-400">Maintained by Aayush Ostwal.</p>
           </div>
           <div className="flex flex-wrap items-center gap-4 text-sm text-zinc-300">
             <a href="https://github.com/aayushostwal" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:text-cyan-300">
               <Github className="size-4" /> GitHub
-            </a>
-            <a href="https://www.linkedin.com" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:text-cyan-300">
-              <Linkedin className="size-4" /> LinkedIn
-            </a>
-            <a href="https://x.com" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:text-cyan-300">
-              <Twitter className="size-4" /> Twitter/X
-            </a>
-            <a href="https://github.com/aayushostwal/nexus/blob/main/LICENSE" className="hover:text-cyan-300">
-              License
             </a>
           </div>
         </div>
