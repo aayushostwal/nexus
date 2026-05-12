@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useState } from "react";
+import { useTheme } from "next-themes";
 
 const graph = `
 graph TD
@@ -23,23 +24,35 @@ graph TD
 export function ArchitectureDiagram() {
   const [svg, setSvg] = useState<string>("");
   const id = useId();
+  const { resolvedTheme } = useTheme();
+  const mermaidTheme = resolvedTheme === "light" ? "default" : "dark";
 
   useEffect(() => {
     let mounted = true;
+    const themeVariables =
+      mermaidTheme === "dark"
+        ? {
+            primaryColor: "#0f172a",
+            primaryTextColor: "#e2e8f0",
+            primaryBorderColor: "#22d3ee",
+            lineColor: "#a78bfa",
+            tertiaryColor: "#111827"
+          }
+        : {
+            primaryColor: "#f8fafc",
+            primaryTextColor: "#0f172a",
+            primaryBorderColor: "#0ea5e9",
+            lineColor: "#7c3aed",
+            tertiaryColor: "#e2e8f0"
+          };
 
     async function render() {
       const mermaid = (await import("mermaid")).default;
       mermaid.initialize({
         startOnLoad: false,
-        theme: "dark",
+        theme: mermaidTheme,
         securityLevel: "loose",
-        themeVariables: {
-          primaryColor: "#0f172a",
-          primaryTextColor: "#e2e8f0",
-          primaryBorderColor: "#22d3ee",
-          lineColor: "#a78bfa",
-          tertiaryColor: "#111827"
-        }
+        themeVariables
       });
 
       const { svg: output } = await mermaid.render(`nexus-${id}`, graph);
@@ -51,10 +64,10 @@ export function ArchitectureDiagram() {
     return () => {
       mounted = false;
     };
-  }, [id]);
+  }, [id, mermaidTheme]);
 
   return (
-    <div className="h-[78vh] w-full overflow-auto rounded-2xl border border-zinc-700/80 bg-zinc-950/80 p-4">
+    <div className="h-[60vh] w-full overflow-auto rounded-2xl border border-zinc-700/80 bg-zinc-950/80 p-4 sm:h-[78vh]">
       <div
         className="flex h-full min-w-fit items-center justify-center [&>svg]:mx-auto [&>svg]:max-h-full [&>svg]:max-w-full [&>svg]:h-auto [&>svg]:w-auto"
         dangerouslySetInnerHTML={{ __html: svg }}

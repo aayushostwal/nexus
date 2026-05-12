@@ -51,14 +51,16 @@ export function SearchModal({ docs, skills }: { docs: DocMeta[]; skills: Skill[]
     <>
       <button
         onClick={() => setOpen(true)}
-        className="hidden items-center gap-2 rounded-lg border border-zinc-700 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-300 md:inline-flex"
+        className="inline-flex items-center gap-2 rounded-lg border border-zinc-700 bg-zinc-900/60 px-2.5 py-2 text-sm text-zinc-300 md:px-3"
       >
-        <Search className="size-4" /> Search <span className="text-xs text-zinc-500">⌘K</span>
+        <Search className="size-4" />
+        <span className="hidden md:inline">Search</span>
+        <span className="hidden text-xs text-zinc-500 md:inline">⌘K</span>
       </button>
       <Dialog.Root open={open} onOpenChange={setOpen}>
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0 z-40 bg-black/70" />
-          <Dialog.Content className="fixed left-1/2 top-[12%] z-50 w-[92vw] max-w-2xl -translate-x-1/2 rounded-2xl border border-zinc-700 bg-zinc-950 p-4">
+          <Dialog.Content className="fixed left-1/2 top-[8%] z-50 w-[94vw] max-w-2xl -translate-x-1/2 rounded-2xl border border-zinc-700 bg-zinc-950 p-4 sm:top-[12%] sm:w-[92vw]">
             <div className="mb-3 flex items-center justify-between">
               <Dialog.Title className="text-sm text-zinc-300">Global Search</Dialog.Title>
               <button onClick={() => setOpen(false)} aria-label="Close" className="rounded p-1 hover:bg-zinc-800">

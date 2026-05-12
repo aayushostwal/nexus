@@ -7,9 +7,9 @@ export function FloatingTerminal() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="fixed bottom-6 right-6 z-40">
+    <div className="fixed bottom-4 right-4 z-40 sm:bottom-6 sm:right-6">
       {open ? (
-        <div className="w-[320px] rounded-2xl border border-zinc-700 bg-zinc-950/95 p-3 shadow-neon backdrop-blur">
+        <div className="w-[min(320px,calc(100vw-2rem))] rounded-2xl border border-zinc-700 bg-zinc-950/95 p-3 shadow-neon backdrop-blur">
           <div className="mb-2 flex items-center justify-between">
             <p className="text-xs text-zinc-400">Nexus Assistant</p>
             <button onClick={() => setOpen(false)} aria-label="Close assistant">

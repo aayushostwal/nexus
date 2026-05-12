@@ -30,6 +30,14 @@
   --muted-foreground: 215 16% 47%;
 }
 
+.dark {
+  color-scheme: dark;
+}
+
+.light {
+  color-scheme: light;
+}
+
 * {
   border-color: hsl(var(--border));
 }
@@ -42,6 +50,11 @@ body {
   @apply bg-background text-foreground;
   background-image: radial-gradient(circle at 5% 0%, rgba(103, 232, 249, 0.1), transparent 25%),
     radial-gradient(circle at 95% 10%, rgba(167, 139, 250, 0.12), transparent 30%);
+}
+
+.light body {
+  background-image: radial-gradient(circle at 0% 0%, rgba(14, 165, 233, 0.12), transparent 28%),
+    radial-gradient(circle at 95% 10%, rgba(124, 58, 237, 0.1), transparent 35%);
 }
 
 .glass {
@@ -58,4 +71,98 @@ body {
 
 .prose code {
   @apply rounded bg-zinc-800/80 px-1 py-0.5 text-cyan-300;
+}
+
+.light .bg-nexus-gradient {
+  background-image: radial-gradient(circle at top right, rgba(14, 165, 233, 0.18), transparent 45%),
+    radial-gradient(circle at 20% 20%, rgba(167, 139, 250, 0.14), transparent 40%),
+    linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+}
+
+.light .bg-grid-pattern {
+  background-image: linear-gradient(to right, rgba(15, 23, 42, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.06) 1px, transparent 1px);
+}
+
+.light .glass {
+  background-color: hsl(0 0% 100% / 0.78);
+  border-color: hsl(var(--border));
+}
+
+.light .prose pre {
+  border-color: hsl(var(--border));
+  background-color: hsl(0 0% 100%);
+}
+
+.light .prose code {
+  background-color: hsl(210 40% 96%);
+  color: hsl(199 89% 34%);
+}
+
+.light .bg-zinc-700 {
+  background-color: hsl(220 13% 91%);
+}
+
+.light .bg-zinc-800,
+.light .bg-zinc-800\/70,
+.light .bg-zinc-800\/80,
+.light .bg-zinc-900\/40,
+.light .bg-zinc-900\/50,
+.light .bg-zinc-900\/55,
+.light .bg-zinc-900\/60,
+.light .bg-zinc-900\/70,
+.light .bg-zinc-900\/80,
+.light .bg-zinc-900\/90,
+.light .bg-zinc-950,
+.light .bg-zinc-950\/60,
+.light .bg-zinc-950\/70,
+.light .bg-zinc-950\/80,
+.light .bg-zinc-950\/90,
+.light .bg-zinc-950\/95 {
+  background-color: hsl(0 0% 100% / 0.92);
+}
+
+.light .border-zinc-500,
+.light .border-zinc-600,
+.light .border-zinc-700,
+.light .border-zinc-700\/60,
+.light .border-zinc-700\/70,
+.light .border-zinc-700\/80,
+.light .border-zinc-800\/70,
+.light .border-zinc-800\/80 {
+  border-color: hsl(var(--border));
+}
+
+.light .text-zinc-100,
+.light .text-zinc-200 {
+  color: hsl(222 47% 11%);
+}
+
+.light .text-zinc-300 {
+  color: hsl(222 28% 25%);
+}
+
+.light .text-zinc-400 {
+  color: hsl(var(--muted-foreground));
+}
+
+.light .text-zinc-500 {
+  color: hsl(220 10% 40%);
+}
+
+.light .text-zinc-950 {
+  color: hsl(222 47% 11%);
+}
+
+.light .hover\:bg-zinc-800:hover,
+.light .hover\:bg-zinc-800\/70:hover {
+  background-color: hsl(210 40% 96%);
+}
+
+.light .hover\:border-zinc-500:hover {
+  border-color: hsl(220 9% 70%);
+}
+
+.light .hover\:text-zinc-100:hover {
+  color: hsl(222 47% 11%);
 }
