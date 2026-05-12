@@ -8,6 +8,7 @@ const {
   printShellHook,
   readTodos,
   renderTodos,
+  runStats,
   update,
 } = require("../scripts/core");
 
@@ -30,6 +31,10 @@ async function main(argv) {
         limit: readLimit(args),
       };
       console.log(renderTodos(readTodos(), options));
+      break;
+    }
+    case "stats": {
+      runStats(args);
       break;
     }
     case "install": {

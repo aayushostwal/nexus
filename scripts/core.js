@@ -3,6 +3,7 @@
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
+const { spawnSync } = require("child_process");
 
 const HOME = os.homedir();
 const NEXUS_HOME = process.env.NEXUS_HOME || path.join(HOME, ".nexus");
@@ -45,16 +46,7 @@ function ensureNexusHome() {
 }
 
 function initialTodos() {
-  return [
-    "# Nexus TODOs",
-    "",
-    "This file is managed by `nexus-agent-kit`.",
-    "",
-    "## Open",
-    "",
-    "## Done",
-    "",
-  ].join("\n");
+  return ["# Nexus TODOs", "", "This file is managed by `nexus-agent-kit`.", "", "## Open", "", "## Done", ""].join("\n");
 }
 
 function classifyTodo(text) {
@@ -166,6 +158,27 @@ function printShellHook() {
   return "command -v nexus >/dev/null 2>&1 && nexus todos --limit 8";
 }
 
+function runStats(args) {
+  const scriptPath = path.join(__dirname, "stats-viewer.js");
+  const result = spawnSync(process.execPath, [scriptPath, ...args], {
+    cwd: process.cwd(),
+    encoding: "utf8",
+  });
+
+  if (result.error) {
+    throw result.error;
+  }
+  if (typeof result.stdout === "string" && result.stdout.length > 0) {
+    process.stdout.write(result.stdout);
+  }
+  if (typeof result.stderr === "string" && result.stderr.length > 0) {
+    process.stderr.write(result.stderr);
+  }
+  if (result.status !== 0) {
+    throw new Error(`stats command failed with exit code ${result.status}`);
+  }
+}
+
 function printHelp() {
   return [
     "Nexus Agent Kit",
@@ -173,6 +186,7 @@ function printHelp() {
     "Usage:",
     '  nexus add "Follow up with client about AWS cost"',
     "  nexus todos [--limit 20] [--no-color]",
+    "  nexus stats [--summary] [--last 10] [--source all|claude|codex] [--session <id>]",
     "  nexus install [--shell-hook]",
     "  nexus update",
     "  nexus shell-hook",
@@ -191,5 +205,6 @@ module.exports = {
   printShellHook,
   readTodos,
   renderTodos,
+  runStats,
   update,
 };
