@@ -4,9 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### MISCELLANEOUS TASKS
+
+- Simplify homepage sections and footer ([`0925021`](https://github.com/aayushostwal/nexus-agent-kit/commit/09250216446ad4e635060a17693dc6eea39e5441))
+
+## [v1.11.0] - 2026-05-12
+
 ### BUG FIXES
 
 - Refine architecture view and stabilize terminal hero ([`00422e6`](https://github.com/aayushostwal/nexus-agent-kit/commit/00422e62c0f65281852f21908ba3f864e857a2f3))
+
+### MISCELLANEOUS TASKS
+
+- Bump version to 1.11.0 ([`e83f6e4`](https://github.com/aayushostwal/nexus-agent-kit/commit/e83f6e419630be77fce9d5023bcd8184dcde11d9))
 
 ## [v1.10.0] - 2026-05-12
 
