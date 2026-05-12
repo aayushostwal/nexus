@@ -1,0 +1,26 @@
+---
+title: Writing Skills
+description: Build reusable skills with triggers, workflows, and validation layers.
+category: Core
+order: 1
+---
+
+## Skill Anatomy
+
+A skill package usually includes:
+
+- `SKILL.md`
+- `validation/output-validation.md`
+- optional checklists and anti-pattern references
+
+## Trigger Design
+
+Define explicit trigger phrases and decision boundaries.
+
+```md
+Trigger when the user asks for "review this PR" or shares a diff.
+```
+
+## Quality Gate
+
+Every skill should include deterministic output validation rules.

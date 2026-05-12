@@ -1,0 +1,23 @@
+---
+title: Guardrails
+description: Build reliability and safety constraints into every workflow.
+category: Advanced
+order: 3
+---
+
+## Guardrail Types
+
+- Destructive action confirmations
+- Production deployment checks
+- Policy compliance validation
+- Rollback readiness
+
+## Release Gate Example
+
+```yaml
+guardrail:
+  requires:
+    - test_pass_rate > 99
+    - rollout_plan
+    - rollback_plan
+```

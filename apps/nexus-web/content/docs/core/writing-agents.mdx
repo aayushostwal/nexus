@@ -1,0 +1,27 @@
+---
+title: Writing Agents
+description: Design specialized agents and define ownership boundaries.
+category: Core
+order: 2
+---
+
+## Role Contracts
+
+Each agent should define:
+
+- Objective
+- Inputs
+- Output format
+- Completion criteria
+
+## Coordination
+
+Use orchestration directives to avoid duplicate work between agents.
+
+```yaml
+agent:
+  role: debugger
+  ownership:
+    - services/api
+    - tests/api
+```

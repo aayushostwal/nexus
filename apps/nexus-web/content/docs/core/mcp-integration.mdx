@@ -1,0 +1,20 @@
+---
+title: MCP Integration
+description: Connect Nexus to external tools through MCP servers.
+category: Core
+order: 4
+---
+
+## Why MCP
+
+MCP lets Nexus use typed tools for GitHub, Jira, AWS, Slack, and custom systems.
+
+## Add a Server
+
+```bash
+mcp add github --scopes repo,read:org
+```
+
+## Guardrails
+
+Use explicit permission boundaries and staging strategies for high-impact actions.

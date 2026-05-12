@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 222 47% 5%;
+  --foreground: 220 14% 96%;
+  --card: 222 40% 9%;
+  --card-foreground: 220 14% 96%;
+  --border: 215 28% 17%;
+  --primary: 189 100% 50%;
+  --primary-foreground: 222 47% 5%;
+  --secondary: 252 88% 72%;
+  --secondary-foreground: 220 14% 96%;
+  --muted: 215 28% 17%;
+  --muted-foreground: 218 11% 65%;
+}
+
+.light {
+  --background: 210 40% 98%;
+  --foreground: 224 71% 4%;
+  --card: 0 0% 100%;
+  --card-foreground: 224 71% 4%;
+  --border: 220 13% 91%;
+  --primary: 224 76% 50%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 258 84% 62%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-background text-foreground;
+  background-image: radial-gradient(circle at 5% 0%, rgba(103, 232, 249, 0.1), transparent 25%),
+    radial-gradient(circle at 95% 10%, rgba(167, 139, 250, 0.12), transparent 30%);
+}
+
+.glass {
+  @apply bg-zinc-900/60 backdrop-blur-xl border border-zinc-700/60;
+}
+
+.nexus-container {
+  @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+.prose pre {
+  @apply relative overflow-x-auto rounded-xl border border-zinc-700/70 bg-zinc-950 p-4;
+}
+
+.prose code {
+  @apply rounded bg-zinc-800/80 px-1 py-0.5 text-cyan-300;
+}
