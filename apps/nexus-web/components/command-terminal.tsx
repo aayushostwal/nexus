@@ -45,7 +45,7 @@ export function CommandTerminal() {
         <span className="size-2 rounded-full bg-green-400" />
         <p className="ml-2 text-xs text-zinc-400">nexus://command-terminal</p>
       </div>
-      <p className="font-mono text-cyan-300">
+      <p className="h-6 overflow-hidden text-ellipsis whitespace-nowrap font-mono text-cyan-300">
         $ {typed}
         <span className="animate-pulse">|</span>
       </p>

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import {
   Braces,
   CircuitBoard,
@@ -18,7 +17,6 @@ import { AgentCard } from "@/components/agent-card";
 import { ArchitectureDiagram } from "@/components/architecture-diagram";
 import { CommandTerminal } from "@/components/command-terminal";
 import { FloatingTerminal } from "@/components/floating-terminal";
-import { GitHubRepoCard } from "@/components/github-repo-card";
 import { MCPIntegrationCard } from "@/components/mcp-integration-card";
 import { SearchModal } from "@/components/search-modal";
 import { SkillCard } from "@/components/skill-card";
@@ -28,11 +26,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { agentSystem, mcpIntegrations, skills } from "@/lib/content";
-import { getGitHubActivity, getGitHubRepos } from "@/lib/github";
 
 export default async function HomePage() {
-  const [repos, activity] = await Promise.all([getGitHubRepos(), getGitHubActivity()]);
-
   return (
     <div className="relative min-h-screen overflow-x-clip bg-nexus-gradient">
       <AnimatedBackground />
@@ -117,6 +112,12 @@ export default async function HomePage() {
               </CardHeader>
               <CardContent className="space-y-3">
                 <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">npm i -g nexus-agent-kit</p>
+                <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">
+                  npx codex-marketplace add aayushostwal/nexus --plugin --global
+                </p>
+                <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">
+                  npx codex-marketplace add aayushostwal/nexus --plugin --project
+                </p>
                 <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">nexus init</p>
                 <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">/nexus:token-saving reduce prompt context footprint</p>
               </CardContent>
@@ -127,6 +128,13 @@ export default async function HomePage() {
               </CardHeader>
               <CardContent className="space-y-3">
                 <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">npm i -g nexus-agent-kit</p>
+                <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">
+                  /plugin marketplace add aayushostwal/nexus
+                </p>
+                <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">
+                  /plugin install nexus@nexus-marketplace
+                </p>
+                <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">/reload-plugins</p>
                 <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">nexus hooks:install</p>
                 <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">/nexus:orchestrator route this incident response workflow</p>
               </CardContent>
@@ -206,27 +214,8 @@ export default async function HomePage() {
         <section id="architecture" className="nexus-container py-20">
           <h2 className="text-3xl font-semibold">Architecture Explorer</h2>
           <p className="mt-2 text-zinc-400">Mermaid-powered system maps for orchestration, memory routing, and tool execution.</p>
-          <div className="mt-8 grid gap-4 lg:grid-cols-2">
+          <div className="relative left-1/2 mt-8 w-screen -translate-x-1/2 px-4 sm:px-8 lg:px-12">
             <ArchitectureDiagram />
-            <Card className="border-zinc-700/80 bg-zinc-900/60">
-              <CardHeader>
-                <CardTitle>Architecture Layers</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3 text-sm text-zinc-300">
-                <p>
-                  <span className="text-cyan-300">Interface Layer:</span> command palette and terminal directives.
-                </p>
-                <p>
-                  <span className="text-cyan-300">Orchestration Layer:</span> classifier, planner, and multi-agent scheduler.
-                </p>
-                <p>
-                  <span className="text-cyan-300">Execution Layer:</span> skills, retries, and verification gates.
-                </p>
-                <p>
-                  <span className="text-cyan-300">Integration Layer:</span> MCP adapters for GitHub, Jira, cloud, and observability.
-                </p>
-              </CardContent>
-            </Card>
           </div>
         </section>
 
@@ -237,53 +226,6 @@ export default async function HomePage() {
           </p>
           <div className="mt-6">
             <CommandTerminal />
-          </div>
-        </section>
-
-        <section id="github" className="nexus-container py-20">
-          <h2 className="text-3xl font-semibold">GitHub Integration</h2>
-          <p className="mt-2 text-zinc-400">Live repository explorer for aayushostwal with stars, forks, languages, and activity streams.</p>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {(repos.length
-              ? repos
-              : skills.map((s, i) => ({
-                  id: i,
-                  name: s.name.toLowerCase().replace(/\s+/g, "-"),
-                  description: s.description,
-                  html_url: s.github,
-                  stargazers_count: 0,
-                  forks_count: 0,
-                  language: "TypeScript",
-                  updated_at: new Date().toISOString()
-                }))
-            ).map((repo) => (
-              <GitHubRepoCard key={repo.id} repo={repo} />
-            ))}
-          </div>
-          <div className="mt-8 grid gap-4 lg:grid-cols-2">
-            <div className="rounded-xl border border-zinc-700/80 bg-zinc-900/60 p-4">
-              <h3 className="mb-3 text-sm font-semibold text-zinc-200">Recent Activity</h3>
-              <ul className="space-y-2 text-sm text-zinc-300">
-                {(activity.length
-                  ? activity
-                  : [{ id: "local", type: "PushEvent", repo: { name: "aayushostwal/nexus" }, created_at: new Date().toISOString() }]
-                ).map((event) => (
-                  <li key={event.id} className="rounded-md border border-zinc-700/70 bg-zinc-950/70 p-2">
-                    <span className="text-cyan-300">{event.type}</span> in {event.repo.name}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="rounded-xl border border-zinc-700/80 bg-zinc-900/60 p-4">
-              <h3 className="mb-3 text-sm font-semibold text-zinc-200">Contribution Graph</h3>
-              <Image
-                src="https://github-readme-activity-graph.vercel.app/graph?username=aayushostwal&theme=github-compact"
-                alt="GitHub contribution graph"
-                width={900}
-                height={320}
-                className="h-auto w-full rounded-lg border border-zinc-700/70"
-              />
-            </div>
           </div>
         </section>
 

@@ -54,8 +54,8 @@ export function ArchitectureDiagram() {
   }, [id]);
 
   return (
-    <div className="overflow-x-auto rounded-2xl border border-zinc-700/80 bg-zinc-950/80 p-4">
-      <div className="min-w-[640px]" dangerouslySetInnerHTML={{ __html: svg }} />
+    <div className="h-[78vh] w-full overflow-auto rounded-2xl border border-zinc-700/80 bg-zinc-950/80 p-4">
+      <div className="h-full w-full [&>svg]:h-full [&>svg]:w-full" dangerouslySetInnerHTML={{ __html: svg }} />
     </div>
   );
 }
