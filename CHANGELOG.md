@@ -4,9 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### MISCELLANEOUS TASKS
+
+- Upgrade next-mdx-remote to v6 ([`68269f9`](https://github.com/aayushostwal/nexus-agent-kit/commit/68269f96d9a187985c2a66d3908fe74d7272b3d8))
+
+## [v1.8.0] - 2026-05-12
+
 ### FEATURES
 
 - Add Nexus Next.js developer platform website ([`0823a70`](https://github.com/aayushostwal/nexus-agent-kit/commit/0823a70f7033e63f6dd10f3c1428d7e50b5d21cf))
+
+### MISCELLANEOUS TASKS
+
+- Bump version to 1.8.0 ([`0ea8fd1`](https://github.com/aayushostwal/nexus-agent-kit/commit/0ea8fd15f3dfcc97626e5cb681214b1d4a98eaa4))
 
 ## [v1.7.0] - 2026-05-12
 
