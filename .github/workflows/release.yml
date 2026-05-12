@@ -78,7 +78,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish --access public
 
-      # E: Generate changelog with git-cliff
+      # E: Generate full CHANGELOG.md for the repo
       - name: Generate changelog
         uses: orhun/git-cliff-action@v4
         with:
@@ -88,8 +88,20 @@ jobs:
           OUTPUT: CHANGELOG.md
           GITHUB_REPO: ${{ github.repository }}
 
-      # E: Commit version bump + changelog, then push tag
-      - name: Commit and tag
+      # E: Generate release notes for this version only
+      - name: Generate release notes
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: cliff.toml
+          args: --verbose --latest --strip header
+        env:
+          OUTPUT: RELEASE_NOTES.md
+          GITHUB_REPO: ${{ github.repository }}
+
+      # E: Commit version bump + changelog, push tag, create GitHub Release
+      - name: Commit, tag, and release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -98,3 +110,7 @@ jobs:
           git push origin main
           git tag "v${{ steps.version.outputs.value }}"
           git push origin "v${{ steps.version.outputs.value }}"
+          gh release create "v${{ steps.version.outputs.value }}" \
+            --title "v${{ steps.version.outputs.value }}" \
+            --notes-file RELEASE_NOTES.md \
+            --latest
