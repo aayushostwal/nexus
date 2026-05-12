@@ -10,9 +10,9 @@ permissions:
   packages: write
 
 jobs:
-  # Step A: Run CI/CD (only when user is NOT github-bot)
+  # A: CI/CD — only when actor is NOT github-bot
   ci:
-    if: ${{ github.actor != 'github-bot' }}
+    if: github.actor != 'github-bot'
     runs-on: ubuntu-latest
 
     steps:
@@ -33,15 +33,11 @@ jobs:
       - name: Validate npm package
         run: npm pack --dry-run
 
-  # Step B: Upgrade and sync versions, push new commit
+  # B: Bump version and push commit as github-bot — only when actor is NOT github-bot
   upgrade-version:
-    runs-on: ubuntu-latest
+    if: github.actor != 'github-bot'
     needs: ci
-    if: |
-      always() &&
-      (needs.ci.result == 'success' || needs.ci.result == 'skipped')
-    outputs:
-      version: ${{ steps.upgrade.outputs.version }}
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -55,33 +51,31 @@ jobs:
         with:
           node-version: 20
 
-      - name: Upgrade minor version
-        id: upgrade
+      - name: Bump minor version
         run: |
-          CURRENT_VERSION=$(npm pkg get version | tr -d '"')
-          MAJOR=$(echo $CURRENT_VERSION | cut -d. -f1)
-          MINOR=$(echo $CURRENT_VERSION | cut -d. -f2)
-          PATCH=$(echo $CURRENT_VERSION | cut -d. -f3)
-          NEW_MINOR=$((MINOR + 1))
-          NEW_VERSION="$MAJOR.$NEW_MINOR.0"
+          CURRENT=$(npm pkg get version | tr -d '"')
+          MAJOR=$(echo $CURRENT | cut -d. -f1)
+          MINOR=$(echo $CURRENT | cut -d. -f2)
+          NEW_VERSION="$MAJOR.$((MINOR + 1)).0"
           npm pkg set version=$NEW_VERSION
-          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "Bumped $CURRENT → $NEW_VERSION"
 
       - name: Commit and push version bump
         run: |
           git config user.name "github-bot"
           git config user.email "bot@github.com"
+          VERSION=$(npm pkg get version | tr -d '"')
           git add package.json
-          git commit -m "chore: bump version to ${{ steps.upgrade.outputs.version }}"
+          git commit -m "chore: bump version to $VERSION"
           git push origin main
 
-  # Steps C-F: Publish, create changelog, push tag (only when user is github-bot)
+  # C-E: Publish, changelog, tag — triggered by github-bot's version bump commit
   publish-release:
+    if: github.actor == 'github-bot'
     runs-on: ubuntu-latest
-    needs: upgrade-version
-    if: ${{ github.actor == 'github-bot' }}
 
     steps:
+      # C: Read version from package.json
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -94,36 +88,36 @@ jobs:
           node-version: 20
           registry-url: "https://registry.npmjs.org"
 
+      - name: Get version
+        id: version
+        run: echo "value=$(npm pkg get version | tr -d '"')" >> $GITHUB_OUTPUT
+
       - name: Install dependencies
         run: npm ci
 
-      - name: Install git-cliff
-        run: cargo install git-cliff
-
-      - name: Verify package
-        run: |
-          npm run lint
-          npm test
-          npm pack --dry-run
-
+      # D: Publish to npm
       - name: Publish to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish --access public
 
+      # E: Generate changelog with git-cliff
       - name: Generate changelog
-        run: |
-          git-cliff --output CHANGELOG.md
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: cliff.toml
+          args: --verbose
+        env:
+          OUTPUT: CHANGELOG.md
+          GITHUB_REPO: ${{ github.repository }}
 
-      - name: Commit and push changelog
+      # E: Push tag
+      - name: Commit changelog and push tag
         run: |
           git config user.name "github-bot"
           git config user.email "bot@github.com"
           git add CHANGELOG.md
-          git commit -m "docs: update changelog for v${{ needs.upgrade-version.outputs.version }}" || echo "No changelog changes"
-          git push origin main || echo "No new commits to push"
-
-      - name: Create and push git tag
-        run: |
-          git tag "v${{ needs.upgrade-version.outputs.version }}"
-          git push origin "v${{ needs.upgrade-version.outputs.version }}"
+          git commit -m "docs: update changelog for v${{ steps.version.outputs.value }}" || echo "No changelog changes"
+          git push origin main || echo "Nothing to push"
+          git tag "v${{ steps.version.outputs.value }}"
+          git push origin "v${{ steps.version.outputs.value }}"
