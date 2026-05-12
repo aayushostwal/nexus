@@ -4,9 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### BUG FIXES
+
+- Refine architecture view and stabilize terminal hero ([`00422e6`](https://github.com/aayushostwal/nexus-agent-kit/commit/00422e62c0f65281852f21908ba3f864e857a2f3))
+
+## [v1.10.0] - 2026-05-12
+
 ### FEATURES
 
 - Reposition Nexus as skills and agents aggregator ([`30f7090`](https://github.com/aayushostwal/nexus-agent-kit/commit/30f70906593796da80d13dfef2727b1cd344e7af))
+
+### MISCELLANEOUS TASKS
+
+- Bump version to 1.10.0 ([`17ab72a`](https://github.com/aayushostwal/nexus-agent-kit/commit/17ab72aeea3e261c7f9bf64056a3a513241c7443))
 
 ## [v1.9.0] - 2026-05-12
 
