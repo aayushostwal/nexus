@@ -8,11 +8,11 @@ on:
 permissions:
   contents: write
   packages: write
+  id-token: write
 
 jobs:
-  # A: CI/CD — only when actor is NOT github-bot
+  # A: CI — lint, test, validate
   ci:
-    if: github.actor != 'github-bot'
     runs-on: ubuntu-latest
 
     steps:
@@ -33,49 +33,16 @@ jobs:
       - name: Validate npm package
         run: npm pack --dry-run
 
-  # B: Bump version and push commit as github-bot — only when actor is NOT github-bot
-  upgrade-version:
-    if: github.actor != 'github-bot'
+  # B-E: Bump version, publish, changelog, tag — all in one run
+  release:
     needs: ci
     runs-on: ubuntu-latest
+    # GITHUB_TOKEN pushes don't re-trigger workflows, so no infinite loop risk
+    # This guard skips the release job on any bot-initiated push (e.g. PAT)
+    if: github.actor != 'github-actions[bot]'
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Bump minor version
-        run: |
-          CURRENT=$(npm pkg get version | tr -d '"')
-          MAJOR=$(echo $CURRENT | cut -d. -f1)
-          MINOR=$(echo $CURRENT | cut -d. -f2)
-          NEW_VERSION="$MAJOR.$((MINOR + 1)).0"
-          npm pkg set version=$NEW_VERSION
-          echo "Bumped $CURRENT → $NEW_VERSION"
-
-      - name: Commit and push version bump
-        run: |
-          git config user.name "github-bot"
-          git config user.email "bot@github.com"
-          VERSION=$(npm pkg get version | tr -d '"')
-          git add package.json
-          git commit -m "chore: bump version to $VERSION"
-          git push origin main
-
-  # C-E: Publish, changelog, tag — triggered by github-bot's version bump commit
-  publish-release:
-    if: github.actor == 'github-bot'
-    runs-on: ubuntu-latest
-
-    steps:
-      # C: Read version from package.json
+      # B: Bump minor version
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -88,6 +55,16 @@ jobs:
           node-version: 20
           registry-url: "https://registry.npmjs.org"
 
+      - name: Bump minor version
+        run: |
+          CURRENT=$(npm pkg get version | tr -d '"')
+          MAJOR=$(echo $CURRENT | cut -d. -f1)
+          MINOR=$(echo $CURRENT | cut -d. -f2)
+          NEW_VERSION="$MAJOR.$((MINOR + 1)).0"
+          npm pkg set version=$NEW_VERSION
+          echo "Bumped $CURRENT → $NEW_VERSION"
+
+      # C: Read version
       - name: Get version
         id: version
         run: echo "value=$(npm pkg get version | tr -d '"')" >> $GITHUB_OUTPUT
@@ -111,13 +88,13 @@ jobs:
           OUTPUT: CHANGELOG.md
           GITHUB_REPO: ${{ github.repository }}
 
-      # E: Push tag
-      - name: Commit changelog and push tag
+      # E: Commit version bump + changelog, then push tag
+      - name: Commit and tag
         run: |
-          git config user.name "github-bot"
-          git config user.email "bot@github.com"
-          git add CHANGELOG.md
-          git commit -m "docs: update changelog for v${{ steps.version.outputs.value }}" || echo "No changelog changes"
-          git push origin main || echo "Nothing to push"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add package.json CHANGELOG.md
+          git commit -m "chore: bump version to ${{ steps.version.outputs.value }}" || echo "Nothing to commit"
+          git push origin main
           git tag "v${{ steps.version.outputs.value }}"
           git push origin "v${{ steps.version.outputs.value }}"
