@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [v1.3.0] - 2026-05-12
 
 ### BUG FIXES
 
@@ -54,6 +54,7 @@ All notable changes to this project will be documented in this file.
 
 ### MISCELLANEOUS TASKS
 
+- Bump version to 1.3.0 ([`eaa859a`](https://github.com/aayushostwal/nexus-agent-kit/commit/eaa859a564d4476d8ab451e2f053a1800f47c28b))
 - Bump version to 1.2.0 ([`8d448d0`](https://github.com/aayushostwal/nexus-agent-kit/commit/8d448d0226506bc49dcbd904d0885b3d3c3b370b))
 - Bump version to 1.1.0 ([`f77aac5`](https://github.com/aayushostwal/nexus-agent-kit/commit/f77aac5fc9ef7e158d9c7f92afe4be0dd9d17607))
 - Sync plugin manifest versions to 1.0.0 ([`0de83e0`](https://github.com/aayushostwal/nexus-agent-kit/commit/0de83e057a7c2d6701ee58b15e8f1777bb1b47c9))
