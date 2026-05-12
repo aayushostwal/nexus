@@ -1,6 +1,6 @@
 {
   "name": "nexus",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "description": "Plugin-first AI terminal workflows for Codex and Claude Code with planning, CI/CD debugging, reusable agents, TODOs, and MCP safety policies.",
   "author": {
     "name": "Aayush Ostwal",

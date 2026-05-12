@@ -4,8 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### FEATURES
+
+- Reposition Nexus as skills and agents aggregator ([`30f7090`](https://github.com/aayushostwal/nexus-agent-kit/commit/30f70906593796da80d13dfef2727b1cd344e7af))
+
+## [v1.9.0] - 2026-05-12
+
 ### MISCELLANEOUS TASKS
 
+- Bump version to 1.9.0 ([`5637e9f`](https://github.com/aayushostwal/nexus-agent-kit/commit/5637e9f962f49db72af9d37a57c074b60097a19b))
 - Upgrade next-mdx-remote to v6 ([`68269f9`](https://github.com/aayushostwal/nexus-agent-kit/commit/68269f96d9a187985c2a66d3908fe74d7272b3d8))
 
 ## [v1.8.0] - 2026-05-12
