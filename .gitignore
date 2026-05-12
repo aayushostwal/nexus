@@ -38,3 +38,4 @@ nexus-agent-kit-*.tgz
 # Temporary files
 *.tmp
 *.temp
+.claude/worktrees/
