@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+### DOCUMENTATION
+
+- Update README with missing agents, skills, commands, and fixes ([`2d7fb46`](https://github.com/aayushostwal/nexus-agent-kit/commit/2d7fb464df651c38792f5a8a2e34346bc99d55c1))
+
+### FEATURES
+
+- Add Flaky Test Root Cause Analyzer skill ([`4d32754`](https://github.com/aayushostwal/nexus-agent-kit/commit/4d3275489924560c695db200c36899d134dd2ac6))
+- Add Production Incident Investigator and Release Readiness Evaluator skills ([`561e126`](https://github.com/aayushostwal/nexus-agent-kit/commit/561e1260802da2d2b8e8a6c151eed1824e4d74d8))
+
+### MISCELLANEOUS TASKS
+
+- Remove anti-patterns directory ([`97c522a`](https://github.com/aayushostwal/nexus-agent-kit/commit/97c522a23f85a4710fe918773a7e3cca732eccc0))
+- Remove examples/heuristics dirs, compact SKILL and validation files ([`4f42c46`](https://github.com/aayushostwal/nexus-agent-kit/commit/4f42c4662afa3ca1185c6a3cae8ccd0ec1dfaf8d))
+- Remove anti-patterns directory ([`603f1bd`](https://github.com/aayushostwal/nexus-agent-kit/commit/603f1bd9c313b607abbe5768b3daecc8497e932b))
+- Remove examples/heuristics dirs, compact SKILL and validation files ([`06f0c08`](https://github.com/aayushostwal/nexus-agent-kit/commit/06f0c08f6bd77370b873639875ead3374d82b936))
+
+## [v1.4.0] - 2026-05-12
+
+### MISCELLANEOUS TASKS
+
+- Bump version to 1.4.0 ([`a912cbb`](https://github.com/aayushostwal/nexus-agent-kit/commit/a912cbb4431e5cf3b37d81baa7cc0614dc864935))
+
 ## [v1.3.0] - 2026-05-12
 
 ### BUG FIXES
