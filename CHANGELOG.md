@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+### TESTING
+
+- Verify hook executable-bit parity across plugins ([`2e05157`](https://github.com/aayushostwal/nexus-agent-kit/commit/2e05157ac5834686a87c58fe2c0e0b9ef103dfae))
+
+## [v1.21.0] - 2026-05-13
+
+### MISCELLANEOUS TASKS
+
+- Bump version to 1.21.0 ([`a8ba681`](https://github.com/aayushostwal/nexus-agent-kit/commit/a8ba6813fb38dc3384ff694a8eae854a16d146f4))
+
 ## [v1.20.0] - 2026-05-13
 
 ### MISCELLANEOUS TASKS
