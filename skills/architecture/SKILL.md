@@ -1,13 +1,9 @@
 ---
 name: nexus-architecture
 description: >
-  Use this skill when mapping, analyzing, or planning architectural changes to a codebase.
-  Trigger phrases: "map this codebase architecture", "understand the system design", "identify
-  bounded contexts", "where should I split this monolith", "dependency map", "service boundaries",
-  "domain analysis", "how is this codebase structured", "what calls what", "module coupling analysis",
-  "strangler fig pattern", "prepare for microservices extraction", "identify domain boundaries",
-  "architecture review", "is this deployment safe", "deployment safety check",
-  "what breaks if I deploy this", "pre-deployment validation".
+  Use for codebase architecture mapping, coupling analysis, bounded-context discovery, monolith-split planning,
+  and deployment-safety impact checks. Trigger on system-structure, service-boundary, dependency-map,
+  or extraction questions, including "what breaks if deployed" validation requests.
   When in doubt, use this skill.
 ---
 
@@ -220,4 +216,3 @@ Read `anti-patterns/common-mistakes.md` before writing any recommendations.
 - Never skip extraction order — extracting high-fan-in modules first causes cascading failures
 - Never recommend microservices for a system with fewer than 3-5 engineers
 - Never mark a context as a true boundary if it imports models from another context
-

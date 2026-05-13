@@ -1,12 +1,9 @@
 ---
 name: nexus-debugging
 description: >
-  Use this skill when the user's primary problem is that something is failing, broken, regressed, or behaving
-  unexpectedly and they need root-cause analysis rather than design advice. Trigger when the task is to
-  investigate evidence, isolate the source of a failure, explain why it happens, apply the narrowest fix,
-  and verify the result. This applies to CI/CD issues, test failures, runtime errors, deployment problems,
-  framework/tooling breakage, and unexplained regressions in existing systems. The expected output is a debug
-  report with root cause, fix, verification, and prevention, not an implementation plan or option analysis.
+  Use when something is failing, regressing, or behaving unexpectedly and the goal is root-cause analysis,
+  narrowest fix, and verification. Covers CI/CD, tests, runtime, deployment, and tooling failures.
+  Output should be RCA + fix + prevention, not design options.
   When in doubt, use this skill.
 ---
 

@@ -1,18 +1,10 @@
 ---
 name: nexus-infra
 description: >
-  Use this skill for any infrastructure planning, cloud architecture, or deployment-related request.
-  Trigger phrases include: "design infra for my app", "what do I need to deploy this", "create an HLD
-  for my backend", "how much will this cost to run", "architect my deployment on AWS", "review my AWS
-  setup", "audit my Terraform", "what's wrong with my infra", "my cloud bill jumped", "give me a
-  short-term and long-term infra plan", "free alternative to Firebase", "I can't afford RDS",
-  "self-hosted option for Redis", "Render vs Railway vs Fly.io", "how do I run this for under $20
-  a month", "what cloud services should I use for this stack", "is my infra production-ready".
-  Also trigger when the user shares a codebase and asks anything about deployment or running costs,
-  shares existing Terraform / K8s / docker-compose files and asks for feedback, or mentions a specific
-  paid service they want to replace with something cheaper.
-  Routes to one of three sub-skills: design (build from codebase), evaluate (audit existing infra),
-  or free-alternatives (OSS / cheap replacements). When in doubt, use this skill.
+  Use for infrastructure design, deployment architecture, cloud cost planning, or infra audits.
+  Trigger on IaC reviews, "what should I deploy with", bill spikes, production-readiness checks,
+  and paid-to-cheaper replacement requests. Route to design, evaluate, or free-alternatives flow.
+  When in doubt, use this skill.
 ---
 
 # Nexus Infrastructure Planning

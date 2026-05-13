@@ -1,13 +1,9 @@
 ---
 name: nexus-observability
 description: >
-  Use this skill when investigating correlated API failures, cascading errors, or distributed system
-  failures. Trigger phrases: "multiple services failing at once", "cascading failure", "error rate
-  correlation", "why are these APIs failing together", "investigate distributed failure", "trace
-  a failure through microservices", "which service is causing the cascade", "correlation between
-  error spikes", "dependency failure analysis", "upstream downstream failure impact",
-  "service mesh error investigation", "circuit breaker opened". Also trigger when the user
-  shares multiple error logs from different services and wants to understand the causal chain.
+  Use for correlated API failures, cascading errors, and distributed-system incident tracing.
+  Trigger on multi-service error spikes, dependency-chain analysis, circuit-breaker events,
+  or requests to identify origin service and blast radius from logs/metrics across components.
   When in doubt, use this skill.
 ---
 

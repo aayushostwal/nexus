@@ -1,11 +1,9 @@
 ---
 name: nexus
 description: >
-  Use this skill when the user wants persistent global TODOs ("remember this", "track this", "add to my
-  list", "don't forget to", "follow up on"), concise response formatting, Codex/Claude workflow setup,
-  or a daily brief from Slack/Outlook/Jira context. Also trigger when the user says "nexus add",
-  "show my todos", "what's on my plate today", "nexus brief", "MCP safety policy", or asks about
-  Nexus Agent Kit configuration, cost policies, or shared operating rules. When in doubt, use this skill.
+  Use for persistent TODO capture, daily brief retrieval, and shared Codex/Claude operating rules.
+  Trigger on remember/track/follow-up requests, "nexus add/show/brief", or policy/workflow questions
+  across Slack, Outlook, and Jira contexts. When in doubt, use this skill.
 ---
 
 # Nexus Agent Kit

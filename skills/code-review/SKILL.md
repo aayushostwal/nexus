@@ -1,13 +1,9 @@
 ---
 name: nexus-code-review
 description: >
-  Use this skill when the user needs a thorough, senior-engineer-quality review of a pull request,
-  diff, or code change. Trigger phrases include: "review this PR", "review my code changes",
-  "what are the issues with this diff", "can you find bugs in this PR", "review this before I merge",
-  "is this safe to deploy", "check my migration for issues", "security review this change",
-  "is this PR production-ready", "what did I miss in this PR". Also trigger when the user pastes
-  a diff, GitHub PR URL, list of changed files, or branch name and asks for feedback, risk assessment,
-  correctness analysis, or approval advice. When in doubt, use this skill.
+  Use for senior-level PR or diff review focused on correctness, regressions, security, migration risk,
+  and deploy safety. Trigger on "review this PR", pasted diffs/branch links, or requests for
+  merge-readiness and missed-issue analysis. When in doubt, use this skill.
 ---
 
 # Nexus Code Review

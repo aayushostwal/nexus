@@ -1,13 +1,10 @@
 ---
 name: nexus-planning
 description: >
-  Use this skill when the user needs a concrete execution plan for technical work and the direction is
-  already known or can be assumed without much ambiguity. Trigger when the main need is to turn an intended
-  change into scope, ordered steps, dependencies, risks, validation, rollout, and rollback rather than to
-  compare fundamentally different approaches. This applies to production features, infrastructure changes,
-  migrations, architecture updates, and repo-local modifications that need structured delivery planning.
-  The expected output is an actionable implementation plan, not just ideas or options. Prefer exploration
-  first when the core uncertainty is still choosing the approach. When in doubt, use this skill.
+  Use when direction is known and the user needs an execution-ready plan: scope, sequencing,
+  dependencies, risks, validation, rollout, and rollback. Applies to features, migrations, infra,
+  and architecture changes. Prefer exploring first only if approach selection remains uncertain.
+  When in doubt, use this skill.
 ---
 
 # Nexus Planning Protocol
