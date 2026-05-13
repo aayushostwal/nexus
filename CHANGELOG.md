@@ -4,9 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### FEATURES
+
+- Interactive architecture explorer and light-mode cyan fixes ([`30bddaa`](https://github.com/aayushostwal/nexus-agent-kit/commit/30bddaac370e157ee97c1c4418af9ac23456ac9b))
+
+## [v1.15.0] - 2026-05-12
+
 ### BUG FIXES
 
 - Replace non-existent setModel API with settings.json approach ([`64d8319`](https://github.com/aayushostwal/nexus-agent-kit/commit/64d831970c807b647e9adab77dee625903df1a9e))
+
+### MISCELLANEOUS TASKS
+
+- Bump version to 1.15.0 ([`f62ed29`](https://github.com/aayushostwal/nexus-agent-kit/commit/f62ed29cb548a79199f9fbf059073c5ab001c0ac))
 
 ## [v1.14.0] - 2026-05-12
 
