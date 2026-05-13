@@ -250,29 +250,15 @@ Safety defaults used by the repo:
 Run the local checks with:
 
 ```bash
-npm run lint
 npm test
-npm pack --dry-run
 ```
 
-Install the pre-commit hook with:
-
-```bash
-npm run hooks:install
-```
-
-Version sync keeps these files aligned with `package.json`:
+Plugin packaging lives in:
 
 - `.agents/plugins/marketplace.json`
 - `.codex-plugin/plugin.json`
 - `.claude-plugin/plugin.json`
 - `.claude-plugin/marketplace.json`
-
-If you need to re-sync manually:
-
-```bash
-node scripts/sync-versions.js
-```
 
 ## License
 
