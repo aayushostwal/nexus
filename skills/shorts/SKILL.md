@@ -1,13 +1,10 @@
 ---
 name: nexus-shorts
 description: >
-  Use this skill when the user wants to turn any content into a YouTube Shorts script. Trigger phrases
-  include: "write a YouTube Short script for X", "make a shorts script about X", "turn this into a
-  YouTube Short", "write a 30-second script", "create a script for YouTube Shorts", "I need a short
-  video script", "write a hook and script for X", "make this into a short-form video script",
-  "write a script for a reel or short", "give me a YouTube Short on X". Also trigger when the user
-  pastes any content — a topic, article, bullet points, code snippet, or URL — and asks for a
-  short-form video script or YouTube content. When in doubt, use this skill.
+  Use to convert any input into a ready-to-record YouTube Shorts script.
+  Trigger on requests for 30-second scripts, hooks, reels/short-form video copy,
+  or pasted topics/articles/bullets/URLs needing concise high-retention narration with CTA.
+  When in doubt, use this skill.
 ---
 
 # Nexus YouTube Shorts Script Writer

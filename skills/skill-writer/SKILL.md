@@ -1,12 +1,10 @@
 ---
 name: nexus-skill-writer-md
 description: >
-  Use this skill whenever the user wants to CREATE a new skill, EDIT or IMPROVE an existing skill,
-  or is asking HOW to write better skills. Triggers include: "write a skill", "create a skill for X",
-  "update my skill", "my skill isn't working well", "improve this skill", "skill doesn't trigger",
-  "help me write a SKILL.md", or any time the user pastes a skill and asks for feedback.
-  Also trigger proactively when a user describes a multi-step workflow they perform repeatedly —
-  that is a strong signal they need a skill. When in doubt, use this skill.
+  Use for creating, refactoring, or debugging skills and improving SKILL.md trigger quality.
+  Trigger on "write/create/update/improve skill", trigger-miss complaints, pasted-skill feedback,
+  or repeated workflows that should be skillized. Output production-ready skill structure and routing logic.
+  When in doubt, use this skill.
 ---
 
 # Nexus Skill Writer

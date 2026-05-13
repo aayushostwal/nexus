@@ -1,12 +1,10 @@
 ---
 name: nexus-tutorial
 description: >
-  Use this skill when creating Jupyter Notebook tutorials, AI engineering walkthroughs, or copy-paste-ready
-  technical learning content. Trigger phrases include: "write a tutorial on X", "create a notebook for Y",
-  "make a Jupyter walkthrough", "I need a step-by-step guide for Z", "build a tutorial notebook",
-  "create an AI tutorial", "write a technical guide with code examples", "show me how to build X with code".
-  Also trigger when the user pastes a topic and asks for educational content with runnable cells, or wants
-  a notebook they can share on GitHub. When in doubt, use this skill.
+  Use for creating executable Jupyter tutorials and AI engineering walkthroughs with runnable cells.
+  Trigger on requests for step-by-step guides, notebook-based teaching, or shareable code-first learning
+  content. Prioritize reproducibility, clarity, and copy-paste-ready outputs.
+  When in doubt, use this skill.
 ---
 
 # Tutorial Generation Protocol

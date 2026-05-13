@@ -1,13 +1,10 @@
 ---
 name: nexus-testing
 description: >
-  Use this skill when tests are flaky, intermittently failing, or the test suite is unreliable.
-  Trigger phrases: "my test is flaky", "tests fail randomly", "test passes locally but fails in CI",
-  "non-deterministic test failure", "test suite is unstable", "this test fails 1 in 5 times",
-  "why does this test randomly fail", "investigate test flakiness", "fix flaky tests",
-  "test race condition", "timing-dependent test failure". Also trigger when CI shows intermittent
-  red builds that pass on retry, or when a test has been marked skip/xfail without investigation.
-  When in doubt, use this skill.
+  Use for flaky or nondeterministic tests, especially local-vs-CI inconsistencies.
+  Trigger on intermittent failures, race/timing symptoms, retry-only greens,
+  or unexplained skip/xfail markers. Output should isolate reproducible cause, narrowest durable fix,
+  and prevention guidance. When in doubt, use this skill.
 ---
 
 # Nexus Flaky Test Root Cause Analyzer

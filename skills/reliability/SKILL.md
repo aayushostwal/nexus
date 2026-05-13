@@ -1,13 +1,9 @@
 ---
 name: nexus-reliability
 description: >
-  Use this skill when investigating a production incident, outage, degradation, or anomaly.
-  Trigger phrases: "production is down", "service degraded", "latency spike", "error rate jumped",
-  "investigate this incident", "why is the service slow", "we're getting 500s", "on-call alert fired",
-  "SLA breach", "runbook execution", "post-mortem", "RCA for incident", "root cause production failure",
-  "CPU spike in prod", "memory leak production", "database connection pool exhausted".
-  Also trigger for release readiness ("is this safe to deploy", "pre-deployment checklist",
-  "release gate", "deploy confidence", "should we roll back").
+  Use for production incidents, outages, and service degradations, plus release-readiness gate checks.
+  Trigger on 500 spikes, SLA breaches, latency/error surges, on-call alerts, rollback decisions,
+  and RCA/post-mortem requests. Prioritize stabilization, timeline reconstruction, and evidence-led actions.
   When in doubt, use this skill.
 ---
 

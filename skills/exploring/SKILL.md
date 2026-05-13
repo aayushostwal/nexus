@@ -1,13 +1,10 @@
 ---
 name: nexus-exploring
 description: >
-  Use this skill when the user needs help figuring out the right approach to a technical change and the
-  solution path is still unclear. Trigger when the main task is to surface constraints, compare plausible
-  directions, understand trade-offs, or recommend a path forward before detailed execution planning begins.
-  This applies both to new builds and to modifying an existing system when the user knows the goal but not
-  yet the best design or implementation strategy. The expected output is a small set of viable options, a
-  recommendation, and clear reasoning. Prefer this skill before planning whenever approach selection is the
-  primary source of uncertainty. When in doubt, use this skill.
+  Use when the goal is clear but implementation direction is uncertain. Trigger for option comparison,
+  trade-off analysis, constraint discovery, and recommendation before detailed planning.
+  Applies to new builds and existing systems where approach selection is the primary uncertainty.
+  When in doubt, use this skill.
 ---
 
 # Nexus Exploring

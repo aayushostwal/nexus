@@ -1,13 +1,9 @@
 ---
 name: nexus-performance
 description: >
-  Use this skill for performance investigations: memory leaks, CPU spikes, latency regressions,
-  dependency upgrade risk analysis, or blast radius assessment before upgrades.
-  Trigger phrases: "memory leak", "OOM kill", "memory usage growing", "heap dump analysis",
-  "CPU spike", "latency regression", "performance degradation", "slow query", "N+1 query",
-  "dependency upgrade risk", "what breaks if I upgrade X", "blast radius of this change",
-  "which services use this library", "upgrade impact analysis", "profiling".
-  Routes to memory-leak.md or dependency-blast-radius.md based on the request.
+  Use for memory, CPU, latency, and query-performance investigations, plus dependency-upgrade
+  blast-radius analysis. Trigger on leak/OOM/profiling/regression reports or "what breaks if I upgrade X."
+  Route to memory-leak or dependency-blast-radius workflow based on intent.
   When in doubt, use this skill.
 ---
 
