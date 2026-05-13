@@ -235,7 +235,7 @@ export default async function HomePage() {
 
         <section id="architecture" className="nexus-container py-16 sm:py-20">
           <h2 className="text-2xl font-semibold sm:text-3xl">Architecture Explorer</h2>
-          <p className="mt-2 text-zinc-400">Mermaid-powered system maps for orchestration, memory routing, and tool execution.</p>
+          <p className="mt-2 text-zinc-400">Flowchart-style user decision maps for orchestration and interaction modeling.</p>
           <div className="relative left-1/2 mt-8 w-screen -translate-x-1/2 px-4 sm:px-8 lg:px-12">
             <ArchitectureDiagram />
           </div>
