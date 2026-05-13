@@ -77,6 +77,19 @@ nexus model-router disable
 nexus model-router enable
 ```
 
+When hooks run (`session-start`, `user-prompt-submit`, `pre-tool-use`), Nexus writes runtime model state to:
+
+```text
+<repo>/.nexus/model-router-runtime.json
+```
+
+For Claude runtime, prompt-size routing runs automatically on `user-prompt-submit` and can switch between a default model and the small-edit model. Tune thresholds with:
+
+```bash
+NEXUS_SMALL_PROMPT_MAX_TOKENS=180
+NEXUS_SMALL_PROMPT_MAX_WORDS=50
+```
+
 ## What Nexus Does In Your Terminal
 
 - Coordinate a multi-agent implementation by identifying which tasks can run in parallel.
