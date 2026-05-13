@@ -2,11 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [v1.16.0] - 2026-05-13
 
 ### FEATURES
 
 - Interactive architecture explorer and light-mode cyan fixes ([`30bddaa`](https://github.com/aayushostwal/nexus-agent-kit/commit/30bddaac370e157ee97c1c4418af9ac23456ac9b))
+
+### MISCELLANEOUS TASKS
+
+- Bump version to 1.16.0 ([`c03b7f6`](https://github.com/aayushostwal/nexus-agent-kit/commit/c03b7f66cab56726761a5d0d13fc47623114da29))
 
 ## [v1.15.0] - 2026-05-12
 
