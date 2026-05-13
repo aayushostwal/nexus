@@ -52,10 +52,10 @@ npx codex-marketplace add aayushostwal/nexus --plugin --project
 
 This is a direct repo install. Users need the repo slug `aayushostwal/nexus`; pushing this repo does not by itself make the plugin searchable in a central Codex marketplace index.
 
-After install, Nexus automatically bootstraps repo instruction files on first active plugin run:
+After install, Nexus automatically bootstraps global instruction files on first active plugin run:
 
-- Claude runtime: updates `CLAUDE.md`
-- Codex runtime: updates `AGENT.md`
+- Claude runtime: updates `~/.claude/CLAUDE.md`
+- Codex runtime: updates `~/.codex/AGENT.md`
 
 If these files already exist, Nexus appends/updates only its managed block and preserves your existing content.
 
@@ -67,7 +67,7 @@ If these files already exist, Nexus appends/updates only its managed block and p
 /reload-plugins
 ```
 
-After plugin enablement, Nexus auto-runs the same bootstrap flow via plugin hooks and maintains the skills-first instruction block in `CLAUDE.md` without manual setup.
+After plugin enablement, Nexus auto-runs the same bootstrap flow via plugin hooks and maintains the skills-first instruction block in `~/.claude/CLAUDE.md` without manual setup.
 
 Model router is enabled by default. You can toggle it per repo:
 
