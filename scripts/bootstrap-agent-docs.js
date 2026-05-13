@@ -1,6 +1,7 @@
 "use strict";
 
 const fs = require("node:fs");
+const os = require("node:os");
 const path = require("node:path");
 
 const START_MARKER = "<!-- nexus-agent-kit:skills-first:start -->";
@@ -10,23 +11,25 @@ const STATE_FILE = "bootstrap-state.json";
 const PLUGIN_ID = "nexus";
 
 function runBootstrap(options = {}) {
-  const repoRoot = resolveRepoRoot(options);
   const runtime = resolveRuntime(options);
+  const targetRoot = resolveTargetRoot(runtime, options);
   const targetFiles = resolveTargetFiles(runtime);
   const version = readPackageVersion();
-  const statePath = path.join(repoRoot, STATE_DIR, STATE_FILE);
+  const stateRoot = resolveStateRoot(options);
+  const statePath = path.join(stateRoot, STATE_DIR, STATE_FILE);
   const state = readJsonSafe(statePath);
   const runtimeState = state?.runtimes?.[runtime];
 
   const shouldSkip =
     runtimeState?.plugin === PLUGIN_ID &&
     runtimeState?.version === version &&
-    targetFiles.every((file) => hasManagedBlock(path.join(repoRoot, file)));
+    targetFiles.every((file) => hasManagedBlock(path.join(targetRoot, file)));
 
   if (shouldSkip) {
     return {
       skipped: true,
-      repoRoot,
+      targetRoot,
+      repoRoot: targetRoot,
       runtime,
       updatedFiles: [],
       version,
@@ -34,8 +37,9 @@ function runBootstrap(options = {}) {
   }
 
   const updatedFiles = [];
+  fs.mkdirSync(targetRoot, { recursive: true });
   for (const file of targetFiles) {
-    const fullPath = path.join(repoRoot, file);
+    const fullPath = path.join(targetRoot, file);
     upsertManagedBlock(fullPath, buildManagedBlock(version));
     updatedFiles.push(fullPath);
   }
@@ -58,20 +62,27 @@ function runBootstrap(options = {}) {
 
   return {
     skipped: false,
-    repoRoot,
+    targetRoot,
+    repoRoot: targetRoot,
     runtime,
     updatedFiles,
     version,
   };
 }
 
-function resolveRepoRoot(options) {
-  const candidate =
-    options.repoRoot ||
-    options.context?.cwd ||
-    process.env.CLAUDE_PROJECT_DIR ||
-    process.cwd();
-  return path.resolve(candidate);
+function resolveTargetRoot(runtime, options = {}) {
+  if (options.targetRoot) return path.resolve(options.targetRoot);
+  const home = process.env.HOME || os.homedir();
+  if (runtime === "codex") {
+    return path.resolve(process.env.CODEX_HOME || path.join(home, ".codex"));
+  }
+  return path.resolve(process.env.CLAUDE_HOME || path.join(home, ".claude"));
+}
+
+function resolveStateRoot(options = {}) {
+  if (options.stateRoot) return path.resolve(options.stateRoot);
+  const home = process.env.HOME || os.homedir();
+  return path.resolve(process.env.NEXUS_HOME || path.join(home, ".nexus"));
 }
 
 function readPackageVersion() {
@@ -151,6 +162,8 @@ function upsertManagedBlock(filePath, block) {
 module.exports = {
   runBootstrap,
   resolveRuntime,
+  resolveStateRoot,
+  resolveTargetRoot,
   resolveTargetFiles,
   upsertManagedBlock,
 };
@@ -159,7 +172,7 @@ if (require.main === module) {
   try {
     const result = runBootstrap();
     if (!result.skipped) {
-      console.log(`Nexus bootstrap updated ${result.updatedFiles.length} file(s) in ${result.repoRoot}`);
+      console.log(`Nexus bootstrap updated ${result.updatedFiles.length} file(s) in ${result.targetRoot}`);
     }
   } catch (error) {
     console.error(`Nexus bootstrap failed: ${error.message}`);

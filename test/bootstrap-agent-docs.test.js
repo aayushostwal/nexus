@@ -8,44 +8,47 @@ const test = require("node:test");
 
 const { runBootstrap, upsertManagedBlock } = require("../scripts/bootstrap-agent-docs");
 
-function makeTempRepo() {
+function makeTempDir() {
   return fs.mkdtempSync(path.join(os.tmpdir(), "nexus-bootstrap-"));
 }
 
-test("bootstrap creates CLAUDE.md with managed block for claude runtime", () => {
-  const repoRoot = makeTempRepo();
-  const result = runBootstrap({ repoRoot, runtime: "claude" });
+test("bootstrap creates CLAUDE.md under claude home for claude runtime", () => {
+  const targetRoot = makeTempDir();
+  const stateRoot = makeTempDir();
+  const result = runBootstrap({ targetRoot, stateRoot, runtime: "claude" });
 
   assert.equal(result.skipped, false);
-  assert.equal(fs.existsSync(path.join(repoRoot, "CLAUDE.md")), true);
-  assert.equal(fs.existsSync(path.join(repoRoot, "AGENT.md")), false);
-  assert.equal(fs.existsSync(path.join(repoRoot, ".nexus", "bootstrap-state.json")), true);
+  assert.equal(fs.existsSync(path.join(targetRoot, "CLAUDE.md")), true);
+  assert.equal(fs.existsSync(path.join(targetRoot, "AGENT.md")), false);
+  assert.equal(fs.existsSync(path.join(stateRoot, ".nexus", "bootstrap-state.json")), true);
 
-  const claudeContent = fs.readFileSync(path.join(repoRoot, "CLAUDE.md"), "utf8");
+  const claudeContent = fs.readFileSync(path.join(targetRoot, "CLAUDE.md"), "utf8");
   assert.match(claudeContent, /search for relevant skills first/i);
 });
 
 test("bootstrap is idempotent once state and markers exist", () => {
-  const repoRoot = makeTempRepo();
-  const first = runBootstrap({ repoRoot, runtime: "claude" });
-  const second = runBootstrap({ repoRoot, runtime: "claude" });
+  const targetRoot = makeTempDir();
+  const stateRoot = makeTempDir();
+  const first = runBootstrap({ targetRoot, stateRoot, runtime: "claude" });
+  const second = runBootstrap({ targetRoot, stateRoot, runtime: "claude" });
 
   assert.equal(first.skipped, false);
   assert.equal(second.skipped, true);
 });
 
-test("bootstrap creates AGENT.md for codex runtime", () => {
-  const repoRoot = makeTempRepo();
-  const result = runBootstrap({ repoRoot, runtime: "codex" });
+test("bootstrap creates AGENT.md under codex home for codex runtime", () => {
+  const targetRoot = makeTempDir();
+  const stateRoot = makeTempDir();
+  const result = runBootstrap({ targetRoot, stateRoot, runtime: "codex" });
 
   assert.equal(result.skipped, false);
-  assert.equal(fs.existsSync(path.join(repoRoot, "AGENT.md")), true);
-  assert.equal(fs.existsSync(path.join(repoRoot, "CLAUDE.md")), false);
+  assert.equal(fs.existsSync(path.join(targetRoot, "AGENT.md")), true);
+  assert.equal(fs.existsSync(path.join(targetRoot, "CLAUDE.md")), false);
 });
 
 test("managed block upsert preserves existing user content", () => {
-  const repoRoot = makeTempRepo();
-  const filePath = path.join(repoRoot, "CLAUDE.md");
+  const targetRoot = makeTempDir();
+  const filePath = path.join(targetRoot, "CLAUDE.md");
   fs.writeFileSync(filePath, "# Existing user instructions\n\nDo not delete this.\n", "utf8");
 
   upsertManagedBlock(filePath, "<!-- nexus-agent-kit:skills-first:start -->\nmanaged\n<!-- nexus-agent-kit:skills-first:end -->");
