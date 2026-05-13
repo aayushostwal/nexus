@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.20.0] - 2026-05-13
+
+### MISCELLANEOUS TASKS
+
+- Bump version to 1.20.0 ([`c7997b9`](https://github.com/aayushostwal/nexus-agent-kit/commit/c7997b9800f79640c30b23ddce5b102fe38249cc))
+
 ## [v1.19.0] - 2026-05-13
 
 ### MISCELLANEOUS TASKS
