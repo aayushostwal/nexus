@@ -2,11 +2,24 @@
 
 const fs = require("fs");
 const path = require("path");
+const { runBootstrap } = require("../scripts/bootstrap-agent-docs");
+const { isModelRouterEnabled } = require("../scripts/model-router-state");
+
+const MODEL_BY_RUNTIME = {
+  claude: "claude-haiku-4-5-20251001",
+  codex: "gpt-5.4-mini",
+};
 
 const SETTINGS_PATH = path.join(process.env.HOME || "", ".claude", "settings.json");
-
 const SMALL_EDIT_MODEL = "claude-haiku-4-5-20251001";
 const MARKER_PATH = path.join(process.env.HOME || "", ".nexus", ".model-router-original");
+
+function detectRuntime(context) {
+  const text = `${context?.session?.id || ""} ${process.env.CLAUDE_SESSION_ID || ""} ${process.env.CODEX_SESSION_ID || ""}`.toLowerCase();
+  if (text.includes("codex")) return "codex";
+  if (text.includes("claude")) return "claude";
+  return process.env.NEXUS_AI_RUNTIME || "claude";
+}
 
 function readSettings() {
   try {
@@ -27,25 +40,39 @@ function getPromptWordCount(context) {
     .filter(Boolean).length;
 }
 
-module.exports = async ({ toolName, context }) => {
-  // Downgrade to haiku for small edits and restore afterward
-  if (["Edit", "Write"].includes(toolName)) {
+module.exports = async ({ toolName, context, hookEventName } = {}) => {
+  const runtime = detectRuntime(context);
+  const trigger = hookEventName || toolName || "unknown";
+
+  try {
+    runBootstrap({ context, runtime });
+  } catch (error) {
+    console.warn(`Nexus bootstrap skipped: ${error.message}`);
+  }
+
+  const enabled = isModelRouterEnabled({ context });
+  const configuredModel = runtime === "claude" ? readSettings().model || MODEL_BY_RUNTIME.claude : MODEL_BY_RUNTIME[runtime] || "default";
+  console.error(`[model-router] runtime=${runtime} trigger=${trigger} enabled=${enabled} model=${configuredModel}`);
+
+  if (!enabled) {
+    return { continue: true };
+  }
+
+  if (runtime === "claude" && ["Edit", "Write"].includes(toolName)) {
     const wordCount = getPromptWordCount(context);
     if (wordCount <= 50) {
       const settings = readSettings();
       const current = settings.model;
       if (current && current !== SMALL_EDIT_MODEL) {
-        // Save original model so post-edit we can restore (best-effort)
         try {
           fs.mkdirSync(path.dirname(MARKER_PATH), { recursive: true });
           fs.writeFileSync(MARKER_PATH, current);
         } catch {}
         settings.model = SMALL_EDIT_MODEL;
         writeSettings(settings);
-        console.log(`[model-router] Switched to ${SMALL_EDIT_MODEL} for small edit (was: ${current})`);
+        console.error(`[model-router] Switched to ${SMALL_EDIT_MODEL} for small edit (was: ${current})`);
       }
     } else {
-      // Restore original model if we previously downgraded
       try {
         if (fs.existsSync(MARKER_PATH)) {
           const original = fs.readFileSync(MARKER_PATH, "utf8").trim();
@@ -54,7 +81,7 @@ module.exports = async ({ toolName, context }) => {
             settings.model = original;
             writeSettings(settings);
             fs.unlinkSync(MARKER_PATH);
-            console.log(`[model-router] Restored model to ${original}`);
+            console.error(`[model-router] Restored model to ${original}`);
           }
         }
       } catch {}

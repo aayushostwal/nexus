@@ -17,17 +17,31 @@ order: 1
 npm i -g nexus-agent-kit
 ```
 
-## Verify
+## Install In Codex
 
 ```bash
-nexus --version
-nexus doctor
+npx codex-marketplace add aayushostwal/nexus --plugin --global
 ```
 
-## Initialize Workspace
+Project-scoped install:
 
 ```bash
-nexus init
+npx codex-marketplace add aayushostwal/nexus --plugin --project
 ```
 
-This creates agent presets, workflow templates, and optional MCP wiring.
+## Install In Claude Code
+
+```text
+/plugin marketplace add aayushostwal/nexus
+/plugin install nexus@nexus-marketplace
+/reload-plugins
+```
+
+## Automatic Bootstrap
+
+Nexus automatically creates or updates runtime-specific repo instruction files:
+
+- Claude runtime: `CLAUDE.md`
+- Codex runtime: `AGENT.md`
+
+If either file already exists, Nexus preserves existing content and only appends/updates the Nexus-managed skills-first block.

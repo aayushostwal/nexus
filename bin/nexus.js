@@ -4,11 +4,13 @@
 const {
   addTodo,
   install,
+  modelRouterStatus,
   printHelp,
   printShellHook,
   readTodos,
   renderTodos,
   runStats,
+  setRouterMode,
   update,
 } = require("../scripts/core");
 
@@ -45,6 +47,15 @@ async function main(argv) {
     case "update": {
       const result = update();
       console.log(result.join("\n"));
+      break;
+    }
+    case "model-router": {
+      const subcommand = args[0] || "status";
+      if (subcommand === "status") {
+        console.log(modelRouterStatus().join("\n"));
+      } else {
+        console.log(setRouterMode(subcommand).join("\n"));
+      }
       break;
     }
     case "shell-hook": {
