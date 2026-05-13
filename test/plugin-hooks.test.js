@@ -25,9 +25,25 @@ function listFiles(root) {
   return entries.sort();
 }
 
+function isExecutable(mode) {
+  return (mode & 0o111) !== 0;
+}
+
 test("claude plugin ships the same hook surface as codex plugin", () => {
-  const codexHooks = listFiles(path.join(__dirname, "..", ".codex-plugin", "hooks"));
-  const claudeHooks = listFiles(path.join(__dirname, "..", ".claude-plugin", "hooks"));
+  const codexRoot = path.join(__dirname, "..", ".codex-plugin", "hooks");
+  const claudeRoot = path.join(__dirname, "..", ".claude-plugin", "hooks");
+  const codexHooks = listFiles(codexRoot);
+  const claudeHooks = listFiles(claudeRoot);
 
   assert.deepEqual(claudeHooks, codexHooks);
+
+  for (const relPath of codexHooks) {
+    const codexMode = fs.statSync(path.join(codexRoot, relPath)).mode;
+    const claudeMode = fs.statSync(path.join(claudeRoot, relPath)).mode;
+    assert.equal(
+      isExecutable(claudeMode),
+      isExecutable(codexMode),
+      `executable bit mismatch for ${relPath}`
+    );
+  }
 });
