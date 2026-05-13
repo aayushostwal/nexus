@@ -8,6 +8,7 @@
     "nexus-agent-kit": "bin/nexus.js"
   },
   "scripts": {
+    "lint": "node --check bin/nexus.js && node --check pre-tool-use/model-router.js && node --check scripts/bootstrap-agent-docs.js && node --check scripts/core.js && node --check scripts/log-stats.js && node --check scripts/model-router-state.js && node --check scripts/stats-viewer.js && node --check test/bootstrap-agent-docs.test.js && node --check test/core.test.js && node --check test/model-router-state.test.js && node --check test/plugin-hooks.test.js && node --check test/stats.test.js",
     "test": "node --test"
   },
   "keywords": [
