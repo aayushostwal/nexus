@@ -2,11 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [v1.18.0] - 2026-05-13
 
 ### BUG FIXES
 
 - Generate notes for current bumped version ([`da11d7e`](https://github.com/aayushostwal/nexus-agent-kit/commit/da11d7e192fca46a6d0f1ffa3d3f376bb4f003b1))
+
+### MISCELLANEOUS TASKS
+
+- Bump version to 1.18.0 ([`6f68606`](https://github.com/aayushostwal/nexus-agent-kit/commit/6f686063a60cd156a9e5ddb773fe58fdc5300c7d))
 
 ## [v1.17.0] - 2026-05-13
 
