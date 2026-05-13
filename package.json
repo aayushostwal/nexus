@@ -40,6 +40,7 @@
     "bin",
     "commands",
     "docs",
+    "hooks",
     "scripts",
     "skills",
     "README.md",

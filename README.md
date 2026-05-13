@@ -11,6 +11,7 @@ Instead of re-explaining how you want the assistant to operate in every new repo
 ## Connect
 
 <p align="center">
+  <a href="https://nexus-ai.aayushostwal.com/"><img src="https://img.shields.io/badge/Website-000000?style=flat&logo=googlechrome&logoColor=white" style="margin: 0 4px"/></a>
   <a href="https://www.linkedin.com/in/aayush-ostwal/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white" style="margin: 0 4px"/></a>
   <a href="https://x.com/ostwal_aayush"><img src="https://img.shields.io/badge/X-000000?style=flat&logo=x&logoColor=white" style="margin: 0 4px"/></a>
   <a href="https://www.youtube.com/@AayushOstwal"><img src="https://img.shields.io/badge/YouTube-FF0000?style=flat&logo=youtube&logoColor=white" style="margin: 0 4px"/></a>
@@ -51,12 +52,29 @@ npx codex-marketplace add aayushostwal/nexus --plugin --project
 
 This is a direct repo install. Users need the repo slug `aayushostwal/nexus`; pushing this repo does not by itself make the plugin searchable in a central Codex marketplace index.
 
+After install, Nexus automatically bootstraps repo instruction files on first active plugin run:
+
+- Claude runtime: updates `CLAUDE.md`
+- Codex runtime: updates `AGENT.md`
+
+If these files already exist, Nexus appends/updates only its managed block and preserves your existing content.
+
 ### Install In Claude Code
 
 ```text
 /plugin marketplace add aayushostwal/nexus
 /plugin install nexus@nexus-marketplace
 /reload-plugins
+```
+
+After plugin enablement, Nexus auto-runs the same bootstrap flow via plugin hooks and maintains the skills-first instruction block in `CLAUDE.md` without manual setup.
+
+Model router is enabled by default. You can toggle it per repo:
+
+```bash
+nexus model-router status
+nexus model-router disable
+nexus model-router enable
 ```
 
 ## What Nexus Does In Your Terminal

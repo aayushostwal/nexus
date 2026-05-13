@@ -4,6 +4,7 @@ const fs = require("fs");
 const os = require("os");
 const path = require("path");
 const { spawnSync } = require("child_process");
+const { readState, setModelRouterEnabled } = require("./model-router-state");
 
 const HOME = os.homedir();
 const NEXUS_HOME = process.env.NEXUS_HOME || path.join(HOME, ".nexus");
@@ -158,6 +159,27 @@ function printShellHook() {
   return "command -v nexus >/dev/null 2>&1 && nexus todos --limit 8";
 }
 
+function setRouterMode(mode) {
+  if (mode !== "enable" && mode !== "disable") {
+    throw new Error('Usage: nexus model-router <enable|disable|status>');
+  }
+
+  const enabled = mode === "enable";
+  const result = setModelRouterEnabled(enabled);
+  return [
+    `Model router ${enabled ? "enabled" : "disabled"}.`,
+    `State file: ${result.statePath}`,
+  ];
+}
+
+function modelRouterStatus() {
+  const state = readState();
+  return [
+    `Model router is ${state.enabled ? "enabled" : "disabled"}.`,
+    `State file: ${state.statePath}`,
+  ];
+}
+
 function runStats(args) {
   const scriptPath = path.join(__dirname, "stats-viewer.js");
   const result = spawnSync(process.execPath, [scriptPath, ...args], {
@@ -188,6 +210,7 @@ function printHelp() {
     "  nexus todos [--limit 20] [--no-color]",
     "  nexus stats [--summary] [--last 10] [--source all|claude|codex] [--session <id>]",
     "  nexus install [--shell-hook]",
+    "  nexus model-router <enable|disable|status>",
     "  nexus update",
     "  nexus shell-hook",
     "",
@@ -201,10 +224,12 @@ module.exports = {
   addTodo,
   classifyTodo,
   install,
+  modelRouterStatus,
   printHelp,
   printShellHook,
   readTodos,
   renderTodos,
   runStats,
+  setRouterMode,
   update,
 };
