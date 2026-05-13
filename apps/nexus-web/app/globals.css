@@ -154,6 +154,47 @@ body {
   color: hsl(222 47% 11%);
 }
 
+.light .text-cyan-100 {
+  color: hsl(194 93% 26%);
+}
+
+.light .text-cyan-200 {
+  color: hsl(194 89% 30%);
+}
+
+.light .text-cyan-300 {
+  color: hsl(194 85% 34%);
+}
+
+.light .hover\:text-cyan-200:hover {
+  color: hsl(194 89% 30%);
+}
+
+.light .hover\:text-cyan-300:hover {
+  color: hsl(194 85% 34%);
+}
+
+.light .border-cyan-400\/30 {
+  border-color: hsl(191 92% 35% / 0.34);
+}
+
+.light .border-cyan-400\/40 {
+  border-color: hsl(191 92% 35% / 0.4);
+}
+
+.light .border-cyan-400\/50 {
+  border-color: hsl(191 92% 35% / 0.5);
+}
+
+.light .border-cyan-400\/60 {
+  border-color: hsl(191 92% 35% / 0.6);
+}
+
+.light .bg-cyan-400\/10,
+.light .bg-cyan-500\/10 {
+  background-color: hsl(191 95% 90% / 0.65);
+}
+
 .light .hover\:bg-zinc-800:hover,
 .light .hover\:bg-zinc-800\/70:hover {
   background-color: hsl(210 40% 96%);
