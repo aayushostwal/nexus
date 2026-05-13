@@ -9,7 +9,6 @@
   "homepage": "https://github.com/aayushostwal/nexus",
   "repository": "https://github.com/aayushostwal/nexus",
   "license": "MIT",
-  "hooks": "./hooks/hooks.json",
   "keywords": [
     "claude-code",
     "codex",
