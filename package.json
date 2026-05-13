@@ -8,8 +8,6 @@
     "nexus-agent-kit": "bin/nexus.js"
   },
   "scripts": {
-    "hooks:install": "bash scripts/install-hooks.sh",
-    "lint": "bash scripts/lint.sh",
     "test": "node --test"
   },
   "keywords": [
@@ -40,7 +38,7 @@
     "bin",
     "commands",
     "docs",
-    "hooks",
+    "pre-tool-use",
     "scripts",
     "skills",
     "README.md",
