@@ -1,6 +1,6 @@
 {
   "name": "nexus-agent-kit",
-  "version": "1.23.0",
+  "version": "1.24.0",
   "description": "Plugin-first AI terminal workspace for Codex and Claude Code with planning, CI/CD debugging, reusable agents, skills, TODOs, and MCP tool integrations.",
   "type": "commonjs",
   "bin": {

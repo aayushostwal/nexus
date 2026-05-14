@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+### MISCELLANEOUS TASKS
+
+- Refactor the exploring skill for faster code base navigation ([`bd2222e`](https://github.com/aayushostwal/nexus-agent-kit/commit/bd2222e2bdab9c08bc05926f916f178541da2a9a))
+
+## [v1.23.0] - 2026-05-13
+
+### MISCELLANEOUS TASKS
+
+- Bump version to 1.23.0 ([`5cd5faf`](https://github.com/aayushostwal/nexus-agent-kit/commit/5cd5faf89abe21f243fb016df32aab4b7ba03a26))
+
 ## [v1.22.0] - 2026-05-13
 
 ### MISCELLANEOUS TASKS
