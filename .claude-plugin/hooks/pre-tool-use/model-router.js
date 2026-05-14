@@ -1,3 +1,6 @@
+#!/usr/bin/env node
 "use strict";
 
-module.exports = require("../../../pre-tool-use/model-router");
+const { run } = require("../../../scripts/run-model-router-hook");
+
+run("claude").catch(() => process.exit(0));

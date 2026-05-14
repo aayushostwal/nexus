@@ -40,6 +40,8 @@ test("claude plugin ships the same hook surface as codex plugin", () => {
   for (const relPath of codexHooks) {
     const codexMode = fs.statSync(path.join(codexRoot, relPath)).mode;
     const claudeMode = fs.statSync(path.join(claudeRoot, relPath)).mode;
+    assert.equal(isExecutable(codexMode), true, `codex hook is not executable: ${relPath}`);
+    assert.equal(isExecutable(claudeMode), true, `claude hook is not executable: ${relPath}`);
     assert.equal(
       isExecutable(claudeMode),
       isExecutable(codexMode),

@@ -1,6 +1,7 @@
 "use strict";
 
 const assert = require("node:assert/strict");
+const { spawnSync } = require("node:child_process");
 const fs = require("node:fs");
 const os = require("node:os");
 const path = require("node:path");
@@ -150,5 +151,36 @@ test("codex session-start writes observed model state", async () => {
     const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
     assert.equal(state.runtime, "codex");
     assert.equal(state.currentModel, "gpt-5.5");
+  });
+});
+
+test("claude session-start hook command bootstraps CLAUDE.md", async () => {
+  await withIsolatedEnv(async () => {
+    const repoRoot = makeTempDir("nexus-router-repo-");
+    const homeRoot = makeTempDir("nexus-router-home-");
+    process.chdir(repoRoot);
+    process.env.HOME = homeRoot;
+
+    const hookPath = path.join(__dirname, "..", ".claude-plugin", "hooks", "session-start", "model-router.js");
+    const hookInput = {
+      hook_event_name: "SessionStart",
+      session_id: "claude-session-hook-bootstrap",
+      cwd: repoRoot,
+    };
+
+    const hookResult = spawnSync(process.execPath, [hookPath], {
+      env: {
+        ...process.env,
+        HOME: homeRoot,
+      },
+      input: `${JSON.stringify(hookInput)}\n`,
+      encoding: "utf8",
+    });
+
+    assert.equal(hookResult.status, 0, hookResult.stderr);
+    const claudeFile = path.join(homeRoot, ".claude", "CLAUDE.md");
+    assert.equal(fs.existsSync(claudeFile), true);
+    const claudeContent = fs.readFileSync(claudeFile, "utf8");
+    assert.match(claudeContent, /token-optimizer skill/i);
   });
 });
