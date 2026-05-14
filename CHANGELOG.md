@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file.
 
 ### MISCELLANEOUS TASKS
 
+- Added aggresive token optimization ([`ac46096`](https://github.com/aayushostwal/nexus-agent-kit/commit/ac46096dae3d9aabf4862206467a7f5991db5d6e))
+
+## [v1.24.0] - 2026-05-14
+
+### MISCELLANEOUS TASKS
+
+- Bump version to 1.24.0 ([`d5b7f71`](https://github.com/aayushostwal/nexus-agent-kit/commit/d5b7f71ec4d44e3aa60fd0c7c4364eed15fbdb7c))
 - Refactor the exploring skill for faster code base navigation ([`bd2222e`](https://github.com/aayushostwal/nexus-agent-kit/commit/bd2222e2bdab9c08bc05926f916f178541da2a9a))
 
 ## [v1.23.0] - 2026-05-13
