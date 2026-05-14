@@ -131,6 +131,8 @@ function buildManagedBlock(version) {
     "",
     "- Before doing anything else, search for relevant skills first and then use the most relevant skill before any other action.",
     "",
+    "- Wherever applicable, try to use token-optimizer skill to minimize the token usage.", 
+    "",
     `<!-- nexus-agent-kit:version ${version} -->`,
     END_MARKER,
   ].join("\n");

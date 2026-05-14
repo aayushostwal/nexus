@@ -129,11 +129,6 @@ Inspect:
 - configuration usage
 - environment coupling
 
-Questions:
-- What does this file rely on?
-- Where does its data come from?
-- What abstractions does it consume?
-
 ---
 
 ### Downstream Analysis
@@ -168,18 +163,3 @@ navigate immediately to:
 Never assume behavior from naming alone.
 
 ---
-
-## Phase 4 — System Understanding
-
-Build a mental model of:
-- execution flow
-- data movement
-- ownership boundaries
-- lifecycle behavior
-- integration points
-
-Focus on:
-- where logic originates
-- where state changes occur
-- where side effects happen
-- where
