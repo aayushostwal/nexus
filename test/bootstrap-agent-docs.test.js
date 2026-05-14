@@ -24,6 +24,7 @@ test("bootstrap creates CLAUDE.md under claude home for claude runtime", () => {
 
   const claudeContent = fs.readFileSync(path.join(targetRoot, "CLAUDE.md"), "utf8");
   assert.match(claudeContent, /search for relevant skills first/i);
+  assert.match(claudeContent, /token-optimizer skill/i);
 });
 
 test("bootstrap is idempotent once state and markers exist", () => {

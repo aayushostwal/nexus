@@ -4,7 +4,7 @@
   <img src="apps/nexus-web/public/logos/nexus.svg" alt="Nexus Logo" width="260" />
 </p>
 
-Nexus Agent Kit is a plugin-first AI terminal workspace for Codex and Claude Code. It packages reusable skills, specialized agents, terminal commands, and MCP safety conventions so your AI sessions behave consistently across planning, CI/CD debugging, code review, TODO tracking, infrastructure design, tutorials, and tool-connected work.
+Nexus Agent Kit is a plugin-first AI terminal workspace for Codex and Claude Code. It packages reusable skills, terminal commands, and MCP safety conventions so your AI sessions behave consistently across planning, CI/CD debugging, code review, TODO tracking, infrastructure design, tutorials, and tool-connected work.
 
 Instead of re-explaining how you want the assistant to operate in every new repo or terminal, you install Nexus once and get a shared operating model for engineering work.
 
@@ -103,22 +103,6 @@ NEXUS_SMALL_PROMPT_MAX_WORDS=50
 - Find free or self-hosted alternatives to Firebase, Heroku, Auth0, Datadog, and other paid services.
 - Build a daily brief from TODOs and connected work systems.
 
-## Agents
-
-Nexus ships focused agent definitions that can be reused inside supported terminals.
-
-| Agent | Category | Purpose |
-| --- | --- | --- |
-| [`nexus-coordinator`](agents/coordinator.md) | ![Coordination](https://img.shields.io/badge/Coordination-0F766E?style=flat) ![Parallelism](https://img.shields.io/badge/Parallelism-0891B2?style=flat) | Decomposes work into a dependency graph, identifies parallel tasks, and routes subtasks to specialist agents. |
-| [`nexus-explorer`](agents/explorer.md) | ![Exploration](https://img.shields.io/badge/Exploration-7C3AED?style=flat) ![Research](https://img.shields.io/badge/Research-6D28D9?style=flat) | Compares viable approaches and recommends a path before detailed planning begins. |
-| [`nexus-planner`](agents/planner.md) | ![Planning](https://img.shields.io/badge/Planning-1D4ED8?style=flat) ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) | Produces approval-first technical plans for production work. |
-| [`nexus-debugger`](agents/debugger.md) | ![Debugging](https://img.shields.io/badge/Debugging-DC2626?style=flat) ![CI/CD](https://img.shields.io/badge/CI%2FCD-EA580C?style=flat) | Investigates failures, identifies root cause, and verifies fixes. |
-| [`nexus-reviewer`](agents/reviewer.md) | ![Review](https://img.shields.io/badge/Review-7C3AED?style=flat) ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) | Reviews code and workflows for bugs, regressions, and risk. |
-| [`nexus-todo-manager`](agents/todo-manager.md) | ![Operations](https://img.shields.io/badge/Operations-0F766E?style=flat) ![TODOs](https://img.shields.io/badge/TODOs-14B8A6?style=flat) | Maintains labeled global TODOs and keeps persistent follow-ups organized. |
-| [`nexus-social-assistant`](agents/social-assistant.md) | ![Comms](https://img.shields.io/badge/Comms-DB2777?style=flat) ![Briefing](https://img.shields.io/badge/Briefing-EC4899?style=flat) | Builds daily briefs from Slack, Outlook, Jira, and Nexus TODO context. |
-| [`nexus-tutorial-architect`](agents/tutorial.md) | ![Teaching](https://img.shields.io/badge/Teaching-059669?style=flat) ![Documentation](https://img.shields.io/badge/Documentation-0EA5E9?style=flat) | Creates executable tutorial notebooks and reproducible learning assets. |
-| [`nexus:fast-editor`](agents/fast-editor.md) | ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) | Minimal, fast agent for small deterministic edits (1–10 lines). No plans, no explanations — just the change. |
-
 ## Skills
 
 Skills are grouped below by role so it is easier to understand what the plugin actually adds to the terminal.
@@ -212,7 +196,7 @@ Skills are grouped below by role so it is easier to understand what the plugin a
 
 | Skill | Category | Purpose |
 | --- | --- | --- |
-| [`nexus-token-saving`](skills/token-saving/SKILL.md) | ![Operations](https://img.shields.io/badge/Operations-0F766E?style=flat) | Best practices to minimize token usage while preserving output quality in Codex and Claude Code sessions. |
+| [`nexus-token-optimizer`](skills/token-optimizer/SKILL.md) | ![Operations](https://img.shields.io/badge/Operations-0F766E?style=flat) | Always-on token optimization rules for efficient context gathering, tool usage, and concise responses. |
 
 ## Commands
 
