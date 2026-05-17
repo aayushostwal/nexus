@@ -2,11 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [v1.26.0] - 2026-05-14
 
 ### BUG FIXES
 
 - Execute bootstrap on hook command; refresh token-optimizer docs ([`2290f31`](https://github.com/aayushostwal/nexus-agent-kit/commit/2290f31415a2d85d016a9c8bc4b83d76e5975b23))
+
+### MISCELLANEOUS TASKS
+
+- Bump version to 1.26.0 ([`7868246`](https://github.com/aayushostwal/nexus-agent-kit/commit/7868246cbf18b857176b50b4d1757ca30308c8ec))
 
 ## [v1.25.0] - 2026-05-14
 
