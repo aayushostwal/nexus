@@ -4,7 +4,6 @@ const fs = require("fs");
 const os = require("os");
 const path = require("path");
 const { spawnSync } = require("child_process");
-const { readState, setModelRouterEnabled } = require("./model-router-state");
 
 const HOME = os.homedir();
 const NEXUS_HOME = process.env.NEXUS_HOME || path.join(HOME, ".nexus");
@@ -124,60 +123,14 @@ function formatLabel(label, color) {
   return `\u001b[${code}m[${label}]\u001b[0m`;
 }
 
-function install(options = {}) {
+function install() {
   ensureNexusHome();
-  const messages = [];
-  if (options.shellHook) {
-    installShellHook(messages);
-  } else {
-    messages.push("Shell hook not installed. Run `nexus install --shell-hook` or add this manually:");
-    messages.push(printShellHook());
-  }
-  messages.push(`Global TODO file: ${TODO_FILE}`);
-  return messages;
+  return [`Global TODO file: ${TODO_FILE}`];
 }
 
 function update() {
   ensureNexusHome();
   return ["Nexus is plugin-first. No template update is required.", `Global TODO file: ${TODO_FILE}`];
-}
-
-function installShellHook(messages) {
-  const zshrc = path.join(HOME, ".zshrc");
-  const marker = "# nexus-agent-kit shell hook";
-  const hook = `${marker}\ncommand -v nexus >/dev/null 2>&1 && nexus todos --limit 8\n`;
-  const current = fs.existsSync(zshrc) ? fs.readFileSync(zshrc, "utf8") : "";
-  if (current.includes(marker)) {
-    messages.push("Shell hook already present in ~/.zshrc.");
-    return;
-  }
-  fs.appendFileSync(zshrc, `${current.endsWith("\n") ? "" : "\n"}\n${hook}`, "utf8");
-  messages.push("Installed shell TODO hook in ~/.zshrc.");
-}
-
-function printShellHook() {
-  return "command -v nexus >/dev/null 2>&1 && nexus todos --limit 8";
-}
-
-function setRouterMode(mode) {
-  if (mode !== "enable" && mode !== "disable") {
-    throw new Error('Usage: nexus model-router <enable|disable|status>');
-  }
-
-  const enabled = mode === "enable";
-  const result = setModelRouterEnabled(enabled);
-  return [
-    `Model router ${enabled ? "enabled" : "disabled"}.`,
-    `State file: ${result.statePath}`,
-  ];
-}
-
-function modelRouterStatus() {
-  const state = readState();
-  return [
-    `Model router is ${state.enabled ? "enabled" : "disabled"}.`,
-    `State file: ${state.statePath}`,
-  ];
 }
 
 function runStats(args) {
@@ -209,10 +162,8 @@ function printHelp() {
     '  nexus add "Follow up with client about AWS cost"',
     "  nexus todos [--limit 20] [--no-color]",
     "  nexus stats [--summary] [--last 10] [--source all|claude|codex] [--session <id>]",
-    "  nexus install [--shell-hook]",
-    "  nexus model-router <enable|disable|status>",
+    "  nexus install",
     "  nexus update",
-    "  nexus shell-hook",
     "",
     "Global files:",
     `  ${TODO_FILE}`,
@@ -224,12 +175,9 @@ module.exports = {
   addTodo,
   classifyTodo,
   install,
-  modelRouterStatus,
   printHelp,
-  printShellHook,
   readTodos,
   renderTodos,
   runStats,
-  setRouterMode,
   update,
 };

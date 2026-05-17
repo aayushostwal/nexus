@@ -67,28 +67,7 @@ If these files already exist, Nexus appends/updates only its managed block and p
 /reload-plugins
 ```
 
-After plugin enablement, Nexus auto-runs the same bootstrap flow via plugin hooks and maintains the skills-first instruction block in `~/.claude/CLAUDE.md` without manual setup.
-
-Model router is enabled by default. You can toggle it per repo:
-
-```bash
-nexus model-router status
-nexus model-router disable
-nexus model-router enable
-```
-
-When hooks run (`session-start`, `user-prompt-submit`, `pre-tool-use`), Nexus writes runtime model state to:
-
-```text
-<repo>/.nexus/model-router-runtime.json
-```
-
-For Claude runtime, prompt-size routing runs automatically on `user-prompt-submit` and can switch between a default model and the small-edit model. Tune thresholds with:
-
-```bash
-NEXUS_SMALL_PROMPT_MAX_TOKENS=180
-NEXUS_SMALL_PROMPT_MAX_WORDS=50
-```
+After plugin enablement, run `node scripts/bootstrap-agent-docs.js` once to create or refresh the managed skills-first instruction block in your runtime instruction files.
 
 ## What Nexus Does In Your Terminal
 

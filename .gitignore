@@ -39,3 +39,4 @@ nexus-agent-kit-*.tgz
 *.tmp
 *.temp
 .claude/worktrees/
+.pruner/

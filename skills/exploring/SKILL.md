@@ -1,165 +1,169 @@
 ---
-name: nexus-exploring
+name: codebase-navigator
 description: >
-  Fast, read-only codebase navigation and dependency tracing skill.
-  Use proactively when exploring unfamiliar repositories, locating files,
-  tracing imports, understanding architecture, mapping execution flow,
-  or identifying upstream/downstream dependencies.
-model: claude-haiku-4-5
+  Token-efficient codebase navigation skill. Use this whenever the user wants to
+  explore, understand, or find anything in their codebase — folder structure,
+  entry points, config files, where a feature lives, or a specific file by name/purpose.
+  Triggers on: "navigate my codebase", "explore the project", "find the file for X",
+  "where is the code for Y", "show me the structure", "what's the entry point",
+  "find config files", "understand this repo". Prefer this over raw `view` calls on
+  directories.
 ---
 
-# Nexus Exploring
+# Codebase Navigator
 
-A high-speed repository exploration skill focused on understanding how a
-codebase is structured and how components interact.
-
-This skill is optimized for:
-- Repository discovery
-- Architecture comprehension
-- Dependency tracing
-- Call-flow analysis
-- File and symbol navigation
-- Context gathering before implementation
-
-The objective is to build a strong mental model of the system before making
-changes or planning implementations.
+A token-efficient skill for exploring any codebase quickly. The core principle:
+**one `bash_tool` call to map, then targeted `view` calls only on confirmed files.**
 
 ---
 
-# Core Principles
-
-## 1. Explore Before Editing
-Never jump into implementation immediately.
-
-First:
-- Understand the repository layout
-- Identify ownership boundaries
-- Locate the source of truth
-- Trace execution paths
-- Map dependencies
+This skill's approach:
+1. **One `bash_tool` call** builds the full structural map (paths only, no content)
+2. **Classify** the structure (monorepo? framework? lang?)
+3. **Read only confirmed key files** — entry points, configs, the specific file asked for
 
 ---
 
-## 2. Think in Upstream & Downstream Flows
-Every file exists within a dependency graph.
+## Step 1 — One-Shot Structure Scan
 
-For any component:
-- Determine what it depends on (upstream)
-- Determine who depends on it (downstream)
+Always start with this single bash command. Adjust `ROOT` to the user's project root (default: `.` or whatever path they gave).
 
-This prevents isolated understanding and reveals system impact.
+```bash
+find ROOT -maxdepth 4 \
+  -not -path '*/node_modules/*' \
+  -not -path '*/.git/*' \
+  -not -path '*/dist/*' \
+  -not -path '*/build/*' \
+  -not -path '*/__pycache__/*' \
+  -not -path '*/.next/*' \
+  -not -path '*/coverage/*' \
+  -not -path '*/vendor/*' \
+  -not -path '*/venv/*' \
+  -not -path '*/.venv/*' \
+  | sort
+```
 
----
-
-## 3. Follow References Aggressively
-Do not stop at the first file.
-
-If:
-- A function calls another module
-- A service references another package
-- A config points elsewhere
-
-Immediately follow the reference chain until the actual implementation and
-usage context are understood.
-
----
-
-# Compatibility
-
-## Required Tools
-- WebSearch
-- WebFetch
-- Grep
-- Read
-- FileSearch
-- ListFiles
-
-## Handoff Target
-- `nexus:planning`
-
-Use `nexus:planning` once:
-- repository structure is understood
-- relevant logic is identified
-- architectural context is clear
+<!-- **If the tree is very large (>300 lines):** Re-run with `-maxdepth 3`, or add `-type f` to show only files, or narrow to a subtree. -->
 
 ---
 
-# Operational Protocol
+## Step 2 — Classify the Repo
 
-## Phase 1 — Top-Down Mapping
+From the path list, identify:
 
-Start by building a repository map.
+| Signal | Inference |
+|---|---|
+| `package.json` at root | Node/JS project |
+| `packages/` or `apps/` dirs | Monorepo (Turborepo, Nx, Lerna) |
+| `pyproject.toml` / `setup.py` | Python project |
+| `go.mod` | Go module |
+| `Cargo.toml` | Rust |
+| `next.config.*` | Next.js |
+| `vite.config.*` | Vite frontend |
+| `manage.py` | Django |
+| `app/` + `config/` | Rails or Laravel |
+| Multiple top-level dirs with own `package.json` | Monorepo |
 
-### Actions
-- List root directories
-- Identify major domains/modules
-- Locate entrypoints
-- Detect framework conventions
-- Find the primary source directories
-
-### Common Source-of-Truth Locations
-- `/src`
-- `/app`
-- `/lib`
-- `/services`
-- `/packages`
-- `/backend`
-- `/frontend`
-
-### Goal
-Understand:
-- project hierarchy
-- ownership boundaries
-- system organization
-- architectural patterns
-
-before reading implementation details.
+Name the repo type confidently before continuing.
 
 ---
 
-## Phase 2 — Dependency Tracing
+## Step 3 — Locate Key Files (by goal)
 
-When investigating a component, perform a full dependency sandwich.
+### Goal: Understand folder structure
+Summarize from the path tree. No extra reads needed. Group by layer:
+- Root config files (list them)
+- Top-level dirs + one-line purpose each
+- Source root (`src/`, `lib/`, `app/`) → key subdirs
 
-### Upstream Analysis
-Inspect:
-- imports
-- inherited classes
-- injected dependencies
-- configuration usage
-- environment coupling
+### Goal: Find entry points
+Read only the confirmed entry file. Common patterns:
+
+| Type | Entry file |
+|---|---|
+| Node/Express | `src/index.ts`, `src/server.ts`, `index.js` |
+| Next.js | `app/layout.tsx`, `pages/_app.tsx` |
+| React (Vite/CRA) | `src/main.tsx`, `src/index.tsx` |
+| Python | `main.py`, `app.py`, `manage.py`, `__main__.py` |
+| Go | `main.go`, `cmd/*/main.go` |
+| Rust | `src/main.rs`, `src/lib.rs` |
+| Django | `manage.py` + `settings.py` |
+
+Read the single entry file with `view`. Do not speculatively read others.
+
+### Goal: Find config files
+From the path tree, collect all files matching these names and read only the ones the user cares about:
+- `*.config.*`, `.env*`, `docker-compose.*`, `Dockerfile`, `.github/workflows/*.yml`
+- Language-specific: `tsconfig.json`, `pyproject.toml`, `go.mod`, `Cargo.toml`
+
+List them. Ask which one to open, or open all if there are ≤3.
+
+### Goal: Find where a feature lives
+Use grep to search for the feature name in file paths first (cheap), then content:
+
+```bash
+# Search paths first (very cheap)
+find ROOT -type f -name "*FEATURE*" \
+  -not -path '*/node_modules/*' -not -path '*/.git/*'
+
+# Then search file contents (targeted — only in src dirs)
+grep -rl "FEATURE" ROOT/src ROOT/app ROOT/lib 2>/dev/null \
+  --include="*.ts" --include="*.tsx" --include="*.py" --include="*.go" \
+  | head -20
+```
+
+Replace `FEATURE` with the keyword. Open only the top 1–2 most relevant hits.
+
+### Goal: Find a file by name/purpose
+```bash
+find ROOT -type f -name "*KEYWORD*" \
+  -not -path '*/node_modules/*' -not -path '*/.git/*' \
+  | head -20
+```
 
 ---
 
-### Downstream Analysis
-Use search tools to find:
-- imports
-- references
-- invocations
-- registrations
-- event bindings
+## Token Budget Rules
 
-Questions:
-- Who calls this?
-- What breaks if this changes?
-- Is this a shared abstraction?
+| Action | When |
+|---|---|
+| `bash_tool` with `find` | Always first — one call |
+| `bash_tool` with `grep` | When searching for a feature/keyword |
+| `view FILE` | Only for confirmed, specific files the user needs |
+| `view DIRECTORY` | **Avoid** — use `find` instead |
+| Multiple sequential `view` calls | Only if user explicitly asked for multiple files |
+
+**Never** do speculative reads — don't open a file "just to check". The path tree tells you almost everything. Only read file content when the user needs to see it or you need a specific value (like a port number or import path) to answer their question.
+
+---
+
+## Monorepo Fast-Path
+
+If you detect a monorepo, immediately run a second scan per workspace to show the internal structure of each package:
+
+```bash
+# List all workspace package.json locations
+find ROOT -name "package.json" \
+  -not -path '*/node_modules/*' \
+  -maxdepth 4 \
+  | xargs grep -l '"name"' \
+  | sort
+```
+
+Then read only the `name` and `scripts` fields (use `grep` not `view`) to summarize each package's purpose without loading the whole file.
 
 ---
 
-## Phase 3 — Contextual Hopping
+## Examples
 
-Follow the execution path naturally.
+**User:** "Show me the structure of my project at /workspace/myapp"  
+→ Run Step 1 scan on `/workspace/myapp`, classify, present the map. No file content reads unless entry point is ambiguous.
 
-If:
-- Function A calls Function B
-- Service X emits Event Y
-- Router Z connects to Handler Q
+**User:** "Where is the authentication code?"  
+→ Step 1 scan (if not done), then grep for `auth` in path names + contents of `src/`. Show the top matches.
 
-navigate immediately to:
-- the implementation
-- the registration layer
-- the execution boundary
+**User:** "What's the entry point of this app?"  
+→ Step 1 scan, classify, infer entry file from the table, `view` that one file only.
 
-Never assume behavior from naming alone.
-
----
+**User:** "Find all config files"  
+→ Step 1 scan, filter for config patterns from the path list, present them. `view` only if asked.
