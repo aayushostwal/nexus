@@ -152,6 +152,15 @@ find ROOT -name "package.json" \
 
 Then read only the `name` and `scripts` fields (use `grep` not `view`) to summarize each package's purpose without loading the whole file.
 
+## Output:
+Make the output precise. It should be a table. It should have following columns:
+
+* Title: It can tell a sub section of a file or a behavior.
+* File path: It points to the file where is behavior is coded.
+* Description: Here you can add commands/cli reference or can point to a specific line in the file.
+
+Make this table concise. It should be human readable as well as if the outputs are passed to another agent, it should be able to retrieve the context with accuracy.
+
 ---
 
 ## Examples
