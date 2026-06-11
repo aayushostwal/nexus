@@ -177,6 +177,14 @@ Skills are grouped below by role so it is easier to understand what the plugin a
 | --- | --- | --- |
 | [`nexus-token-optimizer`](skills/token-optimizer/SKILL.md) | ![Operations](https://img.shields.io/badge/Operations-0F766E?style=flat) | Always-on token optimization rules for efficient context gathering, tool usage, and concise responses. |
 
+## Agents
+
+Agents are autonomous subagents that Claude Code can delegate to. They run in their own context window with a focused system prompt and a restricted tool set.
+
+| Agent | Category | Purpose |
+| --- | --- | --- |
+| [`code-reviewer`](agents/code-reviewer.md) | ![Review](https://img.shields.io/badge/Review-7C3AED?style=flat) ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) | Read-only senior reviewer for a PR, branch, or diff. Returns a verdict with file:line findings covering correctness, regressions, security, migration risk, and deploy safety. |
+
 ## Commands
 
 | Command | Category | Purpose |
