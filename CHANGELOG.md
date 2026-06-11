@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+### FEATURES
+
+- Add code-reviewer agent to marketplace ([`ac98d8d`](https://github.com/aayushostwal/nexus-agent-kit/commit/ac98d8d43000e3671d3eda1e2eaf7072d095514c))
+- Add prd-writer skill and update exploring output format ([`ee5ddbf`](https://github.com/aayushostwal/nexus-agent-kit/commit/ee5ddbf81171485cae7b36a7fe1e1aa25fd33caf))
+
+### MISCELLANEOUS TASKS
+
+- Bump version to 1.28.0 ([`2088c87`](https://github.com/aayushostwal/nexus-agent-kit/commit/2088c87d1f36c6cd2318bb059537327c8fb93a4c))
+
+## [v1.27.0] - 2026-05-17
+
+### MISCELLANEOUS TASKS
+
+- Bump version to 1.27.0 ([`52d378b`](https://github.com/aayushostwal/nexus-agent-kit/commit/52d378ba9ce852948351f6710ebd11e62d1a419f))
+
 ## [v1.26.0] - 2026-05-14
 
 ### BUG FIXES
