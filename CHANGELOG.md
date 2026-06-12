@@ -6,10 +6,17 @@ All notable changes to this project will be documented in this file.
 
 ### FEATURES
 
+- Agent-centric docs site overhaul + real plugin data ([`f50251d`](https://github.com/aayushostwal/nexus-agent-kit/commit/f50251d99b64f4a0bd7099a9d79ad58277ea36bb))
+
+## [v1.30.0] - 2026-06-12
+
+### FEATURES
+
 - Replace generic skills with 14 memory-enabled, color-coded agents ([`269afaf`](https://github.com/aayushostwal/nexus-agent-kit/commit/269afaf0c6b838ddf281ba8888eaa5dc093addf4))
 
 ### MISCELLANEOUS TASKS
 
+- Bump version to 1.30.0 ([`4c60bb2`](https://github.com/aayushostwal/nexus-agent-kit/commit/4c60bb2798fee9b2e13ac9cb507762d422302965))
 - 🚨 **BREAKING** Remove npm packaging, distribute as git-based plugin marketplace only ([`48f33d9`](https://github.com/aayushostwal/nexus-agent-kit/commit/48f33d9ef6199e445bc3f5442411cc4a708696a3))
 
 ## [v1.29.0] - 2026-06-11
