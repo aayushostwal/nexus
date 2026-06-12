@@ -11,7 +11,7 @@ Steps:
 3. Use Slack MCP only if connected and approved.
 4. Use Outlook/Microsoft Graph MCP only if connected and approved.
 5. Use Jira/Atlassian MCP only if connected and approved.
-6. Add extracted action items with `nexus add "<task>"`.
+6. Add extracted action items with `node "${CLAUDE_PLUGIN_ROOT}/bin/nexus.js" add "<task>"`.
 7. Ask before sending, posting, creating, updating, or deleting anything externally.
 
 Output:

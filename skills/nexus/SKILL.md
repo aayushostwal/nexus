@@ -13,7 +13,7 @@ Shared operating rules for Codex and Claude Code sessions.
 ---
 
 ## Compatibility
-- Required CLI: `nexus` (fallback: `npx nexus-agent-kit`)
+- The plugin ships its own dependency-free scripts: run them with `node "${CLAUDE_PLUGIN_ROOT}/bin/nexus.js"` (requires Node >= 18; no npm install)
 - Required files: `~/.nexus/TODOS.md`, `~/.nexus/state.json`
 
 ---
@@ -23,20 +23,20 @@ Shared operating rules for Codex and Claude Code sessions.
 ### Step 1 — TODO Classification & Addition
 When the user asks to remember, track, add, or follow up on something:
 1. Classify into exactly one of: `Work`, `Python`, `Claude`, `Codex`, `AWS`, `Jira`, `Slack`, `Outlook`, `Personal`, `General`.
-2. Run `nexus add "<task>"`.
+2. Run `node "${CLAUDE_PLUGIN_ROOT}/bin/nexus.js" add "<task>"`.
 3. Confirm with the output format below.
 
-If CLI is unavailable: tell user to run `npx nexus-agent-kit todos`.
+If the script fails: check that Node >= 18 is installed (`node --version`).
 
 ### Step 2 — TODO Listing
-Run `nexus todos --limit 8`. Output grouped by label, sorted by recency.
+Run `node "${CLAUDE_PLUGIN_ROOT}/bin/nexus.js" todos --limit 8`. Output grouped by label, sorted by recency.
 
 ### Step 3 — Daily Brief
 When the user asks for a daily brief or "what's on my plate":
 1. Read `~/.nexus/TODOS.md`.
 2. Read `~/.nexus/state.json`.
 3. Use Slack, Outlook, and Jira MCPs **only if configured** in state.json.
-4. Extract action items and add each with `nexus add "<task>"`.
+4. Extract action items and add each with `node "${CLAUDE_PLUGIN_ROOT}/bin/nexus.js" add "<task>"`.
 5. Ask before sending Slack messages, email, updating Jira, or changing AWS.
 
 ---
@@ -47,7 +47,7 @@ For TODO operations:
 ```
 Outcome: [what was done]
 Actions: [commands run]
-Evidence: [nexus CLI output or confirmation]
+Evidence: [nexus script output or confirmation]
 Next Step: [what the user should do next]
 ```
 
@@ -67,9 +67,9 @@ Next Step:
 ## Anti-Patterns
 - Never perform external writes (Slack, email, Jira, AWS changes) without explicit user confirmation first.
 - Never expose API keys, tokens, or secrets in any output.
-- Never skip classification — always assign a label before running `nexus add`.
+- Never skip classification — always assign a label before adding a TODO.
 - Never use a large model for TODO classification or text summarization; use the smallest capable model.
-- Never claim `nexus` CLI output without actually running the command.
+- Never claim nexus script output without actually running the command.
 
 ---
 
@@ -80,7 +80,7 @@ Next Step:
 **Output:**
 ```
 Outcome: TODO added under Work.
-Actions: nexus add "Follow up with finance about Outlook invoice"
+Actions: node "${CLAUDE_PLUGIN_ROOT}/bin/nexus.js" add "Follow up with finance about Outlook invoice"
 Evidence: ✓ Added to ~/.nexus/TODOS.md
 Next Step: Review during tomorrow's daily brief.
 ```

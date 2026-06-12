@@ -20,10 +20,37 @@ jobs:
           node-version: 20
 
       - name: Lint
-        run: npm run lint
+        run: |
+          node --check bin/nexus.js
+          node --check scripts/bootstrap-agent-docs.js
+          node --check scripts/core.js
+          node --check scripts/stats-viewer.js
+          node --check test/bootstrap-agent-docs.test.js
+          node --check test/core.test.js
 
       - name: Test
-        run: npm test
+        run: node --test test/*.test.js
 
-      - name: Validate npm package
-        run: npm pack --dry-run
+      - name: Validate manifests
+        run: |
+          node -e "
+            const fs = require('fs');
+            const files = [
+              '.claude-plugin/plugin.json',
+              '.codex-plugin/plugin.json',
+              '.claude-plugin/marketplace.json',
+              '.agents/plugins/marketplace.json',
+            ];
+            const versions = new Set();
+            for (const f of files) {
+              const obj = JSON.parse(fs.readFileSync(f, 'utf8'));
+              versions.add(obj.version);
+              if (obj.plugins) obj.plugins.forEach(p => versions.add(p.version));
+              console.log(f, '->', obj.version);
+            }
+            if (versions.size !== 1) {
+              console.error('Version mismatch across manifests:', [...versions]);
+              process.exit(1);
+            }
+            console.log('All manifests valid and synced at', [...versions][0]);
+          "

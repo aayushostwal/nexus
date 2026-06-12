@@ -7,8 +7,6 @@ on:
 
 permissions:
   contents: write
-  packages: write
-  id-token: write
 
 jobs:
   # A: CI — lint, test, validate
@@ -25,15 +23,42 @@ jobs:
           node-version: 20
 
       - name: Lint
-        run: npm run lint
+        run: |
+          node --check bin/nexus.js
+          node --check scripts/bootstrap-agent-docs.js
+          node --check scripts/core.js
+          node --check scripts/stats-viewer.js
+          node --check test/bootstrap-agent-docs.test.js
+          node --check test/core.test.js
 
       - name: Test
-        run: npm test
+        run: node --test test/*.test.js
 
-      - name: Validate npm package
-        run: npm pack --dry-run
+      - name: Validate manifests
+        run: |
+          node -e "
+            const fs = require('fs');
+            const files = [
+              '.claude-plugin/plugin.json',
+              '.codex-plugin/plugin.json',
+              '.claude-plugin/marketplace.json',
+              '.agents/plugins/marketplace.json',
+            ];
+            const versions = new Set();
+            for (const f of files) {
+              const obj = JSON.parse(fs.readFileSync(f, 'utf8'));
+              versions.add(obj.version);
+              if (obj.plugins) obj.plugins.forEach(p => versions.add(p.version));
+              console.log(f, '->', obj.version);
+            }
+            if (versions.size !== 1) {
+              console.error('Version mismatch across manifests:', [...versions]);
+              process.exit(1);
+            }
+            console.log('All manifests valid and synced at', [...versions][0]);
+          "
 
-  # B-E: Bump version, publish, changelog, tag — all in one run
+  # B-D: Bump version, changelog, tag — all in one run
   release:
     needs: ci
     runs-on: ubuntu-latest
@@ -53,20 +78,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          registry-url: "https://registry.npmjs.org"
 
       - name: Bump minor version
+        id: version
         run: |
-          CURRENT=$(npm pkg get version | tr -d '"')
+          CURRENT=$(jq -r .version .claude-plugin/marketplace.json)
           MAJOR=$(echo $CURRENT | cut -d. -f1)
           MINOR=$(echo $CURRENT | cut -d. -f2)
           NEW_VERSION="$MAJOR.$((MINOR + 1)).0"
-          npm pkg set version=$NEW_VERSION
+          echo "value=$NEW_VERSION" >> $GITHUB_OUTPUT
           echo "Bumped $CURRENT → $NEW_VERSION"
 
       - name: Sync version to plugin and marketplace JSONs
+        env:
+          NEW_VERSION: ${{ steps.version.outputs.value }}
         run: |
-          NEW_VERSION=$(npm pkg get version | tr -d '"')
           node -e "
             const fs = require('fs');
             const files = [
@@ -75,30 +101,17 @@ jobs:
               '.claude-plugin/marketplace.json',
               '.agents/plugins/marketplace.json',
             ];
+            const version = process.env.NEW_VERSION;
             for (const f of files) {
               const obj = JSON.parse(fs.readFileSync(f, 'utf8'));
-              obj.version = '$NEW_VERSION';
-              if (obj.plugins) obj.plugins.forEach(p => { p.version = '$NEW_VERSION'; });
+              obj.version = version;
+              if (obj.plugins) obj.plugins.forEach(p => { p.version = version; });
               fs.writeFileSync(f, JSON.stringify(obj, null, 2) + '\n');
               console.log('Updated', f);
             }
           "
 
-      # C: Read version
-      - name: Get version
-        id: version
-        run: echo "value=$(npm pkg get version | tr -d '"')" >> $GITHUB_OUTPUT
-
-      - name: Install dependencies
-        run: npm ci
-
-      # D: Publish to npm
-      - name: Publish to npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish --access public
-
-      # E: Generate full CHANGELOG.md for the repo
+      # C: Generate full CHANGELOG.md for the repo
       - name: Generate changelog
         uses: orhun/git-cliff-action@v4
         with:
@@ -108,7 +121,7 @@ jobs:
           OUTPUT: CHANGELOG.md
           GITHUB_REPO: ${{ github.repository }}
 
-      # E: Generate release notes for this version only
+      # C: Generate release notes for this version only
       - name: Generate release notes
         uses: orhun/git-cliff-action@v4
         with:
@@ -118,14 +131,14 @@ jobs:
           OUTPUT: RELEASE_NOTES.md
           GITHUB_REPO: ${{ github.repository }}
 
-      # E: Commit version bump + changelog, push tag, create GitHub Release
+      # D: Commit version bump + changelog, push tag, create GitHub Release
       - name: Commit, tag, and release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add package.json CHANGELOG.md \
+          git add CHANGELOG.md \
             .claude-plugin/plugin.json \
             .codex-plugin/plugin.json \
             .claude-plugin/marketplace.json \

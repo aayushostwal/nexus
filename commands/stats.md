@@ -7,9 +7,9 @@ Run Nexus stats with optional flags.
 Examples:
 
 ```bash
-nexus stats
-nexus stats --summary
-nexus stats --last 50
-nexus stats --source claude
-nexus stats --source codex --session <session-id>
+node "${CLAUDE_PLUGIN_ROOT}/bin/nexus.js" stats
+node "${CLAUDE_PLUGIN_ROOT}/bin/nexus.js" stats --summary
+node "${CLAUDE_PLUGIN_ROOT}/bin/nexus.js" stats --last 50
+node "${CLAUDE_PLUGIN_ROOT}/bin/nexus.js" stats --source claude
+node "${CLAUDE_PLUGIN_ROOT}/bin/nexus.js" stats --source codex --session <session-id>
 ```
