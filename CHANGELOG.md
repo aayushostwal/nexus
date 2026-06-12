@@ -6,7 +6,17 @@ All notable changes to this project will be documented in this file.
 
 ### FEATURES
 
+- Agent-centric filtering, CLAUDE.md setup panel, real commands ([`14367b4`](https://github.com/aayushostwal/nexus-agent-kit/commit/14367b49ad22eb3a4408ba7ffe2d9e8e467401b6))
+
+## [v1.32.0] - 2026-06-12
+
+### FEATURES
+
 - Teach docs-app-builder the interactive node diagram pattern ([`c98084c`](https://github.com/aayushostwal/nexus-agent-kit/commit/c98084c4846b02e67c8ef4258789bc3d5645d562))
+
+### MISCELLANEOUS TASKS
+
+- Bump version to 1.32.0 ([`c527521`](https://github.com/aayushostwal/nexus-agent-kit/commit/c527521f5d60a4b63e3ef97bb113f1c0d3f295a6))
 
 ## [v1.31.0] - 2026-06-12
 
