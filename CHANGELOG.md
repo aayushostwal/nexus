@@ -6,11 +6,22 @@ All notable changes to this project will be documented in this file.
 
 ### FEATURES
 
+- Replace generic skills with 14 memory-enabled, color-coded agents ([`269afaf`](https://github.com/aayushostwal/nexus-agent-kit/commit/269afaf0c6b838ddf281ba8888eaa5dc093addf4))
+
+### MISCELLANEOUS TASKS
+
+- 🚨 **BREAKING** Remove npm packaging, distribute as git-based plugin marketplace only ([`48f33d9`](https://github.com/aayushostwal/nexus-agent-kit/commit/48f33d9ef6199e445bc3f5442411cc4a708696a3))
+
+## [v1.29.0] - 2026-06-11
+
+### FEATURES
+
 - Add code-reviewer agent to marketplace ([`ac98d8d`](https://github.com/aayushostwal/nexus-agent-kit/commit/ac98d8d43000e3671d3eda1e2eaf7072d095514c))
 - Add prd-writer skill and update exploring output format ([`ee5ddbf`](https://github.com/aayushostwal/nexus-agent-kit/commit/ee5ddbf81171485cae7b36a7fe1e1aa25fd33caf))
 
 ### MISCELLANEOUS TASKS
 
+- Bump version to 1.29.0 ([`a39f30d`](https://github.com/aayushostwal/nexus-agent-kit/commit/a39f30d1e5a77078cb88f189c786724ab5796a2b))
 - Bump version to 1.28.0 ([`2088c87`](https://github.com/aayushostwal/nexus-agent-kit/commit/2088c87d1f36c6cd2318bb059537327c8fb93a4c))
 
 ## [v1.27.0] - 2026-05-17
