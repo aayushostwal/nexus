@@ -6,7 +6,17 @@ All notable changes to this project will be documented in this file.
 
 ### FEATURES
 
+- Rearrange page order + add search bars to agents and skills ([`017940a`](https://github.com/aayushostwal/nexus-agent-kit/commit/017940a83e6be17eee4b5786d255fbc81497dae8))
+
+## [v1.33.0] - 2026-06-12
+
+### FEATURES
+
 - Agent-centric filtering, CLAUDE.md setup panel, real commands ([`14367b4`](https://github.com/aayushostwal/nexus-agent-kit/commit/14367b49ad22eb3a4408ba7ffe2d9e8e467401b6))
+
+### MISCELLANEOUS TASKS
+
+- Bump version to 1.33.0 ([`3c14179`](https://github.com/aayushostwal/nexus-agent-kit/commit/3c14179f89f754d8323d8a32ed07d29feb1984f4))
 
 ## [v1.32.0] - 2026-06-12
 
