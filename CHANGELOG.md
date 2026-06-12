@@ -6,7 +6,17 @@ All notable changes to this project will be documented in this file.
 
 ### FEATURES
 
+- Teach docs-app-builder the interactive node diagram pattern ([`c98084c`](https://github.com/aayushostwal/nexus-agent-kit/commit/c98084c4846b02e67c8ef4258789bc3d5645d562))
+
+## [v1.31.0] - 2026-06-12
+
+### FEATURES
+
 - Agent-centric docs site overhaul + real plugin data ([`f50251d`](https://github.com/aayushostwal/nexus-agent-kit/commit/f50251d99b64f4a0bd7099a9d79ad58277ea36bb))
+
+### MISCELLANEOUS TASKS
+
+- Bump version to 1.31.0 ([`915dc17`](https://github.com/aayushostwal/nexus-agent-kit/commit/915dc17e151885ea2a493b250ca01c92676c3f14))
 
 ## [v1.30.0] - 2026-06-12
 
