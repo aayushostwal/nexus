@@ -4,7 +4,7 @@
   <img src="apps/nexus-web/public/logos/nexus.svg" alt="Nexus Logo" width="260" />
 </p>
 
-Nexus Agent Kit is a plugin-first AI terminal workspace for Codex and Claude Code. It packages reusable skills, terminal commands, and MCP safety conventions so your AI sessions behave consistently across planning, CI/CD debugging, code review, TODO tracking, infrastructure design, tutorials, and tool-connected work.
+Nexus Agent Kit is a plugin-first AI terminal workspace for Codex and Claude Code. It packages specialized subagents, reusable skills, and terminal commands — plus MCP safety conventions — so your AI sessions behave consistently across product specs, architecture reviews, database migrations, cloud cost audits, CI/CD debugging, code review, TODO tracking, and tool-connected work.
 
 Instead of re-explaining how you want the assistant to operate in every new repo or terminal, you install Nexus once and get a shared operating model for engineering work.
 
@@ -73,15 +73,16 @@ After plugin enablement, run `node scripts/bootstrap-agent-docs.js` once from th
 
 ## What Nexus Does In Your Terminal
 
-- Coordinate a multi-agent implementation by identifying which tasks can run in parallel.
-- Compare approaches for modifying an existing build, deployment, or architecture flow.
-- Plan a production feature before implementation.
-- Debug a failing CI pipeline after a dependency or config change.
-- Investigate why a deploy works locally but fails in GitHub Actions.
-- Review a branch for correctness and missing tests.
-- Design a production AWS or GCP architecture from a codebase with a cost estimate and Mermaid HLD.
-- Audit existing Terraform or Kubernetes setup for SPOFs, security gaps, and cost waste.
-- Find free or self-hosted alternatives to Firebase, Heroku, Auth0, Datadog, and other paid services.
+- Turn rough notes into a full PRD, or get an existing PRD critiqued with severity-ranked gaps.
+- Plan a production change as an ordered roadmap with verify commands, rollback steps, and an approval gate before any code.
+- Get a GO/NO-GO architecture verdict on a deployment, with service boundaries and risk tiers mapped from the codebase.
+- Design zero-downtime database migrations and index strategies from real query plans.
+- Plan for scale with capacity math and bottleneck-ordered fixes, or design event-driven systems with idempotency and replay handled.
+- Audit cloud spend from real billing data and live-verified pricing, then write the Terraform/CDK to fix it.
+- Review a branch, PR, or UI for correctness, missing tests, accessibility, and mobile UX issues.
+- Debug a failing CI pipeline or a deploy that works locally but fails in GitHub Actions.
+- Explore a large codebase token-efficiently, with project memory that persists across sessions.
+- Build LLM-powered features end-to-end, and ship docs as a searchable React app.
 - Build a daily brief from TODOs and connected work systems.
 
 ## Skills
@@ -152,7 +153,9 @@ Skills are grouped below by role so it is easier to understand what the plugin a
 
 ## Agents
 
-Agents are autonomous subagents that Claude Code can delegate to. They run in their own context window with a focused system prompt and a restricted tool set. Every Nexus agent has persistent memory (`user` or `project` scope) so it learns your conventions across sessions, and a display color grouped by domain.
+Agents are autonomous subagents that Claude Code can delegate to. They run in their own context window with a focused system prompt and a restricted tool set.
+
+Every Nexus agent has persistent memory and a domain-grouped display color. `user`-scoped memory carries your portable preferences across every repo; `project`-scoped memory learns the conventions of the repo it runs in. Project memory lives in `.claude/agent-memory/` — add it to `.gitignore` if you don't want it committed.
 
 ### Product (purple)
 
@@ -268,4 +271,4 @@ This project is licensed under the MIT License. See [LICENSE](LICENSE) for the f
 
 ## SEO / GEO Tags
 
-`codex plugin`, `claude code plugin`, `ai terminal workflow`, `developer ai assistant`, `ci cd debugging`, `github actions debugging`, `terminal agents`, `mcp tools`, `model context protocol`, `ai coding workflow`, `engineering planning`, `developer productivity`, `prompt engineering`, `tool-connected ai`, `slack mcp`, `notion mcp`, `jira mcp`, `aws mcp`, `ai todo manager`, `daily brief automation`, `cloud infrastructure planning`, `aws architecture design`, `gcp architecture`, `azure architecture`, `infrastructure as code review`, `terraform audit`, `kubernetes review`, `hld generator`, `cloud cost estimation`, `free firebase alternative`, `free heroku alternative`, `supabase`, `render railway flyio`, `self-hosted cloud`, `infrastructure skills`, `devops ai assistant`
+`claude code agents`, `claude code plugin`, `codex plugin`, `subagents with memory`, `ai terminal workflow`, `developer ai assistant`, `prd agent`, `roadmap planning agent`, `code review agent`, `architecture review agent`, `database migration agent`, `event-driven design agent`, `cloud cost optimization agent`, `terraform agent`, `infrastructure as code review`, `scalability planning`, `ui ux review agent`, `mobile ux design`, `ai product engineering`, `rag and llm evals`, `documentation site generator`, `ci cd debugging`, `github actions debugging`, `mcp tools`, `model context protocol`, `slack mcp`, `notion mcp`, `jira mcp`, `aws mcp`, `ai todo manager`, `daily brief automation`, `aws architecture design`, `cloud cost estimation`, `devops ai assistant`, `developer productivity`

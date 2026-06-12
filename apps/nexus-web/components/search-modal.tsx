@@ -6,9 +6,9 @@ import { useEffect, useMemo, useState } from "react";
 import { Search, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import type { DocMeta } from "@/lib/docs";
-import type { Skill } from "@/lib/content";
+import type { Agent, Skill } from "@/lib/content";
 
-export function SearchModal({ docs, skills }: { docs: DocMeta[]; skills: Skill[] }) {
+export function SearchModal({ docs, skills, agents = [] }: { docs: DocMeta[]; skills: Skill[]; agents?: Agent[] }) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
 
@@ -44,8 +44,17 @@ export function SearchModal({ docs, skills }: { docs: DocMeta[]; skills: Skill[]
         subtitle: skill.description
       }));
 
-    return [...docResults, ...skillResults].slice(0, 12);
-  }, [docs, skills, query]);
+    const agentResults = agents
+      .filter((agent) => `${agent.name} ${agent.description} ${agent.domain} ${agent.memory}`.toLowerCase().includes(q))
+      .map((agent) => ({
+        type: "agent" as const,
+        title: agent.name,
+        href: "#agent-system",
+        subtitle: agent.description
+      }));
+
+    return [...docResults, ...agentResults, ...skillResults].slice(0, 12);
+  }, [docs, skills, agents, query]);
 
   return (
     <>
@@ -71,12 +80,12 @@ export function SearchModal({ docs, skills }: { docs: DocMeta[]; skills: Skill[]
               autoFocus
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search docs, skills, workflows..."
+              placeholder="Search docs, agents, skills..."
               className="mb-3"
             />
             <div className="max-h-[340px] overflow-auto">
               {results.length === 0 ? (
-                <p className="text-sm text-zinc-500">No results yet. Try searching "orchestration" or "debugging".</p>
+                <p className="text-sm text-zinc-500">No results yet. Try searching "code-reviewer" or "debugging".</p>
               ) : (
                 <ul className="flex flex-col gap-2">
                   {results.map((result) => (

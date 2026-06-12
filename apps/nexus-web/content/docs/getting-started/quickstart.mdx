@@ -1,24 +1,41 @@
 ---
 title: Quickstart
-description: Run your first autonomous engineering command in under two minutes.
+description: Run your first Nexus command, skill, and agent in under two minutes.
 category: Getting Started
 order: 2
 ---
 
 ## First Command
 
-```bash
-/nexus:code-review review this PR
+With the plugin installed, review your current branch:
+
+```text
+/nexus:review-branch
 ```
 
-## What Happens
+Nexus ships 4 commands: `/nexus:add-todo`, `/nexus:daily-brief`, `/nexus:review-branch`, and `/nexus:stats`.
 
-1. Task is classified.
-2. Planner builds an execution path.
-3. Reviewer skill executes checks.
-4. Verification gate ensures output quality.
-5. Delivery artifact is produced.
+## Trigger A Skill
+
+Skills auto-trigger when your request matches their description, or you can invoke one directly:
+
+```text
+/nexus:debugging fix the failing CI pipeline
+```
+
+## Delegate To An Agent
+
+Agents are subagents that Claude Code delegates to based on your request. Just ask in natural language:
+
+```text
+review this PR for regressions          → code-reviewer
+where is the auth flow implemented      → codebase-explorer
+write a PRD for this feature idea       → prd-writer-critic
+```
+
+Each agent runs in its own context window and remembers what it learns — user-scoped agents carry preferences across repos, project-scoped agents build per-repo memory in `.claude/agent-memory/`.
 
 ## Next
 
-Move to workflow authoring to customize your own execution graph.
+- [Writing Skills](/docs/core/writing-skills) to build your own skill.
+- [Writing Agents](/docs/core/writing-agents) for the agent frontmatter spec and the full agent roster.

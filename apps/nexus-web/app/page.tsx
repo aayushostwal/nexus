@@ -22,9 +22,11 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { agentSystem, skills } from "@/lib/content";
+import { agents, commands, pluginVersion, skills } from "@/lib/content";
+import { getAllDocs } from "@/lib/docs";
 
 export default async function HomePage() {
+  const docs = getAllDocs();
   return (
     <div className="relative min-h-screen overflow-x-clip bg-nexus-gradient">
       <AnimatedBackground />
@@ -41,18 +43,18 @@ export default async function HomePage() {
             <a href="#install" className="hover:text-cyan-300">
               Install
             </a>
-            <a href="#skills-marketplace" className="hover:text-cyan-300">
-              Skills
-            </a>
             <a href="#agent-system" className="hover:text-cyan-300">
               Agents
+            </a>
+            <a href="#skills-marketplace" className="hover:text-cyan-300">
+              Skills
             </a>
             <a href="#architecture" className="hover:text-cyan-300">
               Architecture
             </a>
           </nav>
           <div className="flex items-center gap-1.5 sm:gap-2">
-            <SearchModal docs={[]} skills={skills} />
+            <SearchModal docs={docs} skills={skills} agents={agents} />
             <ThemeToggle />
             <Button asChild size="sm">
               <a href="https://github.com/aayushostwal" target="_blank" rel="noreferrer">
@@ -70,11 +72,11 @@ export default async function HomePage() {
             <a href="#install" className="whitespace-nowrap rounded-md border border-zinc-700/80 bg-zinc-900/60 px-2.5 py-1.5 hover:text-cyan-300">
               Install
             </a>
-            <a href="#skills-marketplace" className="whitespace-nowrap rounded-md border border-zinc-700/80 bg-zinc-900/60 px-2.5 py-1.5 hover:text-cyan-300">
-              Skills
-            </a>
             <a href="#agent-system" className="whitespace-nowrap rounded-md border border-zinc-700/80 bg-zinc-900/60 px-2.5 py-1.5 hover:text-cyan-300">
               Agents
+            </a>
+            <a href="#skills-marketplace" className="whitespace-nowrap rounded-md border border-zinc-700/80 bg-zinc-900/60 px-2.5 py-1.5 hover:text-cyan-300">
+              Skills
             </a>
             <a href="#architecture" className="whitespace-nowrap rounded-md border border-zinc-700/80 bg-zinc-900/60 px-2.5 py-1.5 hover:text-cyan-300">
               Architecture
@@ -87,26 +89,39 @@ export default async function HomePage() {
         <section className="nexus-container relative py-16 sm:py-20 lg:py-24">
           <div className="grid items-center gap-12">
             <div>
-              <Badge className="mb-6">AI Terminal Aggregator</Badge>
+              <Badge className="mb-6">14 Memory-Enabled Agents</Badge>
               <h1 className="text-balance text-3xl font-semibold leading-tight text-zinc-100 sm:text-5xl lg:text-6xl">
                 Agentify Your Terminal
               </h1>
               <p className="mt-6 max-w-2xl text-base text-zinc-300 sm:text-lg">
-                Nexus is an aggregator of skills and agents that automate and leverage Codex and Claude terminal workflows.
+                Nexus ships 14 specialized agents with persistent memory — each focused on a domain, each color-coded, each learning your conventions across sessions.
               </p>
-              <p className="mt-2 text-zinc-400">Composable AI Agents, Skills, and token-efficient automation for engineering teams.</p>
+              <p className="mt-2 text-zinc-400">PRD writing, architecture review, database migrations, cloud cost audits, LLM product engineering, and more — one plugin install away.</p>
               <div className="mt-8 grid gap-3 sm:flex sm:flex-wrap">
                 <Button asChild size="lg" className="w-full sm:w-auto">
-                  <a href="#skills-marketplace">Explore Skills</a>
+                  <a href="#agent-system">Explore Agents</a>
                 </Button>
                 <Button asChild variant="outline" size="lg" className="w-full sm:w-auto">
-                  <a href="#agent-system">Explore Agents</a>
+                  <a href="#skills-marketplace">Explore Skills</a>
                 </Button>
                 <Button asChild variant="secondary" size="lg" className="w-full sm:w-auto">
                   <a href="https://github.com/aayushostwal" target="_blank" rel="noreferrer">
                     GitHub Repository
                   </a>
                 </Button>
+              </div>
+              <div className="mt-10 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-4">
+                {[
+                  [String(agents.length), "Agents"],
+                  [String(skills.length), "Skills"],
+                  [String(commands.length), "Commands"],
+                  [`v${pluginVersion}`, "Plugin Version"]
+                ].map(([value, label]) => (
+                  <div key={label} className="rounded-xl border border-zinc-700/70 bg-zinc-900/50 px-4 py-3">
+                    <p className="text-2xl font-semibold text-zinc-100">{value}</p>
+                    <p className="text-xs text-zinc-400">{label}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -129,29 +144,9 @@ export default async function HomePage() {
           <div className="mt-8 grid gap-4 lg:grid-cols-2">
             <Card className="border-zinc-700/80 bg-zinc-900/60">
               <CardHeader>
-                <CardTitle>Codex Terminal</CardTitle>
+                <CardTitle>Claude Code</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">npm i -g nexus-agent-kit</p>
-                <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">
-                  # Install globally
-                  <br />
-                  npx codex-marketplace add aayushostwal/nexus --plugin --global  
-                  
-                </p>
-                <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">
-                  # Install for project
-                  <br />
-                  npx codex-marketplace add aayushostwal/nexus --plugin --project 
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="border-zinc-700/80 bg-zinc-900/60">
-              <CardHeader>
-                <CardTitle>Claude Terminal</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">npm i -g nexus-agent-kit</p>
                 <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">
                   /plugin marketplace add aayushostwal/nexus
                 </p>
@@ -161,7 +156,28 @@ export default async function HomePage() {
                 <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">/reload-plugins</p>
               </CardContent>
             </Card>
+            <Card className="border-zinc-700/80 bg-zinc-900/60">
+              <CardHeader>
+                <CardTitle>Codex (via third-party codex-marketplace)</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">
+                  # Install globally
+                  <br />
+                  npx codex-marketplace add aayushostwal/nexus --plugin --global
+                </p>
+                <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/80 p-3 font-mono text-xs text-cyan-300">
+                  # Install for project
+                  <br />
+                  npx codex-marketplace add aayushostwal/nexus --plugin --project
+                </p>
+              </CardContent>
+            </Card>
           </div>
+          <p className="mt-4 text-sm text-zinc-400">
+            There is no npm package and no global CLI. Nexus installs as a git-based plugin marketplace; bundled helper scripts are
+            dependency-free and run with plain <code>node &quot;$&#123;CLAUDE_PLUGIN_ROOT&#125;/bin/nexus.js&quot;</code> (Node 18+).
+          </p>
         </section>
 
         <section id="what-is-nexus" className="nexus-container py-16 sm:py-20">
@@ -181,7 +197,7 @@ export default async function HomePage() {
               [Workflow, "Token Management", "Built-in token-saving strategy for cost-aware and context-efficient execution."],
               [Network, "Orchestration", "Context-aware handoffs between agents running in sequence or parallel."],
               [CircuitBoard, "Tooling", "MCP integrations across GitHub, Jira, AWS, Slack, and more."],
-              [Globe, "Memory", "Long-lived context, TODO intelligence, and cross-session continuity."]
+              [Globe, "Memory", "Persistent agent memory: portable user-scope preferences plus per-repo project learning."]
             ].map(([Icon, title, desc]) => (
               <Card key={title as string} className="border-zinc-700/80 bg-zinc-900/55">
                 <CardHeader>
@@ -198,37 +214,43 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <section id="skills-marketplace" className="nexus-container py-16 sm:py-20">
-          <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+        <section id="agent-system" className="nexus-container py-16 sm:py-20">
+          <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
             <div>
-              <h2 className="text-2xl font-semibold sm:text-3xl">Skills Marketplace</h2>
-              <p className="mt-2 text-zinc-400">Discover installable skills for architecture, security, testing, observability, and token management.</p>
+              <h2 className="text-2xl font-semibold sm:text-3xl">Agent System</h2>
+              <p className="mt-2 text-zinc-400">
+                14 specialized subagents that Claude Code delegates to — each owns a domain, runs in its own context window,
+                and builds persistent memory of your conventions across sessions.
+              </p>
+              <p className="mt-2 text-sm text-zinc-400">
+                <span className="text-zinc-200">User scope</span> carries portable preferences across all repos.{" "}
+                <span className="text-zinc-200">Project scope</span> learns each repo&apos;s conventions in{" "}
+                <code>.claude/agent-memory/</code>.
+              </p>
             </div>
             <div className="hidden items-center gap-2 rounded-lg border border-zinc-700/80 bg-zinc-900/70 px-3 py-2 text-sm text-zinc-400 md:flex">
               <Search className="size-4" /> Search via command palette
             </div>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {skills.map((skill) => (
-              <SkillCard key={skill.name} skill={skill} />
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {agents.map((agent, index) => (
+              <AgentCard key={agent.name} agent={agent} step={index} />
             ))}
           </div>
         </section>
 
-        <section id="agent-system" className="nexus-container py-16 sm:py-20">
-          <h2 className="text-2xl font-semibold sm:text-3xl">Agent System</h2>
-          <p className="mt-2 text-zinc-400">Specialized agents with explicit command patterns, role boundaries, and ownership.</p>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {agentSystem.map((agent, index) => (
-              <AgentCard
-                key={agent.id}
-                name={agent.name}
-                role={agent.role}
-                command={agent.command}
-                bestFor={agent.bestFor}
-                ownership={agent.ownership}
-                step={index}
-              />
+        <section id="skills-marketplace" className="nexus-container py-16 sm:py-20">
+          <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+            <div>
+              <h2 className="text-2xl font-semibold sm:text-3xl">Skills</h2>
+              <p className="mt-2 text-zinc-400">
+                10 bundled skills covering debugging, testing, reliability, observability, performance, authoring, content, and token efficiency.
+              </p>
+            </div>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            {skills.map((skill) => (
+              <SkillCard key={skill.name} skill={skill} />
             ))}
           </div>
         </section>

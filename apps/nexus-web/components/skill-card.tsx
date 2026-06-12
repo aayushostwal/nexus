@@ -27,7 +27,9 @@ export function SkillCard({ skill }: { skill: Skill }) {
             ))}
           </div>
           <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/70 p-3 font-mono text-xs text-cyan-200">{skill.example}</p>
-          <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/70 p-3 font-mono text-xs text-zinc-200">{skill.install}</p>
+          <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/70 p-3 font-mono text-xs text-zinc-200">
+            Bundled with nexus@nexus-marketplace — no separate install
+          </p>
           <div className="mt-auto flex items-center justify-between">
             <a href={skill.github} target="_blank" rel="noreferrer" className="text-sm text-cyan-300 hover:text-cyan-200">
               Source Code

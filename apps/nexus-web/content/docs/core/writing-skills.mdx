@@ -7,19 +7,22 @@ order: 1
 
 ## Skill Anatomy
 
-A skill package usually includes:
+A skill is a directory under `skills/` with a `SKILL.md` whose frontmatter declares `name` and `description`. Larger skills add supporting playbooks, for example the bundled `debugging` skill:
 
-- `SKILL.md`
-- `validation/output-validation.md`
-- optional checklists and anti-pattern references
+- `SKILL.md` — frontmatter (`name`, `description`) plus the routing logic
+- `common.md`, `ci-cd.md`, `codebase.md`, `frameworks.md` — focused playbooks
+- `checklists/`, `validation/` — deterministic quality gates
 
 ## Trigger Design
 
-Define explicit trigger phrases and decision boundaries.
+The `description` frontmatter drives auto-triggering — define explicit trigger phrases and decision boundaries.
 
 ```md
 Trigger when the user asks for "review this PR" or shares a diff.
+When in doubt, use this skill.
 ```
+
+The bundled `skill-writer` skill automates this: invoke `/nexus:skill-writer` to create or refine a skill's structure and triggers.
 
 ## Quality Gate
 

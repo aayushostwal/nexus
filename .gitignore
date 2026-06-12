@@ -15,6 +15,10 @@ coverage/
 dist/
 build/
 *.tsbuildinfo
+apps/nexus-web/.next/
+
+# Agent memory (per-repo; opt-in to commit if desired)
+.claude/agent-memory/
 
 # Local package/cache output
 .npm-cache/

@@ -1,27 +1,77 @@
 ---
 title: Writing Agents
-description: Design specialized agents and define ownership boundaries.
+description: The agent frontmatter spec, persistent memory scopes, and the 14 agents Nexus ships.
 category: Core
 order: 2
 ---
 
-## Role Contracts
+## Agent Anatomy
 
-Each agent should define:
-
-- Objective
-- Inputs
-- Output format
-- Completion criteria
-
-## Coordination
-
-Use orchestration directives to avoid duplicate work between agents.
+An agent is a single Markdown file in `agents/` — YAML frontmatter that tells Claude Code when to delegate, followed by the agent's system prompt.
 
 ```yaml
-agent:
-  role: debugger
-  ownership:
-    - services/api
-    - tests/api
+---
+name: code-reviewer
+description: >
+  Use this agent for senior-level review of a PR, branch, or diff.
+  Trigger on "review this PR", "review my branch", "is this safe to merge".
+tools: Bash, Read, Grep, Glob
+model: inherit
+color: red
+memory: project
+---
+You are a senior code reviewer...
 ```
+
+## Frontmatter Reference
+
+| Field | Required | Values | Notes |
+| --- | --- | --- | --- |
+| `name` | yes | kebab-case identifier | How the agent is referenced and where its memory lives. |
+| `description` | yes | free text | Drives delegation — include explicit trigger phrases and what the agent returns. |
+| `tools` | no | comma-separated tool names | Omit to inherit all tools. List only what the agent needs (e.g. `Bash, Read, Grep, Glob` for read-only agents). |
+| `model` | no | model name or `inherit` | Default is `inherit` (uses the conversation's model). |
+| `color` | no | `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, `cyan` | Display color in the UI. Nexus uses it to group agents by domain. |
+| `memory` | no | `user`, `project`, `local` | Enables persistent memory at that scope (see below). |
+
+## Persistent Memory
+
+Every Nexus agent declares a `memory` scope. The first 200 lines of the agent's `MEMORY.md` are auto-injected at session start, and `Read`/`Write`/`Edit` are auto-enabled so the agent can maintain its own memory files.
+
+| Scope | Lives | Use for |
+| --- | --- | --- |
+| `user` | per-user, portable across every repo | Personal preferences, recurring stack choices, review style. |
+| `project` | per-repo, in `.claude/agent-memory/` | Repo conventions, architecture learnings, known stubs. Shared with the team if committed. |
+| `local` | per-repo, never committed | Machine-specific or private context. |
+
+Rule of thumb: agents that adapt to *you* (designers, planners, reviewers of your taste) use `user`; agents that adapt to *a codebase* (architecture, database, code review) use `project`.
+
+## The 14 Shipped Agents
+
+| Agent | Color | Memory | Purpose |
+| --- | --- | --- | --- |
+| `prd-writer-critic` | purple | user | Writes 10-section PRDs from rough notes, or critiques PRDs with severity-ranked gaps. |
+| `roadmap-planner` | purple | user | Execution-ready roadmaps: scope, sequencing, verify commands, rollback plans. |
+| `uiux-reviewer` | pink | user | Read-only UI/UX review with severity-ranked findings and top-3 fixes. |
+| `mobile-ux-designer` | pink | user | Mobile UX design and review for iOS, Android, React Native, Flutter. |
+| `system-architecture-reviewer` | blue | project | Architecture maps, coupling analysis, GO/NO-GO deployment safety verdicts. |
+| `scalability-planner` | blue | project | Bottleneck-ordered scaling plans with capacity math and cost estimates. |
+| `database-architect` | orange | project | Schema design, indexing, and migrations with per-step verify and rollback. |
+| `event-driven-designer` | orange | project | Async system design: queues, sagas, outbox, DLQs, failure-mode tables. |
+| `cloud-cost-optimizer` | yellow | user | Cost audits from real billing data with prioritized savings. |
+| `iac-engineer` | yellow | project | Designs infra and writes Terraform/CDK, or audits IaC with evidence. |
+| `codebase-explorer` | green | project | Token-efficient repo exploration returning a concise file map. |
+| `code-reviewer` | red | project | Senior PR/branch/diff review with verdict and file:line findings. |
+| `docs-app-builder` | green | project | Builds documentation as a React app with navigation, diagrams, search. |
+| `ai-product-engineer` | cyan | user | LLM features end-to-end: models, RAG, agents, evals, token economics. |
+
+Domain color grouping: Product (purple), Design (pink), Architecture (blue), Data and Events (orange), Cloud (yellow), Code and Docs (green/red), AI (cyan).
+
+## Writing A Good Description
+
+The `description` field is the delegation contract. The shipped agents follow a consistent shape:
+
+- Start with "Use this agent to/for ..." and the task domain.
+- List literal trigger phrases users actually type.
+- State what the agent returns (verdict, table, plan) so the caller knows the output shape.
+- Declare constraints, e.g. "Read-only — it never edits code."

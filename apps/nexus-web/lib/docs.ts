@@ -28,7 +28,7 @@ export function getAllDocs(): DocMeta[] {
   const docs = files.map((file) => {
     const source = fs.readFileSync(file, "utf8");
     const { data } = matter(source);
-    const relative = path.relative(docsRoot, file).replace(/\\.mdx$/, "");
+    const relative = path.relative(docsRoot, file).replace(/\.mdx$/, "");
     const slug = relative.split(path.sep);
     return {
       title: data.title as string,

@@ -4,177 +4,253 @@ export type Skill = {
   tags: string[];
   complexity: "Beginner" | "Intermediate" | "Advanced";
   example: string;
-  install: string;
   github: string;
 };
 
+// The 10 skills bundled with the nexus plugin (skills/*/SKILL.md).
 export const skills: Skill[] = [
   {
-    name: "Architecture Mapper",
-    description: "Maps service boundaries, dependencies, and deployment risk before major changes.",
-    tags: ["architecture", "systems", "risk"],
-    complexity: "Advanced",
-    example: "/nexus:architecture map this monolith into bounded contexts",
-    install: "nexus skill install architecture-mapper",
-    github: "https://github.com/aayushostwal/nexus/tree/main/skills/architecture"
-  },
-  {
-    name: "Autonomous Debugger",
-    description: "Runs evidence-first root-cause analysis with narrow fixes and verification loops.",
-    tags: ["debugging", "incident", "ci/cd"],
+    name: "debugging",
+    description: "Evidence-first root-cause analysis with the narrowest fix and verification. Covers CI/CD, tests, runtime, deployment, and tooling failures.",
+    tags: ["debugging", "ci/cd", "rca"],
     complexity: "Intermediate",
     example: "/nexus:debugging fix production deployment issue",
-    install: "nexus skill install autonomous-debugger",
     github: "https://github.com/aayushostwal/nexus/tree/main/skills/debugging"
   },
   {
-    name: "PR Review Guardian",
-    description: "Performs senior-grade code reviews with severity-ranked findings and rollout risk.",
-    tags: ["review", "quality", "security"],
-    complexity: "Intermediate",
-    example: "/nexus:code-review review this PR for regressions",
-    install: "nexus skill install review-guardian",
-    github: "https://github.com/aayushostwal/nexus/tree/main/skills/code-review"
+    name: "nexus",
+    description: "Persistent TODO capture, daily brief retrieval, and shared Codex/Claude operating rules across Slack, Outlook, and Jira contexts.",
+    tags: ["todos", "briefs", "operations"],
+    complexity: "Beginner",
+    example: "/nexus:nexus show today's brief",
+    github: "https://github.com/aayushostwal/nexus/tree/main/skills/nexus"
   },
   {
-    name: "Refactor Strategist",
-    description: "Plans incremental refactors with dependency awareness and regression containment.",
-    tags: ["refactor", "planning", "testing"],
-    complexity: "Advanced",
-    example: "/nexus:planning refactor this service without downtime",
-    install: "nexus skill install refactor-strategist",
-    github: "https://github.com/aayushostwal/nexus/tree/main/skills/planning"
-  },
-  {
-    name: "DevOps Automator",
-    description: "Builds CI pipelines, release gates, and rollback-safe deployment workflows.",
-    tags: ["devops", "automation", "release"],
-    complexity: "Advanced",
-    example: "/nexus:reliability create release rollout workflow",
-    install: "nexus skill install devops-automator",
-    github: "https://github.com/aayushostwal/nexus/tree/main/skills/reliability"
-  },
-  {
-    name: "Security Sentinel",
-    description: "Audits policies, permissions, and secrets exposure with least-privilege guidance.",
-    tags: ["security", "iam", "guardrails"],
-    complexity: "Advanced",
-    example: "/nexus:reliability audit this repo for secret leaks",
-    install: "nexus skill install security-sentinel",
-    github: "https://github.com/aayushostwal/nexus/tree/main/skills/reliability"
-  },
-  {
-    name: "Observability Correlator",
-    description: "Finds causal chains across distributed services during cascading failures.",
-    tags: ["observability", "tracing", "sre"],
+    name: "observability",
+    description: "Traces correlated API failures and cascading errors across distributed services to identify the origin service and blast radius.",
+    tags: ["observability", "tracing", "incidents"],
     complexity: "Advanced",
     example: "/nexus:observability correlate these API failures",
-    install: "nexus skill install observability-correlator",
     github: "https://github.com/aayushostwal/nexus/tree/main/skills/observability"
   },
   {
-    name: "Performance Forensics",
-    description: "Investigates latency, memory, and CPU regressions with blast-radius analysis.",
-    tags: ["performance", "profiling", "scalability"],
+    name: "performance",
+    description: "Memory, CPU, latency, and query-performance investigations, plus dependency-upgrade blast-radius analysis.",
+    tags: ["performance", "profiling", "dependencies"],
     complexity: "Intermediate",
-    example: "/nexus:performance optimize architecture for latency",
-    install: "nexus skill install performance-forensics",
+    example: "/nexus:performance find this memory leak",
     github: "https://github.com/aayushostwal/nexus/tree/main/skills/performance"
   },
   {
-    name: "Test Stabilizer",
-    description: "Eliminates flaky tests using deterministic fixtures and race-condition isolation.",
-    tags: ["testing", "qa", "ci"],
+    name: "reliability",
+    description: "Production incident response and release-readiness gates: stabilization first, timeline reconstruction, and evidence-led actions.",
+    tags: ["incidents", "releases", "sre"],
+    complexity: "Advanced",
+    example: "/nexus:reliability run a release readiness gate",
+    github: "https://github.com/aayushostwal/nexus/tree/main/skills/reliability"
+  },
+  {
+    name: "shorts",
+    description: "Converts any input — topics, articles, bullets, URLs — into a ready-to-record YouTube Shorts script with hook, narration, and CTA.",
+    tags: ["content", "video", "scripts"],
+    complexity: "Beginner",
+    example: "/nexus:shorts script this article in 30 seconds",
+    github: "https://github.com/aayushostwal/nexus/tree/main/skills/shorts"
+  },
+  {
+    name: "skill-writer",
+    description: "Creates, refactors, and debugs skills; improves SKILL.md trigger quality and produces production-ready routing logic.",
+    tags: ["skills", "authoring", "triggers"],
     complexity: "Intermediate",
-    example: "/nexus:testing investigate flaky tests",
-    install: "nexus skill install test-stabilizer",
+    example: "/nexus:skill-writer improve this skill's triggers",
+    github: "https://github.com/aayushostwal/nexus/tree/main/skills/skill-writer"
+  },
+  {
+    name: "testing",
+    description: "Isolates flaky and nondeterministic tests — local-vs-CI gaps, race conditions, retry-only greens — and ships the narrowest durable fix.",
+    tags: ["testing", "flaky", "ci"],
+    complexity: "Intermediate",
+    example: "/nexus:testing investigate this flaky suite",
     github: "https://github.com/aayushostwal/nexus/tree/main/skills/testing"
   },
   {
-    name: "Token Management",
-    description: "Optimizes context usage, prompt shape, and delegation depth to reduce token spend.",
-    tags: ["tokens", "cost", "prompting"],
+    name: "token-optimizer",
+    description: "Always-on token optimization rules applied to every response for cost-aware, context-efficient execution.",
+    tags: ["tokens", "cost", "efficiency"],
     complexity: "Beginner",
-    example: "/nexus:token-saving reduce token usage for this task",
-    install: "nexus skill install token-saving",
-    github: "https://github.com/aayushostwal/nexus/tree/main/skills/token-saving"
+    example: "Always on — applies to every response",
+    github: "https://github.com/aayushostwal/nexus/tree/main/skills/token-optimizer"
+  },
+  {
+    name: "tutorial",
+    description: "Builds executable Jupyter tutorials and AI engineering walkthroughs with runnable, reproducible, copy-paste-ready cells.",
+    tags: ["tutorials", "notebooks", "teaching"],
+    complexity: "Beginner",
+    example: "/nexus:tutorial build a RAG walkthrough notebook",
+    github: "https://github.com/aayushostwal/nexus/tree/main/skills/tutorial"
   }
 ];
 
-export const agentSystem = [
+export type AgentColor = "red" | "blue" | "green" | "yellow" | "purple" | "orange" | "pink" | "cyan";
+
+export type AgentDomain = "Product" | "Design" | "Architecture" | "Data & Events" | "Cloud" | "Code & Docs" | "AI";
+
+export type Agent = {
+  name: string;
+  description: string;
+  domain: AgentDomain;
+  color: AgentColor;
+  memory: "user" | "project";
+  tools: string;
+  github: string;
+};
+
+// The 14 agents bundled with the nexus plugin (agents/*.md frontmatter).
+// Every agent has persistent memory: user scope is portable across repos;
+// project scope learns each repo in .claude/agent-memory/.
+export const agents: Agent[] = [
   {
-    id: "orchestrator",
-    name: "Nexus Orchestrator",
-    role: "Routes tasks and coordinates agent swarms",
-    command: "/nexus:orchestrator route this task",
-    bestFor: "Cross-skill orchestration",
-    ownership: "Task routing, handoff policy, completion synthesis"
+    name: "prd-writer-critic",
+    description: "Writes complete 10-section PRDs from rough notes, or critiques existing PRDs with a severity-ranked gaps table.",
+    domain: "Product",
+    color: "purple",
+    memory: "user",
+    tools: "Read, Write, Grep, Glob, WebSearch",
+    github: "https://github.com/aayushostwal/nexus/blob/main/agents/prd-writer-critic.md"
   },
   {
-    id: "architect",
-    name: "Architect",
-    role: "Designs structure, boundaries, and change strategy",
-    command: "/nexus:architect map service boundaries",
-    bestFor: "Architecture planning",
-    ownership: "System design docs, dependency maps, migration plans"
+    name: "roadmap-planner",
+    description: "Turns a known direction into an execution-ready roadmap: scope, sequencing, risks, verify commands, and rollback plans.",
+    domain: "Product",
+    color: "purple",
+    memory: "user",
+    tools: "Bash, Read, Grep, Glob, Write",
+    github: "https://github.com/aayushostwal/nexus/blob/main/agents/roadmap-planner.md"
   },
   {
-    id: "debugger",
-    name: "Debugger",
-    role: "Finds root cause and applies narrow fixes",
-    command: "/nexus:debugger resolve CI failure",
-    bestFor: "Incident diagnosis",
-    ownership: "Failure analysis, minimal patches, verification"
+    name: "uiux-reviewer",
+    description: "Read-only UI/UX review of components, pages, and flows with severity-ranked findings and top-3 prioritized fixes.",
+    domain: "Design",
+    color: "pink",
+    memory: "user",
+    tools: "Bash, Read, Grep, Glob",
+    github: "https://github.com/aayushostwal/nexus/blob/main/agents/uiux-reviewer.md"
   },
   {
-    id: "refactorer",
-    name: "Refactorer",
-    role: "Modernizes code safely with migration slices",
-    command: "/nexus:refactorer split this module",
-    bestFor: "Safe modernization",
-    ownership: "Refactor plans, compatibility checks, rollout steps"
+    name: "mobile-ux-designer",
+    description: "Designs and reviews mobile UX for iOS, Android, React Native, and Flutter with screen-by-screen specs and wireframes.",
+    domain: "Design",
+    color: "pink",
+    memory: "user",
+    tools: "All tools",
+    github: "https://github.com/aayushostwal/nexus/blob/main/agents/mobile-ux-designer.md"
   },
   {
-    id: "reviewer",
-    name: "Reviewer",
-    role: "Enforces quality gates and regression checks",
-    command: "/nexus:reviewer review PR #428",
-    bestFor: "Quality control",
-    ownership: "Bug/risk findings, severity ranking, merge readiness"
+    name: "system-architecture-reviewer",
+    description: "Maps architecture, coupling, and bounded contexts; issues GO / CONDITIONAL GO / NO-GO deployment safety verdicts.",
+    domain: "Architecture",
+    color: "blue",
+    memory: "project",
+    tools: "Bash, Read, Grep, Glob",
+    github: "https://github.com/aayushostwal/nexus/blob/main/agents/system-architecture-reviewer.md"
   },
   {
-    id: "planner",
-    name: "Planner",
-    role: "Builds executable implementation plans",
-    command: "/nexus:planner create execution plan",
-    bestFor: "Delivery planning",
-    ownership: "Scope slicing, dependencies, risk mitigation"
+    name: "scalability-planner",
+    description: "Plans how a system scales to a growth target with bottleneck-ordered tiers, trigger metrics, and cost estimates.",
+    domain: "Architecture",
+    color: "blue",
+    memory: "project",
+    tools: "Bash, Read, Grep, Glob, WebSearch",
+    github: "https://github.com/aayushostwal/nexus/blob/main/agents/scalability-planner.md"
   },
   {
-    id: "devops",
-    name: "DevOps Agent",
-    role: "Automates pipelines, release gates, and rollbacks",
-    command: "/nexus:devops generate release gate",
-    bestFor: "Deployment automation",
-    ownership: "CI/CD workflows, guardrails, rollback strategy"
+    name: "database-architect",
+    description: "Schema design, indexing strategy, and query optimization, with migration plans where every step has verify and rollback commands.",
+    domain: "Data & Events",
+    color: "orange",
+    memory: "project",
+    tools: "All tools",
+    github: "https://github.com/aayushostwal/nexus/blob/main/agents/database-architect.md"
   },
   {
-    id: "infra",
-    name: "Infra Agent",
-    role: "Owns cloud resources, IaC, and platform topology",
-    command: "/nexus:infra evaluate terraform blast radius",
-    bestFor: "Platform operations",
-    ownership: "Infrastructure diffs, policy checks, environment safety"
+    name: "event-driven-designer",
+    description: "Designs and reviews async systems — queues, streams, sagas, outbox, DLQs — with explicit failure-mode tables.",
+    domain: "Data & Events",
+    color: "orange",
+    memory: "project",
+    tools: "All tools",
+    github: "https://github.com/aayushostwal/nexus/blob/main/agents/event-driven-designer.md"
   },
   {
-    id: "testing",
-    name: "Testing Agent",
-    role: "Continuously verifies behavior and reliability",
-    command: "/nexus:testing stabilize flaky suite",
-    bestFor: "Reliability verification",
-    ownership: "Test diagnostics, deterministic fixes, coverage deltas"
+    name: "cloud-cost-optimizer",
+    description: "Cloud cost audits and bill-spike investigations from real billing data, with prioritized savings and copy-paste quick wins.",
+    domain: "Cloud",
+    color: "yellow",
+    memory: "user",
+    tools: "Bash, Read, Grep, Glob, WebSearch, WebFetch",
+    github: "https://github.com/aayushostwal/nexus/blob/main/agents/cloud-cost-optimizer.md"
+  },
+  {
+    name: "iac-engineer",
+    description: "Designs cloud architecture and writes the Terraform/CDK for it, or audits existing IaC with file:line evidence.",
+    domain: "Cloud",
+    color: "yellow",
+    memory: "project",
+    tools: "All tools",
+    github: "https://github.com/aayushostwal/nexus/blob/main/agents/iac-engineer.md"
+  },
+  {
+    name: "codebase-explorer",
+    description: "Token-efficient codebase exploration returning a concise map of where features, entry points, and configs live.",
+    domain: "Code & Docs",
+    color: "green",
+    memory: "project",
+    tools: "Bash, Read, Grep, Glob",
+    github: "https://github.com/aayushostwal/nexus/blob/main/agents/codebase-explorer.md"
+  },
+  {
+    name: "code-reviewer",
+    description: "Senior-level review of a PR, branch, or diff with a verdict and file:line findings. Read-only — never edits code.",
+    domain: "Code & Docs",
+    color: "red",
+    memory: "project",
+    tools: "Bash, Read, Grep, Glob",
+    github: "https://github.com/aayushostwal/nexus/blob/main/agents/code-reviewer.md"
+  },
+  {
+    name: "docs-app-builder",
+    description: "Builds documentation as a React app with sidebar navigation, Mermaid diagrams, reference tables, and search.",
+    domain: "Code & Docs",
+    color: "green",
+    memory: "project",
+    tools: "All tools",
+    github: "https://github.com/aayushostwal/nexus/blob/main/agents/docs-app-builder.md"
+  },
+  {
+    name: "ai-product-engineer",
+    description: "Designs and reviews LLM features end-to-end: model selection, RAG, agent design, eval pipelines, and token economics.",
+    domain: "AI",
+    color: "cyan",
+    memory: "user",
+    tools: "All tools",
+    github: "https://github.com/aayushostwal/nexus/blob/main/agents/ai-product-engineer.md"
   }
 ];
+
+export type Command = {
+  name: string;
+  description: string;
+};
+
+// The 4 slash commands bundled with the plugin (commands/*.md).
+export const commands: Command[] = [
+  { name: "/nexus:add-todo", description: "Add a global Nexus TODO with automatic classification." },
+  { name: "/nexus:daily-brief", description: "Build a daily brief from TODOs, Slack, Outlook, and Jira where configured." },
+  { name: "/nexus:review-branch", description: "Review the current git branch for bugs, regressions, and missing tests." },
+  { name: "/nexus:stats", description: "Show token usage and estimated cost stats for Claude and Codex sessions." }
+];
+
+export const pluginVersion = "1.30.0";
 
 export const workflowStages = ["CLASSIFY", "PLAN", "EXECUTE", "VERIFY", "DELIVER"];
 
@@ -205,16 +281,16 @@ export const mcpIntegrations = [
   {
     title: "GitHub MCP",
     description: "Issue triage, PR reviews, branch insights, and release management from one terminal workflow.",
-    command: "mcp add github --scopes repo,read:org"
+    command: "claude mcp add github"
   },
   {
     title: "Jira MCP",
     description: "Sprint analytics, ticket orchestration, and delivery-state automation via structured tool calls.",
-    command: "mcp add jira --cloud-id <cloud_id>"
+    command: "claude mcp add jira"
   },
   {
     title: "AWS MCP",
     description: "Infrastructure-aware automation for deployments, policy checks, and regional availability analysis.",
-    command: "mcp add aws --profile platform-prod"
+    command: "claude mcp add aws"
   }
 ];

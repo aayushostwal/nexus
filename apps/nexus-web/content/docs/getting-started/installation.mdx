@@ -1,23 +1,30 @@
 ---
 title: Installation
-description: Install Nexus and bootstrap your first agentic workflow.
+description: Install the Nexus plugin in Claude Code or Codex — no npm package required.
 category: Getting Started
 order: 1
 ---
 
 ## Prerequisites
 
-- Node.js 20+
-- GitHub account
-- Terminal with `npm` or `pnpm`
+- Claude Code, or the Codex CLI
+- Node.js 18+ (only used by the bundled helper scripts — there is nothing to `npm install`)
 
-## Install
+There is no npm package and no global `nexus` CLI. Nexus is distributed as a git-based plugin marketplace, installed directly from the GitHub repo `aayushostwal/nexus`.
 
-```bash
-npm i -g nexus-agent-kit
+## Install In Claude Code
+
+```text
+/plugin marketplace add aayushostwal/nexus
+/plugin install nexus@nexus-marketplace
+/reload-plugins
 ```
 
+After the reload, the 10 skills, 14 agents, and 4 commands are available under the `nexus:` namespace.
+
 ## Install In Codex
+
+Codex installs use the third-party `codex-marketplace` tool:
 
 ```bash
 npx codex-marketplace add aayushostwal/nexus --plugin --global
@@ -29,19 +36,27 @@ Project-scoped install:
 npx codex-marketplace add aayushostwal/nexus --plugin --project
 ```
 
-## Install In Claude Code
+This is a direct repo install — you need the repo slug `aayushostwal/nexus`; the plugin is not listed in a central Codex index.
 
-```text
-/plugin marketplace add aayushostwal/nexus
-/plugin install nexus@nexus-marketplace
-/reload-plugins
+## Bundled Helper Scripts
+
+The plugin's helper scripts are dependency-free Node scripts. Commands run them with plain `node`:
+
+```bash
+node "${CLAUDE_PLUGIN_ROOT}/bin/nexus.js"
 ```
+
+No install step, no `node_modules` — Node 18 or newer is the only requirement.
 
 ## Automatic Bootstrap
 
-Nexus automatically creates or updates runtime-specific repo instruction files:
+On first active plugin run, Nexus creates or updates runtime-specific instruction files:
 
-- Claude runtime: `CLAUDE.md`
-- Codex runtime: `AGENT.md`
+- Claude runtime: `~/.claude/CLAUDE.md`
+- Codex runtime: `~/.codex/AGENT.md`
 
-If either file already exists, Nexus preserves existing content and only appends/updates the Nexus-managed skills-first block.
+If either file already exists, Nexus preserves your content and only appends/updates the Nexus-managed skills-first block. You can also trigger this manually from the plugin directory:
+
+```bash
+node scripts/bootstrap-agent-docs.js
+```
