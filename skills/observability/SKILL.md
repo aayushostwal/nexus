@@ -17,7 +17,7 @@ Systematically correlate failures across distributed services to identify causal
 - Supporting files: `checklists/investigation-checklist.md`, `anti-patterns/common-mistakes.md`, `validation/output-validation.md`
 - Required tools: Read, Bash, Grep
 - Optional tools: WebSearch (vendor-specific error lookups)
-- Hands off to: `nexus:debugging` once origin service is identified; `nexus:planning` after fix is agreed upon
+- Hands off to: `nexus:debugging` once origin service is identified; the `roadmap-planner` agent after fix is agreed upon
 
 ---
 

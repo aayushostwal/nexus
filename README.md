@@ -36,9 +36,11 @@ Instead of re-explaining how you want the assistant to operate in every new repo
 
 ## Quick Start
 
+Nexus is distributed as a git-based plugin marketplace. There is no npm package: the bundled Node scripts are dependency-free and run with plain `node` (Node 18 or newer), so no `npm install` is ever needed.
+
 ### Install In Codex
 
-Install directly from this GitHub repo:
+Install directly from this GitHub repo using the third-party `codex-marketplace` tool:
 
 ```bash
 npx codex-marketplace add aayushostwal/nexus --plugin --global
@@ -67,7 +69,7 @@ If these files already exist, Nexus appends/updates only its managed block and p
 /reload-plugins
 ```
 
-After plugin enablement, run `node scripts/bootstrap-agent-docs.js` once to create or refresh the managed skills-first instruction block in your runtime instruction files.
+After plugin enablement, run `node scripts/bootstrap-agent-docs.js` once from the cloned or installed plugin directory (plain `node`, no dependencies to install) to create or refresh the managed skills-first instruction block in your runtime instruction files.
 
 ## What Nexus Does In Your Terminal
 
@@ -91,35 +93,6 @@ Skills are grouped below by role so it is easier to understand what the plugin a
 | Skill | Category | Purpose |
 | --- | --- | --- |
 | [`nexus`](skills/nexus/SKILL.md) | ![Operations](https://img.shields.io/badge/Operations-0F766E?style=flat) | Shared operating rules, TODO workflows, daily briefs, and MCP safety behavior. |
-
-### Planning And Research
-
-| Skill | Category | Purpose |
-| --- | --- | --- |
-| [`nexus-planning`](skills/planning/SKILL.md) | ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) ![Planning](https://img.shields.io/badge/Planning-1D4ED8?style=flat) | Turns an intended technical change into scope, ordered steps, dependencies, risks, validation, and rollout. |
-| [`nexus-exploring`](skills/exploring/SKILL.md) | ![Exploration](https://img.shields.io/badge/Exploration-7C3AED?style=flat) ![Research](https://img.shields.io/badge/Research-6D28D9?style=flat) | Determines the right approach when the goal is clear but the design or implementation strategy is still uncertain. |
-
-### Architecture And Design
-
-| Skill | Category | Purpose |
-| --- | --- | --- |
-| [`nexus-architecture`](skills/architecture/SKILL.md) | ![Architecture](https://img.shields.io/badge/Architecture-0369A1?style=flat) ![Design](https://img.shields.io/badge/Design-0891B2?style=flat) | Reads a codebase and produces a structured map of service boundaries, coupling points, and refactoring opportunities. |
-| [`nexus-deployment-safety`](skills/architecture/deployment-safety.md) | ![Architecture](https://img.shields.io/badge/Architecture-0369A1?style=flat) ![Reliability](https://img.shields.io/badge/Reliability-DC2626?style=flat) | Checks a proposed change against deployment history, rollback readiness, and runtime risk factors before rollout. |
-
-### Code Quality
-
-| Skill | Category | Purpose |
-| --- | --- | --- |
-| [`nexus-code-review`](skills/code-review/SKILL.md) | ![Review](https://img.shields.io/badge/Review-7C3AED?style=flat) ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) | Reviews a branch for logic correctness, regression risk, test coverage gaps, and observable behavior changes. |
-
-### Infrastructure Planning
-
-| Skill | Category | Purpose |
-| --- | --- | --- |
-| [`nexus-infra`](skills/infrastructure/SKILL.md) | ![Infrastructure](https://img.shields.io/badge/Infrastructure-0369A1?style=flat) ![Cloud](https://img.shields.io/badge/Cloud-0EA5E9?style=flat) | Entry point for all infrastructure requests — routes to design, evaluate, or free-alternatives based on what the user needs. |
-| [`nexus-infra-design`](skills/infrastructure/design.md) | ![Infrastructure](https://img.shields.io/badge/Infrastructure-0369A1?style=flat) ![Planning](https://img.shields.io/badge/Planning-1D4ED8?style=flat) | Scans a codebase and produces a professional HLD with Mermaid diagram, component table, cost estimate, and trade-off matrix. |
-| [`nexus-infra-evaluate`](skills/infrastructure/evaluate.md) | ![Infrastructure](https://img.shields.io/badge/Infrastructure-0369A1?style=flat) ![Review](https://img.shields.io/badge/Review-DC2626?style=flat) | Reads existing Terraform, K8s, docker-compose, and CI/CD files to produce a full audit report with short-term and long-term improvement plans. |
-| [`nexus-infra-free-alternatives`](skills/infrastructure/free-alternatives.md) | ![Infrastructure](https://img.shields.io/badge/Infrastructure-0369A1?style=flat) ![Cost](https://img.shields.io/badge/Cost-16A34A?style=flat) | Maps every paid cloud service to free, cheap, or self-hosted alternatives grouped by tier, with migration notes per service. |
 
 ### Debugging
 
@@ -179,11 +152,56 @@ Skills are grouped below by role so it is easier to understand what the plugin a
 
 ## Agents
 
-Agents are autonomous subagents that Claude Code can delegate to. They run in their own context window with a focused system prompt and a restricted tool set.
+Agents are autonomous subagents that Claude Code can delegate to. They run in their own context window with a focused system prompt and a restricted tool set. Every Nexus agent has persistent memory (`user` or `project` scope) so it learns your conventions across sessions, and a display color grouped by domain.
 
-| Agent | Category | Purpose |
+### Product (purple)
+
+| Agent | Memory | Purpose |
 | --- | --- | --- |
-| [`code-reviewer`](agents/code-reviewer.md) | ![Review](https://img.shields.io/badge/Review-7C3AED?style=flat) ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) | Read-only senior reviewer for a PR, branch, or diff. Returns a verdict with file:line findings covering correctness, regressions, security, migration risk, and deploy safety. |
+| [`prd-writer-critic`](agents/prd-writer-critic.md) | user | Writes PRDs from rough notes using a 10-section template with hard KPI/JTBD gates, or critiques existing PRDs with severity-ranked gaps. |
+| [`roadmap-planner`](agents/roadmap-planner.md) | user | Turns an intended change into a scoping table, ordered steps with verify commands, risks, and rollback plans — hard-stops for approval before any implementation detail. |
+
+### Design (pink)
+
+| Agent | Memory | Purpose |
+| --- | --- | --- |
+| [`uiux-reviewer`](agents/uiux-reviewer.md) | user | Read-only UI/UX review: heuristics, WCAG 2.2 AA accessibility, state coverage, and responsive behavior, with impact-calibrated severity. |
+| [`mobile-ux-designer`](agents/mobile-ux-designer.md) | user | Designs and reviews mobile UX across iOS/Android/cross-platform: navigation, touch ergonomics, offline states, permission choreography. |
+
+### Architecture (blue)
+
+| Agent | Memory | Purpose |
+| --- | --- | --- |
+| [`system-architecture-reviewer`](agents/system-architecture-reviewer.md) | project | Maps service boundaries, coupling, and extraction candidates; issues GO/NO-GO deployment safety verdicts with T1–T5 risk tiers. |
+| [`scalability-planner`](agents/scalability-planner.md) | project | Bottleneck-ordered scaling plans with explicit capacity math and tiered triggers — boring solutions first, sharding last. |
+
+### Data & Events (orange)
+
+| Agent | Memory | Purpose |
+| --- | --- | --- |
+| [`database-architect`](agents/database-architect.md) | project | Schema design, index strategy from real query plans, and zero-downtime expand–contract migrations with per-step rollback. |
+| [`event-driven-designer`](agents/event-driven-designer.md) | project | Designs and reviews async systems: idempotency, ordering costs, outbox, sagas, DLQ replay, and schema evolution. |
+
+### Cloud (yellow)
+
+| Agent | Memory | Purpose |
+| --- | --- | --- |
+| [`cloud-cost-optimizer`](agents/cloud-cost-optimizer.md) | user | Cost audits from real billing data and live-verified pricing — never from memory. Quick wins, structural changes, and monitoring setup. |
+| [`iac-engineer`](agents/iac-engineer.md) | project | Designs and writes Terraform/CDK, audits existing IaC with evidence-cited findings, produces HLDs with verified cost tables. |
+
+### Code & Docs (green / red)
+
+| Agent | Memory | Purpose |
+| --- | --- | --- |
+| [`codebase-explorer`](agents/codebase-explorer.md) | project | Token-efficient codebase navigation; returns a three-column map (Title, File path, Description) consumable by humans and downstream agents. |
+| [`code-reviewer`](agents/code-reviewer.md) | project | Read-only senior reviewer for a PR, branch, or diff. Returns a verdict with file:line findings covering correctness, regressions, security, migration risk, and deploy safety. |
+| [`docs-app-builder`](agents/docs-app-builder.md) | project | Builds documentation as a React app: Diátaxis-organized sidebar navigation, Mermaid diagrams, reference tables, search, tabs, and dark mode — verified by a passing build and link crawl. |
+
+### AI (cyan)
+
+| Agent | Memory | Purpose |
+| --- | --- | --- |
+| [`ai-product-engineer`](agents/ai-product-engineer.md) | user | Builds LLM-powered features end-to-end: model selection, cost projections, RAG and agent design, evals as the core loop, production failure modes. |
 
 ## Commands
 
@@ -231,10 +249,10 @@ Safety defaults used by the repo:
 
 ## Development
 
-Run the local checks with:
+The scripts are dependency-free, so local checks run with the built-in Node test runner:
 
 ```bash
-npm test
+node --test
 ```
 
 Plugin packaging lives in:

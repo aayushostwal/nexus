@@ -20,7 +20,7 @@ Route to the correct sub-skill and follow it end-to-end.
   `validation/output-validation.md`
 - Required tools: Read, Bash, Grep
 - Hands off to: `nexus:debugging` for single-service runtime failures
-- Hands off to: `nexus:planning` after the fix is approved
+- Hands off to: the `roadmap-planner` agent after the fix is approved
 
 ---
 

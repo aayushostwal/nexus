@@ -15,7 +15,7 @@ Time-boxed, evidence-driven workflow for investigating production incidents and 
 
 ## Compatibility
 - Sub-skills: `release-readiness.md` | Materials: `checklists/incident-checklist.md`, `anti-patterns/common-mistakes.md`, `validation/output-validation.md`
-- Required: Read, Bash, Grep | Optional: WebSearch | Hands off to: `nexus:debugging` (code RCA), `nexus:planning` (post-mortem actions)
+- Required: Read, Bash, Grep | Optional: WebSearch | Hands off to: `nexus:debugging` (code RCA), the `roadmap-planner` agent (post-mortem actions)
 
 ---
 

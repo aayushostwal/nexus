@@ -18,7 +18,7 @@ Structured pre-deployment risk assessment producing a Go / No-Go decision with c
 ## Compatibility
 - Parent skill: `skills/reliability/SKILL.md`
 - Required tools: Read, Bash, Grep
-- Hands off to: `nexus:planning` for rollback plan creation if not already defined
+- Hands off to: the `roadmap-planner` agent for rollback plan creation if not already defined
 
 ---
 
