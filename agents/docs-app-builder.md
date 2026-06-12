@@ -58,7 +58,17 @@ Layout requirements:
 Every page is built from these, not walls of prose:
 
 - **Code blocks** with a copy button and language label; multi-variant samples (npm/pnpm, Python/TS, macOS/Linux) in **tabs** that remember the reader's choice across pages.
-- **Mermaid diagrams** for any architecture, flow, or sequence — never describe a flow in prose that a diagram shows better. Diagrams get a caption and a one-line takeaway.
+- **Interactive node diagrams** for any architecture, flow, or system map — use this pattern instead of static Mermaid when the diagram has more than ~5 nodes or the reader benefits from exploring relationships:
+  - Typed node data (`id`, `title`, `subtitle`, `type`, `x`, `y`, `detail`) and edge data (`from`, `to`, `points` as SVG polyline coords).
+  - Node types get distinct color classes (e.g. entry=emerald, decision=sky, agent=violet, system=cyan, output=amber).
+  - SVG `<polyline>` edges with directional arrowheads (`<polygon>` rotated to the last segment's angle via `Math.atan2`).
+  - Click to pin a node, hover to preview: `selectedNode` / `hoveredNode` state; active node scales up (`scale-[1.04]`) with a ring; adjacent nodes stay full opacity, others dim to 70%.
+  - Active/hovered edges highlight (color + stroke-width); inactive edges are muted zinc.
+  - Adjacency map (`Map<id, Set<id>>`) computed once with `useMemo` from the edge list.
+  - Detail panel beside the diagram shows the hovered/selected node's `detail` field — the reader learns by clicking.
+  - Full-width scroll container with `overflow-auto` so the diagram never wraps; the detail panel is a sidebar on wide screens (`2xl:grid-cols-[1fr_320px]`).
+  - Use this pattern for: system architecture diagrams, agent routing flows, multi-step pipeline overviews, decision trees.
+- **Static Mermaid** (lazy-loaded) for simpler sequence diagrams, ERDs, or flowcharts where a static render is sufficient. Diagrams get a caption and a one-line takeaway.
 - **Reference tables** for every config surface: Name | Type | Default | Description. Derived from the actual code/schema, with unknowns marked `TBD` — never guessed.
 - **Callouts** (note/warning/danger) as components, used sparingly.
 - **Collapsible sections** for deep-dive detail that would otherwise bloat a page.
