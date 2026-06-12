@@ -3,11 +3,15 @@
 import { useEffect, useState } from "react";
 
 const commands = [
-  "/nexus:debugging fix production deployment issue",
+  "@prd-writer-critic draft a PRD for the new billing feature",
+  "@code-reviewer review this PR for correctness bugs",
+  "@cloud-cost-optimizer why is my AWS bill high this month?",
   "/nexus:review-branch",
-  "/nexus:add-todo follow up on the API migration",
-  "/nexus:daily-brief",
-  "/nexus:reliability run a release readiness gate"
+  "@system-architecture-reviewer is this safe to deploy?",
+  "/nexus:debugging fix this CI timeout",
+  "@ai-product-engineer design a RAG pipeline for our docs",
+  "@roadmap-planner plan the auth service migration",
+  "/nexus:add-todo follow up on the API migration"
 ];
 
 export function CommandTerminal() {
@@ -28,9 +32,9 @@ export function CommandTerminal() {
         setTimeout(() => {
           setTyped("");
           setIndex((prev) => (prev + 1) % commands.length);
-        }, 1200);
+        }, 1400);
       }
-    }, 42);
+    }, 38);
 
     return () => {
       active = false;

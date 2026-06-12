@@ -12,12 +12,13 @@ import {
   Workflow
 } from "lucide-react";
 import { AnimatedBackground } from "@/components/animated-background";
-import { AgentCard } from "@/components/agent-card";
+import { AgentsGrid } from "@/components/agents-grid";
 import { ArchitectureDiagram } from "@/components/architecture-diagram";
+import { ClaudeMdSetup } from "@/components/claude-md-setup";
 import { CommandTerminal } from "@/components/command-terminal";
 import { FloatingTerminal } from "@/components/floating-terminal";
 import { SearchModal } from "@/components/search-modal";
-import { SkillCard } from "@/components/skill-card";
+import { SkillsGrid } from "@/components/skills-grid";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -94,9 +95,11 @@ export default async function HomePage() {
                 Agentify Your Terminal
               </h1>
               <p className="mt-6 max-w-2xl text-base text-zinc-300 sm:text-lg">
-                Nexus ships 14 specialized agents with persistent memory — each focused on a domain, each color-coded, each learning your conventions across sessions.
+                Nexus ships 14 specialized agents — each focused on one domain, color-coded for fast orientation, and equipped with persistent memory that learns your conventions across sessions.
               </p>
-              <p className="mt-2 text-zinc-400">PRD writing, architecture review, database migrations, cloud cost audits, LLM product engineering, and more — one plugin install away.</p>
+              <p className="mt-2 text-zinc-400">
+                <span className="text-purple-300">Product</span> · <span className="text-pink-300">Design</span> · <span className="text-blue-300">Architecture</span> · <span className="text-orange-300">Data &amp; Events</span> · <span className="text-yellow-300">Cloud</span> · <span className="text-green-300">Code &amp; Docs</span> · <span className="text-cyan-300">AI</span>
+              </p>
               <div className="mt-8 grid gap-3 sm:flex sm:flex-wrap">
                 <Button asChild size="lg" className="w-full sm:w-auto">
                   <a href="#agent-system">Explore Agents</a>
@@ -128,11 +131,19 @@ export default async function HomePage() {
         </section>
 
         <section className="nexus-container pb-4">
-          <div className="rounded-2xl border border-zinc-700/70 bg-zinc-900/50 p-4">
-            <p className="mb-3 text-sm text-zinc-400">
-              CLI Commands <code>/nexus:&lt;skill-or-agent&gt;</code>
-            </p>
-            <CommandTerminal />
+          <div className="grid gap-4 lg:grid-cols-2">
+            <div className="rounded-2xl border border-zinc-700/70 bg-zinc-900/50 p-4">
+              <p className="mb-3 text-sm text-zinc-400">
+                Invoke agents and skills with <code className="text-cyan-300">@agent-name</code> or <code className="text-cyan-300">/nexus:skill</code>
+              </p>
+              <CommandTerminal />
+            </div>
+            <div className="rounded-2xl border border-zinc-700/70 bg-zinc-900/50 p-4">
+              <p className="mb-3 text-sm text-zinc-400">
+                Use agents by default — add to your <code className="text-cyan-300">~/.claude/CLAUDE.md</code>
+              </p>
+              <ClaudeMdSetup />
+            </div>
           </div>
         </section>
 
@@ -232,10 +243,8 @@ export default async function HomePage() {
               <Search className="size-4" /> Search via command palette
             </div>
           </div>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {agents.map((agent, index) => (
-              <AgentCard key={agent.name} agent={agent} step={index} />
-            ))}
+          <div className="mt-8">
+            <AgentsGrid agents={agents} />
           </div>
         </section>
 
@@ -248,11 +257,7 @@ export default async function HomePage() {
               </p>
             </div>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {skills.map((skill) => (
-              <SkillCard key={skill.name} skill={skill} />
-            ))}
-          </div>
+          <SkillsGrid skills={skills} />
         </section>
 
         <section id="architecture" className="nexus-container py-16 sm:py-20">
