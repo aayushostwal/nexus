@@ -210,10 +210,8 @@ Every Nexus agent has persistent memory and a domain-grouped display color. `use
 
 | Command | Category | Purpose |
 | --- | --- | --- |
-| [`/add-todo`](commands/add-todo.md) | ![Operations](https://img.shields.io/badge/Operations-0F766E?style=flat) ![TODOs](https://img.shields.io/badge/TODOs-14B8A6?style=flat) | Add a classified item to the Nexus TODO system. |
-| [`/daily-brief`](commands/daily-brief.md) | ![Comms](https://img.shields.io/badge/Comms-DB2777?style=flat) ![Briefing](https://img.shields.io/badge/Briefing-EC4899?style=flat) | Build a daily brief from TODOs and configured tools. |
-| [`/review-branch`](commands/review-branch.md) | ![Review](https://img.shields.io/badge/Review-7C3AED?style=flat) ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) | Review current branch changes with findings first. |
-| [`/stats`](commands/stats.md) | ![Operations](https://img.shields.io/badge/Operations-0F766E?style=flat) | Show token usage and estimated cost stats for Claude and Codex sessions. |
+| [`/commit-message`](commands/commit-message.md) | ![Coding](https://img.shields.io/badge/Coding-2563EB?style=flat) | Draft a Conventional Commit message from the staged diff. |
+| [`/grind`](commands/grind.md) | ![Learning](https://img.shields.io/badge/Learning-CA8A04?style=flat) | Run an adversarial mock-interview drilling session on a concept, role, and format. |
 
 ## Tool Setup Guides
 
