@@ -4,9 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### DOCUMENTATION
+
+- Swap deprecated commands for commit-message and grind ([`432cc29`](https://github.com/aayushostwal/nexus-agent-kit/commit/432cc297919cb9748de071999ec405f898f1afe7))
+
+## [v1.34.0] - 2026-06-12
+
 ### FEATURES
 
 - Rearrange page order + add search bars to agents and skills ([`017940a`](https://github.com/aayushostwal/nexus-agent-kit/commit/017940a83e6be17eee4b5786d255fbc81497dae8))
+
+### MISCELLANEOUS TASKS
+
+- Bump version to 1.34.0 ([`2a97e4d`](https://github.com/aayushostwal/nexus-agent-kit/commit/2a97e4d61da766e0ab23ddd4815e2402012bc3d4))
 
 ## [v1.33.0] - 2026-06-12
 
