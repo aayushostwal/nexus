@@ -5,7 +5,7 @@ import "./globals.css";
 import { Providers } from "@/components/providers";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://nexus-agent-kit.vercel.app"),
+  metadataBase: new URL("https://nexus-ai.aayushostwal.com"),
   icons: {
     icon: [
       { url: "/logos/nexus.svg", type: "image/svg+xml" },
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     title: "Nexus | Agentify Your Terminal",
     description: "Build autonomous engineering systems with composable AI agents, skills, and workflows.",
     type: "website",
-    url: "https://nexus-agent-kit.vercel.app"
+    url: "https://nexus-ai.aayushostwal.com"
   },
   twitter: {
     card: "summary_large_image",
@@ -57,7 +57,7 @@ const jsonLd = {
     "A modern AI agents platform for discovering and orchestrating skills, workflows, and autonomous developer automation.",
   softwareHelp: {
     "@type": "CreativeWork",
-    url: "https://nexus-agent-kit.vercel.app/docs"
+    url: "https://nexus-ai.aayushostwal.com/docs"
   }
 };
 

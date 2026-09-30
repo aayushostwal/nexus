@@ -1,0 +1,8 @@
+{
+  "number": 17,
+  "title": "Collapse punctuation runs in generated slugs",
+  "body": "slug('  Hello,   world!  ') must return 'hello-world'. Trim leading/trailing separators, collapse punctuation and whitespace runs, preserve ASCII letters and digits, and return an empty string for punctuation-only input. Existing lowercase and trim behavior must remain.",
+  "state": "OPEN",
+  "url": "https://github.com/example/fixture/issues/17",
+  "assignees": []
+}

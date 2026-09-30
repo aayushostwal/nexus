@@ -1,10 +1,9 @@
 ---
-name: nexus-shorts
+name: shorts
 description: >
   Use to convert any input into a ready-to-record YouTube Shorts script.
   Trigger on requests for 30-second scripts, hooks, reels/short-form video copy,
   or pasted topics/articles/bullets/URLs needing concise high-retention narration with CTA.
-  When in doubt, use this skill.
 ---
 
 # Nexus YouTube Shorts Script Writer

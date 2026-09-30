@@ -1,10 +1,9 @@
 ---
-name: nexus-tutorial
+name: tutorial
 description: >
   Use for creating executable Jupyter tutorials and AI engineering walkthroughs with runnable cells.
   Trigger on requests for step-by-step guides, notebook-based teaching, or shareable code-first learning
   content. Prioritize reproducibility, clarity, and copy-paste-ready outputs.
-  When in doubt, use this skill.
 ---
 
 # Tutorial Generation Protocol

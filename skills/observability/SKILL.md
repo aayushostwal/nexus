@@ -1,10 +1,9 @@
 ---
-name: nexus-observability
+name: observability
 description: >
   Use for correlated API failures, cascading errors, and distributed-system incident tracing.
   Trigger on multi-service error spikes, dependency-chain analysis, circuit-breaker events,
   or requests to identify origin service and blast radius from logs/metrics across components.
-  When in doubt, use this skill.
 ---
 
 # Nexus Observability — API Failure Correlation Engine

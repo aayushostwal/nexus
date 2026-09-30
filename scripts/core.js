@@ -37,6 +37,7 @@ const LABEL_COLORS = {
 
 function ensureNexusHome() {
   fs.mkdirSync(NEXUS_HOME, { recursive: true });
+  fs.mkdirSync(path.dirname(TODO_FILE), { recursive: true });
   if (!fs.existsSync(TODO_FILE)) {
     fs.writeFileSync(TODO_FILE, initialTodos(), "utf8");
   }
@@ -57,6 +58,8 @@ function classifyTodo(text) {
 }
 
 function addTodo(text, options = {}) {
+  text = String(text).replace(/[\r\n]+/g, " ").trim();
+  if (!text) throw new Error("TODO text must not be empty");
   ensureNexusHome();
   const label = options.label || classifyTodo(text);
   const created = new Date().toISOString();
@@ -72,7 +75,7 @@ function insertOpenTodo(markdown, line) {
   if (!markdown.includes("## Open")) {
     return `${markdown.trim()}\n\n## Open\n\n${line}\n`;
   }
-  return markdown.replace(/(## Open\s*\n)/, `$1\n${line}\n`);
+  return markdown.replace(/(## Open\s*\n)/, (heading) => `${heading}\n${line}\n`);
 }
 
 function readTodos() {

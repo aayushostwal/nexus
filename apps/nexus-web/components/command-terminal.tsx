@@ -6,12 +6,12 @@ const commands = [
   "@prd-writer-critic draft a PRD for the new billing feature",
   "@code-reviewer review this PR for correctness bugs",
   "@cloud-cost-optimizer why is my AWS bill high this month?",
-  "/nexus:review-branch",
+  "/nexus:software-engineer fix issue #123 and raise a PR",
   "@system-architecture-reviewer is this safe to deploy?",
   "/nexus:debugging fix this CI timeout",
   "@ai-product-engineer design a RAG pipeline for our docs",
   "@roadmap-planner plan the auth service migration",
-  "/nexus:add-todo follow up on the API migration"
+  "/nexus:commit-message"
 ];
 
 export function CommandTerminal() {

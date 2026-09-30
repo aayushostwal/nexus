@@ -1,41 +1,100 @@
 ---
 title: Quickstart
-description: Run your first Nexus command, skill, and agent in under two minutes.
+description: Take a GitHub issue or a bug in chat through investigation, verification, and a pull request.
 category: Getting Started
 order: 2
 ---
 
-## First Command
+## Fix Your First Issue
 
-With the plugin installed, review your current branch:
-
-```text
-/nexus:review-branch
-```
-
-Nexus ships 4 commands: `/nexus:add-todo`, `/nexus:daily-brief`, `/nexus:review-branch`, and `/nexus:stats`.
-
-## Trigger A Skill
-
-Skills auto-trigger when your request matches their description, or you can invoke one directly:
+[Install Nexus](/docs/getting-started/installation), open a local Git repository, and configure GitHub access through your host's connector or authenticated `gh` CLI. In Claude Code:
 
 ```text
-/nexus:debugging fix the failing CI pipeline
+/nexus:software-engineer fix issue #123 in the current repository and raise a PR
 ```
 
-## Delegate To An Agent
-
-Agents are subagents that Claude Code delegates to based on your request. Just ask in natural language:
+You can also give a local directory and a concrete bug:
 
 ```text
-review this PR for regressions          → code-reviewer
-where is the auth flow implemented      → codebase-explorer
-write a PRD for this feature idea       → prd-writer-critic
+Use software-engineer in /path/to/repo. Saving an empty display name crashes. Reproduce the bug, fix it, run relevant checks, and raise a PR.
 ```
 
-Each agent runs in its own context window and remembers what it learns — user-scoped agents carry preferences across repos, project-scoped agents build per-repo memory in `.claude/agent-memory/`.
+With a directory but no issue, the workflow inspects open GitHub issues and selects a bounded candidate according to its selection rules. It checks for existing work, protects unrelated changes, investigates, implements, verifies, and opens a focused PR. Missing authentication or failed checks are reported; a successful local check does not establish green CI. The workflow does not merge or deploy.
+
+In Codex, select the installed software-engineer skill or ask for it by name. Exact invocation and agent support depend on your host and installer.
+
+## Try A Small Command
+
+After staging a change intentionally, ask Claude Code to draft a commit message:
+
+```text
+/nexus:commit-message
+```
+
+The command drafts a message from the staged diff. If nothing is staged, it reports that condition.
+
+## Trigger A Skill Or Agent
+
+```text
+/nexus:debugging investigate the failing CI pipeline
+```
+
+In Claude Code, ask to use `code-reviewer` for a read-only PR review or `codebase-explorer` to locate an implementation. Agent memory and tool permissions are host-specific. Instructions to stay read-only do not replace host permission enforcement.
+
+## Current Catalog
+
+Generated from the shipped source files. Slash invocations below use Claude plugin syntax.
+
+{/* catalog:start */}
+
+Version **1.35.0** includes **11 skills**, **14 Claude agents**, and **2 commands**.
+
+### Skills
+
+| Claude invocation | Source |
+| --- | --- |
+| `/nexus:debugging` | [debugging](https://github.com/aayushostwal/nexus/blob/main/skills/debugging/SKILL.md) |
+| `/nexus:nexus` | [nexus](https://github.com/aayushostwal/nexus/blob/main/skills/nexus/SKILL.md) |
+| `/nexus:observability` | [observability](https://github.com/aayushostwal/nexus/blob/main/skills/observability/SKILL.md) |
+| `/nexus:performance` | [performance](https://github.com/aayushostwal/nexus/blob/main/skills/performance/SKILL.md) |
+| `/nexus:reliability` | [reliability](https://github.com/aayushostwal/nexus/blob/main/skills/reliability/SKILL.md) |
+| `/nexus:shorts` | [shorts](https://github.com/aayushostwal/nexus/blob/main/skills/shorts/SKILL.md) |
+| `/nexus:skill-writer` | [skill-writer](https://github.com/aayushostwal/nexus/blob/main/skills/skill-writer/SKILL.md) |
+| `/nexus:software-engineer` | [software-engineer](https://github.com/aayushostwal/nexus/blob/main/skills/software-engineer/SKILL.md) |
+| `/nexus:testing` | [testing](https://github.com/aayushostwal/nexus/blob/main/skills/testing/SKILL.md) |
+| `/nexus:token-optimizer` | [token-optimizer](https://github.com/aayushostwal/nexus/blob/main/skills/token-optimizer/SKILL.md) |
+| `/nexus:tutorial` | [tutorial](https://github.com/aayushostwal/nexus/blob/main/skills/tutorial/SKILL.md) |
+
+### Agents
+
+| Agent | Source |
+| --- | --- |
+| `ai-product-engineer` | [ai-product-engineer](https://github.com/aayushostwal/nexus/blob/main/agents/ai-product-engineer.md) |
+| `cloud-cost-optimizer` | [cloud-cost-optimizer](https://github.com/aayushostwal/nexus/blob/main/agents/cloud-cost-optimizer.md) |
+| `code-reviewer` | [code-reviewer](https://github.com/aayushostwal/nexus/blob/main/agents/code-reviewer.md) |
+| `codebase-explorer` | [codebase-explorer](https://github.com/aayushostwal/nexus/blob/main/agents/codebase-explorer.md) |
+| `database-architect` | [database-architect](https://github.com/aayushostwal/nexus/blob/main/agents/database-architect.md) |
+| `docs-app-builder` | [docs-app-builder](https://github.com/aayushostwal/nexus/blob/main/agents/docs-app-builder.md) |
+| `event-driven-designer` | [event-driven-designer](https://github.com/aayushostwal/nexus/blob/main/agents/event-driven-designer.md) |
+| `iac-engineer` | [iac-engineer](https://github.com/aayushostwal/nexus/blob/main/agents/iac-engineer.md) |
+| `mobile-ux-designer` | [mobile-ux-designer](https://github.com/aayushostwal/nexus/blob/main/agents/mobile-ux-designer.md) |
+| `prd-writer-critic` | [prd-writer-critic](https://github.com/aayushostwal/nexus/blob/main/agents/prd-writer-critic.md) |
+| `roadmap-planner` | [roadmap-planner](https://github.com/aayushostwal/nexus/blob/main/agents/roadmap-planner.md) |
+| `scalability-planner` | [scalability-planner](https://github.com/aayushostwal/nexus/blob/main/agents/scalability-planner.md) |
+| `system-architecture-reviewer` | [system-architecture-reviewer](https://github.com/aayushostwal/nexus/blob/main/agents/system-architecture-reviewer.md) |
+| `uiux-reviewer` | [uiux-reviewer](https://github.com/aayushostwal/nexus/blob/main/agents/uiux-reviewer.md) |
+
+### Commands
+
+| Claude invocation | Source |
+| --- | --- |
+| `/nexus:commit-message` | [commit-message](https://github.com/aayushostwal/nexus/blob/main/commands/commit-message.md) |
+| `/nexus:grind` | [grind](https://github.com/aayushostwal/nexus/blob/main/commands/grind.md) |
+
+{/* catalog:end */}
 
 ## Next
 
-- [Writing Skills](/docs/core/writing-skills) to build your own skill.
-- [Writing Agents](/docs/core/writing-agents) for the agent frontmatter spec and the full agent roster.
+- [Writing Skills](/docs/core/writing-skills)
+- [Writing Agents](/docs/core/writing-agents)
+- [Migration notes](https://github.com/aayushostwal/nexus/blob/main/docs/migration.md)

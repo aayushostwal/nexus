@@ -1,10 +1,10 @@
 ---
-name: nexus-testing
+name: testing
 description: >
   Use for flaky or nondeterministic tests, especially local-vs-CI inconsistencies.
   Trigger on intermittent failures, race/timing symptoms, retry-only greens,
   or unexplained skip/xfail markers. Output should isolate reproducible cause, narrowest durable fix,
-  and prevention guidance. When in doubt, use this skill.
+  and prevention guidance.
 ---
 
 # Nexus Flaky Test Root Cause Analyzer
@@ -13,7 +13,7 @@ Structured protocol for diagnosing, isolating, and permanently eliminating non-d
 failures. Not a retry wrapper — treats flakiness as a first-class defect.
 
 ```
-name:             nexus-testing
+name:             testing
 category:         testing / quality
 required_context: test file path, failure frequency, CI log or local output, stack trace if available
 expected_inputs:  test name, framework, failure pattern, environment (local/CI/both), reproduction rate
@@ -28,7 +28,6 @@ expected_outputs: flakiness type, reproduction steps, root cause (one sentence),
 3. Fix the root cause, not the symptom — masking a race condition makes it fail more often.
 4. Never mark `xfail`/`skip` without a linked issue and expiry date.
 5. Test flakiness often mirrors a real production concurrency or data integrity hazard.
-
 ---
 
 ## Step 1 — Collect Context

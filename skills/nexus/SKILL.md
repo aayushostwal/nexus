@@ -3,13 +3,12 @@ name: nexus
 description: >
   Use for persistent TODO capture, daily brief retrieval, and shared Codex/Claude operating rules.
   Trigger on remember/track/follow-up requests, "nexus add/show/brief", or policy/workflow questions
-  across Slack, Outlook, and Jira contexts. When in doubt, use this skill.
+  across Slack, Outlook, and Jira contexts.
 ---
 
 # Nexus Agent Kit
 
 Shared operating rules for Codex and Claude Code sessions.
-
 ---
 
 ## Compatibility

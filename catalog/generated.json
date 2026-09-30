@@ -1,0 +1,215 @@
+{
+  "schemaVersion": 1,
+  "name": "nexus",
+  "version": "1.35.0",
+  "skills": [
+    {
+      "name": "debugging",
+      "description": "Use when something is failing, regressing, or behaving unexpectedly and the goal is root-cause analysis, narrowest fix, and verification. Covers CI/CD, tests, runtime, deployment, and tooling failures. Output should be RCA + fix + prevention, not design options.",
+      "path": "skills/debugging/SKILL.md",
+      "invocation": "/nexus:debugging"
+    },
+    {
+      "name": "nexus",
+      "description": "Use for persistent TODO capture, daily brief retrieval, and shared Codex/Claude operating rules. Trigger on remember/track/follow-up requests, \"nexus add/show/brief\", or policy/workflow questions across Slack, Outlook, and Jira contexts.",
+      "path": "skills/nexus/SKILL.md",
+      "invocation": "/nexus:nexus"
+    },
+    {
+      "name": "observability",
+      "description": "Use for correlated API failures, cascading errors, and distributed-system incident tracing. Trigger on multi-service error spikes, dependency-chain analysis, circuit-breaker events, or requests to identify origin service and blast radius from logs/metrics across components.",
+      "path": "skills/observability/SKILL.md",
+      "invocation": "/nexus:observability"
+    },
+    {
+      "name": "performance",
+      "description": "Use for memory, CPU, latency, and query-performance investigations, plus dependency-upgrade blast-radius analysis. Trigger on leak/OOM/profiling/regression reports or \"what breaks if I upgrade X.\" Route to memory-leak or dependency-blast-radius workflow based on intent.",
+      "path": "skills/performance/SKILL.md",
+      "invocation": "/nexus:performance"
+    },
+    {
+      "name": "reliability",
+      "description": "Use for production incidents, outages, and service degradations, plus release-readiness gate checks. Trigger on 500 spikes, SLA breaches, latency/error surges, on-call alerts, rollback decisions, and RCA/post-mortem requests. Prioritize stabilization, timeline reconstruction, and evidence-led actions.",
+      "path": "skills/reliability/SKILL.md",
+      "invocation": "/nexus:reliability"
+    },
+    {
+      "name": "shorts",
+      "description": "Use to convert any input into a ready-to-record YouTube Shorts script. Trigger on requests for 30-second scripts, hooks, reels/short-form video copy, or pasted topics/articles/bullets/URLs needing concise high-retention narration with CTA.",
+      "path": "skills/shorts/SKILL.md",
+      "invocation": "/nexus:shorts"
+    },
+    {
+      "name": "skill-writer",
+      "description": "Use for creating, refactoring, or debugging skills and improving SKILL.md trigger quality. Trigger on \"write/create/update/improve skill\", trigger-miss complaints, pasted-skill feedback, or repeated workflows that should be skillized. Output production-ready skill structure and routing logic.",
+      "path": "skills/skill-writer/SKILL.md",
+      "invocation": "/nexus:skill-writer"
+    },
+    {
+      "name": "software-engineer",
+      "description": "Resolve a GitHub issue or a concrete bug described in chat in a local repository, from reproduction through a verified fix and pull request. Use when asked to implement an issue or run the issue-to-PR workflow; not for read-only review, issue listing, or architecture planning.",
+      "path": "skills/software-engineer/SKILL.md",
+      "invocation": "/nexus:software-engineer"
+    },
+    {
+      "name": "testing",
+      "description": "Use for flaky or nondeterministic tests, especially local-vs-CI inconsistencies. Trigger on intermittent failures, race/timing symptoms, retry-only greens, or unexplained skip/xfail markers. Output should isolate reproducible cause, narrowest durable fix, and prevention guidance.",
+      "path": "skills/testing/SKILL.md",
+      "invocation": "/nexus:testing"
+    },
+    {
+      "name": "token-optimizer",
+      "description": "Always-on token optimization rules. Apply on every response.",
+      "path": "skills/token-optimizer/SKILL.md",
+      "invocation": "/nexus:token-optimizer"
+    },
+    {
+      "name": "tutorial",
+      "description": "Use for creating executable Jupyter tutorials and AI engineering walkthroughs with runnable cells. Trigger on requests for step-by-step guides, notebook-based teaching, or shareable code-first learning content. Prioritize reproducibility, clarity, and copy-paste-ready outputs.",
+      "path": "skills/tutorial/SKILL.md",
+      "invocation": "/nexus:tutorial"
+    }
+  ],
+  "agents": [
+    {
+      "name": "ai-product-engineer",
+      "description": "Use this agent to design, build, or review LLM-powered features and products end-to-end: model selection, RAG architecture, agent design, eval pipelines, token economics, and LLM observability. Trigger on \"design this LLM feature\", \"review my RAG pipeline\", \"which model should I use for X\", \"why is my agent failing\", \"estimate token costs\", or eval-strategy questions. Returns designs with cost projections, eval plans, and failure-mode tables; or reviews with severity-ranked findings tied to specific production scenarios.",
+      "path": "agents/ai-product-engineer.md",
+      "invocation": null,
+      "color": "cyan",
+      "memory": "user",
+      "tools": "Inherited from host"
+    },
+    {
+      "name": "cloud-cost-optimizer",
+      "description": "Use this agent for cloud cost audits, bill-spike investigations, cost monitoring setup, and \"find me a cheaper alternative\" requests. AWS primary; GCP/Azure aware. Trigger on \"why is my AWS bill high\", \"audit our cloud spend\", \"set up cost alerts\", \"cheaper alternative to X\", or monthly-cost reviews. Returns a current-spend table from real billing data, a prioritized findings table with savings estimates, copy-paste quick wins, and structural changes by quarter.",
+      "path": "agents/cloud-cost-optimizer.md",
+      "invocation": null,
+      "color": "yellow",
+      "memory": "user",
+      "tools": "Bash, Read, Grep, Glob, WebSearch, WebFetch"
+    },
+    {
+      "name": "code-reviewer",
+      "description": "Use this agent for senior-level review of a PR, branch, or diff. It inspects changes for correctness bugs, regressions, security issues, migration risk, and deploy safety, then returns a verdict with file:line findings. Trigger on \"review this PR\", \"review my branch\", \"is this safe to merge\", pasted diffs, or pre-merge risk checks. Read-only — it never edits code.",
+      "path": "agents/code-reviewer.md",
+      "invocation": null,
+      "color": "red",
+      "memory": "project",
+      "tools": "Bash, Read, Grep, Glob"
+    },
+    {
+      "name": "codebase-explorer",
+      "description": "Use this agent for token-efficient codebase exploration: mapping repo structure, finding where a feature lives, locating entry points and config files, or answering \"where is the code for X\". Trigger on \"explore this repo\", \"where is X implemented\", \"what's the entry point\", \"find the config for Y\", \"map the structure\". Read-only. Returns a concise three-column table (Title | File path | Description) consumable by humans and downstream agents.",
+      "path": "agents/codebase-explorer.md",
+      "invocation": null,
+      "color": "green",
+      "memory": "project",
+      "tools": "Bash, Read, Grep, Glob"
+    },
+    {
+      "name": "database-architect",
+      "description": "Use this agent for database design and change work: schema design, indexing strategy, query optimization, migration safety, and engine selection. Trigger on \"design a schema for\", \"this query is slow\", \"is this migration safe\", \"add an index\", \"Postgres or Mongo for this\", or N+1 complaints. Returns schema/DDL with per-decision rationale, or a numbered migration plan where every step has a verify command and a rollback command.",
+      "path": "agents/database-architect.md",
+      "invocation": null,
+      "color": "orange",
+      "memory": "project",
+      "tools": "Inherited from host"
+    },
+    {
+      "name": "docs-app-builder",
+      "description": "Use this agent to build a documentation application as a React app — from a repo's README, docs folder, or code. Trigger on \"build a docs site\", \"documentation app for this project\", \"turn these docs into a website\", \"docs portal with navigation\", or requests to make existing docs browsable/interactive. Returns a runnable React app with sidebar navigation, Mermaid diagrams, reference tables, search, and interactive components — plus the commands to run it.",
+      "path": "agents/docs-app-builder.md",
+      "invocation": null,
+      "color": "green",
+      "memory": "project",
+      "tools": "Inherited from host"
+    },
+    {
+      "name": "event-driven-designer",
+      "description": "Use this agent to design or review asynchronous, event-driven systems: queues, streams, pub/sub, sagas, outbox patterns, DLQs. Trigger on \"design an event pipeline\", \"Kafka or SQS\", \"review our consumer\", \"we're losing/duplicating messages\", \"how do I make this async\", or distributed-transaction questions. Returns a design (Mermaid flow, component table, failure-mode table) or a review (findings with severity and the exact data-loss or duplication scenario each finding causes).",
+      "path": "agents/event-driven-designer.md",
+      "invocation": null,
+      "color": "orange",
+      "memory": "project",
+      "tools": "Inherited from host"
+    },
+    {
+      "name": "iac-engineer",
+      "description": "Use this agent to design cloud architecture and write the Infrastructure-as-Code for it (Terraform, CDK in Python, CloudFormation), or to audit existing IaC for risk and waste. Trigger on \"design infra for X\", \"write the Terraform for\", \"review our IaC\", \"is this stack production-ready\", or greenfield deployment questions. Returns either a full design (diagram, costs, trade-offs, scaling tiers) or an audit (issues with file:line evidence, short-term and long-term remediation plans).",
+      "path": "agents/iac-engineer.md",
+      "invocation": null,
+      "color": "yellow",
+      "memory": "project",
+      "tools": "Inherited from host"
+    },
+    {
+      "name": "mobile-ux-designer",
+      "description": "Use this agent to design or review mobile UX for iOS, Android, React Native, or Flutter apps. Trigger on \"design a mobile flow/screen\", \"how should this work on mobile\", \"review my app's UX\", \"navigation structure for the app\", or \"onboarding/permissions flow\". Returns a screen-by-screen spec (purpose, layout, components, states, transitions) with ASCII wireframes, or review findings in a severity-ranked table.",
+      "path": "agents/mobile-ux-designer.md",
+      "invocation": null,
+      "color": "pink",
+      "memory": "user",
+      "tools": "Inherited from host"
+    },
+    {
+      "name": "prd-writer-critic",
+      "description": "Use this agent to write or critique Product Requirements Documents. Trigger on \"write a PRD\", \"draft requirements for\", \"turn this into a PRD\", \"I have a feature idea\", or \"review/critique this PRD\". Write mode turns rough notes into a complete 10-section PRD; Critique mode returns a severity-ranked gaps table plus rewritten worst sections. Returns a delivery-ready document, never a partial outline.",
+      "path": "agents/prd-writer-critic.md",
+      "invocation": null,
+      "color": "purple",
+      "memory": "user",
+      "tools": "Read, Write, Grep, Glob, WebSearch"
+    },
+    {
+      "name": "roadmap-planner",
+      "description": "Use this agent when direction is known and the user needs an execution-ready roadmap: scope, sequencing, dependencies, risks, validation, rollout, and rollback. Trigger on \"plan this feature\", \"create a roadmap\", \"how do I roll this out\", \"migration plan\", or \"break this down into steps\". Returns a scoping table for approval, then a dependency-ordered implementation plan with verify commands and rollback procedures. It plans — it never implements.",
+      "path": "agents/roadmap-planner.md",
+      "invocation": null,
+      "color": "purple",
+      "memory": "user",
+      "tools": "Bash, Read, Grep, Glob, Write"
+    },
+    {
+      "name": "scalability-planner",
+      "description": "Use this agent to plan how a system scales from its current load to a growth target. Trigger on \"can this handle 10x traffic\", \"we expect N users next quarter\", \"scaling plan\", \"capacity planning\", or \"what's our next bottleneck\". Returns a current-capacity assessment, a bottleneck-ordered tiered scaling plan with trigger metrics and cost estimates, and a single next action. Read-only against the codebase; uses web search for service limits.",
+      "path": "agents/scalability-planner.md",
+      "invocation": null,
+      "color": "blue",
+      "memory": "project",
+      "tools": "Bash, Read, Grep, Glob, WebSearch"
+    },
+    {
+      "name": "system-architecture-reviewer",
+      "description": "Use this agent for codebase architecture mapping, coupling analysis, bounded-context discovery, monolith-split planning, and deployment-safety review. Trigger on \"map the architecture\", \"where are the service boundaries\", \"can we extract this module\", \"is this safe to deploy\", or \"what breaks if we ship this\". Returns either an Architecture Map (layers, dependency graph, coupling matrix, extraction candidates, C4 diagram) or a Deployment Safety Report with a GO / CONDITIONAL GO / NO-GO verdict and rollback plan. Read-only — it never edits code.",
+      "path": "agents/system-architecture-reviewer.md",
+      "invocation": null,
+      "color": "blue",
+      "memory": "project",
+      "tools": "Bash, Read, Grep, Glob"
+    },
+    {
+      "name": "uiux-reviewer",
+      "description": "Use this agent for read-only UI/UX review of web apps — components, pages, flows, or screenshots. Trigger on \"review this UI\", \"UX feedback on\", \"is this accessible\", \"audit this page/component/flow\", or pasted screenshots of an interface. Returns a verdict, a severity-ranked findings table with file:line locations, a brief what-works-well section, and the top-3 prioritized fixes. Read-only — it never edits code.",
+      "path": "agents/uiux-reviewer.md",
+      "invocation": null,
+      "color": "pink",
+      "memory": "user",
+      "tools": "Bash, Read, Grep, Glob"
+    }
+  ],
+  "commands": [
+    {
+      "name": "commit-message",
+      "description": "Draft a Conventional Commit message from the staged git diff.",
+      "path": "commands/commit-message.md",
+      "invocation": "/nexus:commit-message"
+    },
+    {
+      "name": "grind",
+      "description": "Practice a technical or behavioral interview through targeted questions and evidence-based feedback.",
+      "path": "commands/grind.md",
+      "invocation": "/nexus:grind"
+    }
+  ]
+}

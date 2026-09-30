@@ -1,10 +1,9 @@
 ---
-name: nexus-performance
+name: performance
 description: >
   Use for memory, CPU, latency, and query-performance investigations, plus dependency-upgrade
   blast-radius analysis. Trigger on leak/OOM/profiling/regression reports or "what breaks if I upgrade X."
   Route to memory-leak or dependency-blast-radius workflow based on intent.
-  When in doubt, use this skill.
 ---
 
 # Nexus Performance
