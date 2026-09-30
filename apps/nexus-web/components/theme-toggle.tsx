@@ -1,29 +1,19 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import { Moon, Sun } from "lucide-react";
-import { Button } from "@/components/ui/button";
-
+import { Monitor, Moon, Sun } from "lucide-react";
 export function ThemeToggle() {
-  const { resolvedTheme, setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const isDark = mounted ? resolvedTheme === "dark" : true;
-
+  useEffect(() => setMounted(true), []);
+  const selected = mounted && (theme === "dark" || theme === "light") ? theme : "system";
+  const Icon = selected === "dark" ? Moon : selected === "light" ? Sun : Monitor;
   return (
-    <Button
-      variant="outline"
-      size="icon"
-      aria-label="Toggle theme"
-      onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="border-zinc-600"
-    >
-      {isDark ? <Sun className="size-4" /> : <Moon className="size-4" />}
-    </Button>
+    <div className="relative flex min-h-10 items-center rounded-lg border border-border bg-card text-muted-foreground">
+      <Icon aria-hidden="true" className="pointer-events-none absolute left-3 size-4" />
+      <select aria-label="Color theme" disabled={!mounted} value={selected} onChange={event => setTheme(event.target.value)} className="h-10 max-w-[7.5rem] cursor-pointer rounded-lg bg-transparent pl-9 pr-2 text-xs text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-wait">
+        <option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option>
+      </select>
+    </div>
   );
 }

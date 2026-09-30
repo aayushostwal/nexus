@@ -1,47 +1,44 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState } from "react";
+import { ArrowUpRight, Check, Copy, Workflow } from "lucide-react";
 import type { Skill } from "@/lib/content";
 
 export function SkillCard({ skill }: { skill: Skill }) {
+  const [copyState, setCopyState] = useState<"idle" | "copied" | "failed">("idle");
+  const invocation = skill.example.startsWith("/nexus:") ? skill.example : `/nexus:${skill.name}`;
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(invocation);
+      setCopyState("copied");
+    } catch {
+      setCopyState("failed");
+    }
+  }
   return (
-    <motion.div whileHover={{ y: -6 }} transition={{ duration: 0.2 }}>
-      <Card className="group h-full border-zinc-700/70 bg-zinc-900/60 transition-all hover:border-cyan-400/40 hover:shadow-glow">
-        <CardHeader>
-          <div className="flex items-start justify-between gap-4">
-            <CardTitle className="text-lg">{skill.name}</CardTitle>
-            <Badge variant={skill.complexity === "Advanced" ? "secondary" : "default"}>{skill.complexity}</Badge>
-          </div>
-          <CardDescription>{skill.description}</CardDescription>
-        </CardHeader>
-        <CardContent className="flex h-[220px] flex-col gap-4">
-          <div className="flex flex-wrap gap-2">
-            {skill.tags.map((tag) => (
-              <Badge key={tag} variant="outline" className="lowercase">
-                {tag}
-              </Badge>
-            ))}
-          </div>
-          <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/70 p-3 font-mono text-xs text-cyan-200">{skill.example}</p>
-          <p className="rounded-lg border border-zinc-700/80 bg-zinc-950/70 p-3 font-mono text-xs text-zinc-200">
-            Bundled with nexus@nexus-marketplace — no separate install
-          </p>
-          <div className="mt-auto flex items-center justify-between">
-            <a href={skill.github} target="_blank" rel="noreferrer" className="text-sm text-cyan-300 hover:text-cyan-200">
-              Source Code
-            </a>
-            <Button asChild variant="ghost" size="sm" className="text-zinc-200">
-              <a href={skill.github} target="_blank" rel="noreferrer">
-                Details <ArrowUpRight className="ml-1 size-4" />
-              </a>
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-    </motion.div>
+    <article tabIndex={-1} id={`skill-${skill.name}`} className="flex h-full scroll-mt-28 flex-col rounded-2xl border border-border bg-card p-6 text-foreground transition-colors hover:border-primary/50 target:border-primary">
+      <div className="mb-5 flex items-center justify-between gap-3">
+        <span className="flex size-10 items-center justify-center rounded-xl border border-border bg-muted"><Workflow aria-hidden="true" className="size-5 text-primary" /></span>
+        <span className="text-xs font-medium text-muted-foreground">{skill.complexity}</span>
+      </div>
+      <h3 className="break-words text-lg font-semibold tracking-tight">{skill.name}</h3>
+      <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{skill.description}</p>
+      <div className="mb-6 mt-4 flex flex-wrap gap-1.5">{skill.tags.map(tag => <span key={tag} className="rounded-md bg-muted px-2 py-1 text-xs text-muted-foreground">{tag}</span>)}</div>
+      <div className="mt-auto">
+        <p className="mb-2 text-xs font-medium text-muted-foreground">Try in Claude Code</p>
+        <div className="rounded-xl border border-border bg-background p-3">
+          <code className="block break-words text-xs leading-relaxed">{invocation}</code>
+          <button type="button" onClick={copy} aria-label={`Copy ${skill.name} invocation`} className="mt-3 inline-flex min-h-9 items-center gap-2 rounded-md text-xs font-medium text-primary hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary">
+            {copyState === "copied" ? <Check aria-hidden="true" className="size-3.5" /> : <Copy aria-hidden="true" className="size-3.5" />}
+            {copyState === "copied" ? "Copied" : "Copy prompt"}
+          </button>
+          <p role="status" className="text-xs text-muted-foreground">{copyState === "failed" ? "Could not copy. Select and copy the prompt above." : copyState === "copied" ? "Prompt copied to clipboard." : ""}</p>
+        </div>
+        <div className="mt-4 flex items-center justify-between gap-3 text-xs">
+          <span className="text-muted-foreground">Included in Nexus</span>
+          <a href={skill.github} target="_blank" rel="noopener noreferrer" aria-label={`View ${skill.name} source on GitHub (opens a new tab)`} className="inline-flex min-h-9 items-center gap-1 font-medium hover:text-primary">View source <ArrowUpRight aria-hidden="true" className="size-3.5" /></a>
+        </div>
+      </div>
+    </article>
   );
 }

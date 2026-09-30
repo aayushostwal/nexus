@@ -1,109 +1,37 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Search } from "lucide-react";
 import { AgentCard } from "@/components/agent-card";
 import type { Agent, AgentDomain } from "@/lib/content";
 
-const DOMAINS: AgentDomain[] = [
-  "Product",
-  "Design",
-  "Architecture",
-  "Data & Events",
-  "Cloud",
-  "Code & Docs",
-  "AI"
-];
-
-const domainChipColor: Record<AgentDomain, string> = {
-  Product: "border-purple-400/50 text-purple-300 data-[active=true]:bg-purple-500/20 data-[active=true]:border-purple-400/80",
-  Design: "border-pink-400/50 text-pink-300 data-[active=true]:bg-pink-500/20 data-[active=true]:border-pink-400/80",
-  Architecture: "border-blue-400/50 text-blue-300 data-[active=true]:bg-blue-500/20 data-[active=true]:border-blue-400/80",
-  "Data & Events": "border-orange-400/50 text-orange-300 data-[active=true]:bg-orange-500/20 data-[active=true]:border-orange-400/80",
-  Cloud: "border-yellow-400/50 text-yellow-300 data-[active=true]:bg-yellow-500/20 data-[active=true]:border-yellow-400/80",
-  "Code & Docs": "border-green-400/50 text-green-300 data-[active=true]:bg-green-500/20 data-[active=true]:border-green-400/80",
-  AI: "border-cyan-400/50 text-cyan-300 data-[active=true]:bg-cyan-500/20 data-[active=true]:border-cyan-400/80"
-};
-
 export function AgentsGrid({ agents }: { agents: Agent[] }) {
   const [query, setQuery] = useState("");
   const [domain, setDomain] = useState<AgentDomain | "All">("All");
-  const [memory, setMemory] = useState<"All" | "user" | "project">("All");
-
-  const filtered = useMemo(() => {
-    const q = query.toLowerCase().trim();
-    return agents.filter((a) => {
-      if (domain !== "All" && a.domain !== domain) return false;
-      if (memory !== "All" && a.memory !== memory) return false;
-      if (q && !a.name.toLowerCase().includes(q) && !a.description.toLowerCase().includes(q) && !a.domain.toLowerCase().includes(q)) return false;
-      return true;
-    });
-  }, [agents, query, domain, memory]);
-
+  const [memory, setMemory] = useState("All");
+  const domains = Array.from(new Set(agents.map(a => a.domain)));
+  const filtered = agents.filter(a => (domain === "All" || a.domain === domain) && (memory === "All" || a.memory === memory) && `${a.name} ${a.description} ${a.domain}`.toLowerCase().includes(query.trim().toLowerCase()));
+  const active = query !== "" || domain !== "All" || memory !== "All";
+  function clear() { setQuery(""); setDomain("All"); setMemory("All"); }
+  useEffect(() => {
+    const reveal = (event: Event) => {
+      const id = (event as CustomEvent<string>).detail;
+      clear();
+      requestAnimationFrame(() => { const target = document.getElementById(id); target?.scrollIntoView({ block: "start" }); target?.focus({ preventScroll: true }); });
+    };
+    window.addEventListener("nexus:reveal-catalog", reveal);
+    return () => window.removeEventListener("nexus:reveal-catalog", reveal);
+  }, []);
   return (
     <div>
-      {/* Search */}
-      <div className="relative mb-4">
-        <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-zinc-500" />
-        <input
-          type="text"
-          placeholder="Search agents by name, domain, or capability…"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="w-full rounded-xl border border-zinc-700/80 bg-zinc-900/70 py-2.5 pl-9 pr-4 text-sm text-zinc-200 placeholder-zinc-500 outline-none ring-0 transition focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/30"
-        />
+      <div className="mb-6 rounded-2xl border border-border bg-card p-4 sm:p-5">
+        <label htmlFor="agent-query" className="mb-2 block text-sm font-medium">Find a specialist</label>
+        <div className="relative"><Search aria-hidden="true" className="absolute left-3 top-3.5 size-4 text-muted-foreground" /><input id="agent-query" type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Search by name or capability" className="h-11 w-full rounded-lg border border-border bg-background pl-10 pr-3 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary" /></div>
+        <fieldset className="mt-4"><legend className="mb-2 text-xs text-muted-foreground">Specialty</legend><div className="flex flex-wrap gap-2">{(["All", ...domains] as const).map(d => <button type="button" key={d} aria-pressed={domain === d} onClick={() => setDomain(d)} className="min-h-10 rounded-lg border border-border px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground aria-pressed:border-primary aria-pressed:bg-primary/10 aria-pressed:text-foreground">{d === "All" ? "All specialties" : d}</button>)}</div></fieldset>
+        <div className="mt-4 flex flex-wrap items-center gap-3"><label htmlFor="agent-memory" className="text-xs text-muted-foreground">Memory in Claude Code</label><select id="agent-memory" value={memory} onChange={e => setMemory(e.target.value)} className="h-10 rounded-lg border border-border bg-background px-3 text-sm text-foreground"><option value="All">Any scope</option><option value="user">Personal · across projects</option><option value="project">Repository · this project</option></select></div>
       </div>
-
-      {/* Filters */}
-      <div className="mb-6 flex flex-wrap items-center gap-2">
-        <button
-          type="button"
-          data-active={domain === "All"}
-          onClick={() => setDomain("All")}
-          className="rounded-full border border-zinc-600/60 px-3 py-1 text-xs text-zinc-300 transition hover:border-zinc-400/60 data-[active=true]:border-zinc-300 data-[active=true]:bg-zinc-700/60 data-[active=true]:text-zinc-100"
-        >
-          All domains
-        </button>
-        {DOMAINS.map((d) => (
-          <button
-            key={d}
-            type="button"
-            data-active={domain === d}
-            onClick={() => setDomain(d === domain ? "All" : d)}
-            className={`rounded-full border px-3 py-1 text-xs transition opacity-70 hover:opacity-100 data-[active=true]:opacity-100 ${domainChipColor[d]}`}
-          >
-            {d}
-          </button>
-        ))}
-
-        <span className="mx-1 h-4 w-px bg-zinc-700" />
-
-        {(["All", "user", "project"] as const).map((m) => (
-          <button
-            key={m}
-            type="button"
-            data-active={memory === m}
-            onClick={() => setMemory(m)}
-            className="rounded-full border border-zinc-600/60 px-3 py-1 text-xs text-zinc-300 transition hover:border-zinc-400/60 data-[active=true]:border-cyan-400/60 data-[active=true]:bg-zinc-800 data-[active=true]:text-cyan-300"
-          >
-            {m === "All" ? "Any memory" : `memory: ${m}`}
-          </button>
-        ))}
-
-        <span className="ml-auto text-xs text-zinc-500">
-          {filtered.length} / {agents.length}
-        </span>
-      </div>
-
-      {filtered.length === 0 ? (
-        <p className="py-16 text-center text-sm text-zinc-500">No agents match — try a different search or filter.</p>
-      ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((agent, i) => (
-            <AgentCard key={agent.name} agent={agent} step={i} />
-          ))}
-        </div>
-      )}
+      <div className="mb-4 flex min-h-9 items-center justify-between gap-3"><p role="status" aria-live="polite" className="text-sm text-muted-foreground">{filtered.length} of {agents.length} specialists</p>{active && <button type="button" onClick={clear} className="min-h-9 text-sm font-medium text-primary hover:underline">Clear filters</button>}</div>
+      {filtered.length ? <div className="grid auto-rows-fr gap-4 sm:grid-cols-2 xl:grid-cols-3">{filtered.map(agent => <AgentCard key={agent.name} agent={agent} />)}</div> : <div className="rounded-2xl border border-dashed border-border bg-card px-6 py-14 text-center"><h3 className="font-medium">No matching specialists</h3><p className="mt-2 text-sm text-muted-foreground">Try a broader search or clear your filters.</p><button type="button" onClick={clear} className="mt-4 min-h-10 text-sm font-medium text-primary hover:underline">Show all specialists</button></div>}
     </div>
   );
 }

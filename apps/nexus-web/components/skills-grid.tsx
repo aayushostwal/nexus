@@ -1,111 +1,41 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Search } from "lucide-react";
 import { SkillCard } from "@/components/skill-card";
 import type { Skill } from "@/lib/content";
 
-type Complexity = "Beginner" | "Intermediate" | "Advanced";
-const COMPLEXITIES: Complexity[] = ["Beginner", "Intermediate", "Advanced"];
-
-const complexityChip: Record<Complexity, string> = {
-  Beginner: "border-green-400/50 text-green-300 data-[active=true]:bg-green-500/20 data-[active=true]:border-green-400/80",
-  Intermediate: "border-yellow-400/50 text-yellow-300 data-[active=true]:bg-yellow-500/20 data-[active=true]:border-yellow-400/80",
-  Advanced: "border-red-400/50 text-red-300 data-[active=true]:bg-red-500/20 data-[active=true]:border-red-400/80"
-};
-
+const LEVELS = ["All", "Beginner", "Intermediate", "Advanced"] as const;
+const chip = "min-h-10 rounded-lg border border-border px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground aria-pressed:border-primary aria-pressed:bg-primary/10 aria-pressed:text-foreground";
 export function SkillsGrid({ skills }: { skills: Skill[] }) {
   const [query, setQuery] = useState("");
-  const [complexity, setComplexity] = useState<Complexity | "All">("All");
-  const [tag, setTag] = useState<string | "All">("All");
-
-  const allTags = useMemo(
-    () => Array.from(new Set(skills.flatMap((s) => s.tags))).sort(),
-    [skills]
-  );
-
-  const filtered = useMemo(() => {
-    const q = query.toLowerCase().trim();
-    return skills.filter((s) => {
-      if (complexity !== "All" && s.complexity !== complexity) return false;
-      if (tag !== "All" && !s.tags.includes(tag)) return false;
-      if (q && !s.name.toLowerCase().includes(q) && !s.description.toLowerCase().includes(q) && !s.tags.some((t) => t.includes(q))) return false;
-      return true;
-    });
-  }, [skills, query, complexity, tag]);
-
+  const [complexity, setComplexity] = useState<(typeof LEVELS)[number]>("All");
+  const [tag, setTag] = useState("All");
+  const tags = useMemo(() => Array.from(new Set(skills.flatMap(s => s.tags))).sort(), [skills]);
+  const filtered = skills.filter(s => (complexity === "All" || s.complexity === complexity) && (tag === "All" || s.tags.includes(tag)) && `${s.name} ${s.description} ${s.tags.join(" ")}`.toLowerCase().includes(query.trim().toLowerCase()));
+  const active = query !== "" || complexity !== "All" || tag !== "All";
+  function clear() { setQuery(""); setComplexity("All"); setTag("All"); }
+  useEffect(() => {
+    const reveal = (event: Event) => {
+      const id = (event as CustomEvent<string>).detail;
+      clear();
+      requestAnimationFrame(() => { const target = document.getElementById(id); target?.scrollIntoView({ block: "start" }); target?.focus({ preventScroll: true }); });
+    };
+    window.addEventListener("nexus:reveal-catalog", reveal);
+    return () => window.removeEventListener("nexus:reveal-catalog", reveal);
+  }, []);
   return (
     <div>
-      {/* Search */}
-      <div className="relative mb-4">
-        <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-zinc-500" />
-        <input
-          type="text"
-          placeholder="Search skills by name, tag, or description…"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="w-full rounded-xl border border-zinc-700/80 bg-zinc-900/70 py-2.5 pl-9 pr-4 text-sm text-zinc-200 placeholder-zinc-500 outline-none ring-0 transition focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/30"
-        />
-      </div>
-
-      {/* Filters */}
-      <div className="mb-6 flex flex-wrap items-center gap-2">
-        <button
-          type="button"
-          data-active={complexity === "All"}
-          onClick={() => setComplexity("All")}
-          className="rounded-full border border-zinc-600/60 px-3 py-1 text-xs text-zinc-300 transition hover:border-zinc-400/60 data-[active=true]:border-zinc-300 data-[active=true]:bg-zinc-700/60 data-[active=true]:text-zinc-100"
-        >
-          All levels
-        </button>
-        {COMPLEXITIES.map((c) => (
-          <button
-            key={c}
-            type="button"
-            data-active={complexity === c}
-            onClick={() => setComplexity(c === complexity ? "All" : c)}
-            className={`rounded-full border px-3 py-1 text-xs transition opacity-70 hover:opacity-100 data-[active=true]:opacity-100 ${complexityChip[c]}`}
-          >
-            {c}
-          </button>
-        ))}
-
-        <span className="mx-1 h-4 w-px bg-zinc-700" />
-
-        <button
-          type="button"
-          data-active={tag === "All"}
-          onClick={() => setTag("All")}
-          className="rounded-full border border-zinc-600/60 px-3 py-1 text-xs text-zinc-300 transition hover:border-zinc-400/60 data-[active=true]:border-zinc-300 data-[active=true]:bg-zinc-700/60 data-[active=true]:text-zinc-100"
-        >
-          All tags
-        </button>
-        {allTags.map((t) => (
-          <button
-            key={t}
-            type="button"
-            data-active={tag === t}
-            onClick={() => setTag(t === tag ? "All" : t)}
-            className="rounded-full border border-zinc-600/60 px-3 py-1 text-xs text-zinc-300 opacity-70 transition hover:border-zinc-400/60 hover:opacity-100 data-[active=true]:border-zinc-300 data-[active=true]:bg-zinc-700/60 data-[active=true]:text-zinc-100 data-[active=true]:opacity-100"
-          >
-            {t}
-          </button>
-        ))}
-
-        <span className="ml-auto text-xs text-zinc-500">
-          {filtered.length} / {skills.length}
-        </span>
-      </div>
-
-      {filtered.length === 0 ? (
-        <p className="py-16 text-center text-sm text-zinc-500">No skills match — try a different search or filter.</p>
-      ) : (
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {filtered.map((skill) => (
-            <SkillCard key={skill.name} skill={skill} />
-          ))}
+      <div className="mb-6 rounded-2xl border border-border bg-card p-4 sm:p-5">
+        <label htmlFor="skill-query" className="mb-2 block text-sm font-medium">Find a workflow</label>
+        <div className="relative"><Search aria-hidden="true" className="absolute left-3 top-3.5 size-4 text-muted-foreground" /><input id="skill-query" type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Search by task, name, or tag" className="h-11 w-full rounded-lg border border-border bg-background pl-10 pr-3 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary" /></div>
+        <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
+          <fieldset><legend className="mb-2 text-xs text-muted-foreground">Experience level</legend><div className="flex flex-wrap gap-2">{LEVELS.map(level => <button key={level} type="button" aria-pressed={complexity === level} onClick={() => setComplexity(level)} className={chip}>{level === "All" ? "All levels" : level}</button>)}</div></fieldset>
+          <div><label htmlFor="skill-tag" className="mb-2 block text-xs text-muted-foreground">Topic</label><select id="skill-tag" value={tag} onChange={e => setTag(e.target.value)} className="h-10 rounded-lg border border-border bg-background px-3 text-sm text-foreground"><option value="All">All topics</option>{tags.map(t => <option key={t} value={t}>{t}</option>)}</select></div>
         </div>
-      )}
+      </div>
+      <div className="mb-4 flex min-h-9 items-center justify-between gap-3"><p role="status" aria-live="polite" className="text-sm text-muted-foreground">{filtered.length} of {skills.length} workflows</p>{active && <button type="button" onClick={clear} className="min-h-9 text-sm font-medium text-primary hover:underline">Clear filters</button>}</div>
+      {filtered.length ? <div className="grid auto-rows-fr gap-4 sm:grid-cols-2 xl:grid-cols-3">{filtered.map(skill => <SkillCard key={skill.name} skill={skill} />)}</div> : <div className="rounded-2xl border border-dashed border-border bg-card px-6 py-14 text-center"><h3 className="font-medium">No matching workflows</h3><p className="mt-2 text-sm text-muted-foreground">Try a broader search or clear your filters.</p><button type="button" onClick={clear} className="mt-4 min-h-10 text-sm font-medium text-primary hover:underline">Show all workflows</button></div>}
     </div>
   );
 }

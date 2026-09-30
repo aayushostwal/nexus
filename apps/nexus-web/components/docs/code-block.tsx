@@ -1,43 +1,38 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy } from "lucide-react";
 
 function extractText(node: unknown): string {
-  if (typeof node === "string") return node;
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(extractText).join("");
   if (!node || typeof node !== "object") return "";
-
-  const maybeNode = node as { props?: { children?: unknown } };
-  if (maybeNode.props?.children) {
-    if (Array.isArray(maybeNode.props.children)) {
-      return maybeNode.props.children.map(extractText).join("");
-    }
-    return extractText(maybeNode.props.children);
-  }
-
-  return "";
+  return extractText((node as { props?: { children?: unknown } }).props?.children);
 }
 
 export function CodeBlock({ children }: { children: React.ReactNode }) {
-  const [copied, setCopied] = useState(false);
+  const [status, setStatus] = useState<"idle" | "copied" | "failed">("idle");
+  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const raw = useMemo(() => extractText(children), [children]);
+  useEffect(() => () => clearTimeout(timer.current), []);
 
   async function onCopy() {
-    await navigator.clipboard.writeText(raw.trim());
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1200);
+    clearTimeout(timer.current);
+    try {
+      if (!navigator.clipboard) throw new Error("Clipboard unavailable");
+      await navigator.clipboard.writeText(raw.trim());
+      setStatus("copied");
+    } catch { setStatus("failed"); }
+    timer.current = setTimeout(() => setStatus("idle"), 3000);
   }
 
   return (
-    <div className="group relative">
-      <button
-        type="button"
-        onClick={onCopy}
-        className="absolute right-2 top-2 z-10 inline-flex items-center gap-1 rounded-md border border-zinc-700 bg-zinc-900/90 px-2 py-1 text-xs text-zinc-300 opacity-0 transition group-hover:opacity-100"
-      >
-        {copied ? <Check className="size-3.5 text-cyan-300" /> : <Copy className="size-3.5" />} {copied ? "Copied" : "Copy"}
-      </button>
-      <pre>{children}</pre>
+    <div className="my-5 min-w-0 overflow-hidden rounded-xl border border-border bg-[#151c2b]">
+      <div className="flex min-h-11 items-center justify-between gap-3 border-b border-white/10 px-4 text-xs text-[#b4bbc8]">
+        <span className="font-mono">Code</span>
+        <button type="button" onClick={onCopy} aria-label="Copy code" className="inline-flex min-h-10 items-center gap-2 rounded-md px-2 text-[#e5e7eb] hover:bg-white/10">{status === "copied" ? <Check aria-hidden="true" className="size-3.5" /> : <Copy aria-hidden="true" className="size-3.5" />}<span aria-live="polite">{status === "copied" ? "Copied" : status === "failed" ? "Select code to copy" : "Copy"}</span></button>
+      </div>
+      <pre tabIndex={0} aria-label="Code example, scroll horizontally for long lines" className="!my-0 !rounded-none !border-0">{children}</pre>
     </div>
   );
 }

@@ -15,30 +15,30 @@ export const metadata: Metadata = {
     apple: "/logos/nexus-logo.svg"
   },
   title: {
-    default: "Nexus | AI Agents Platform",
+    default: "Nexus | Engineering Workflows for Claude Code and Codex",
     template: "%s | Nexus"
   },
   description:
-    "Nexus is a futuristic developer ecosystem to discover, orchestrate, and compose AI agents, skills, workflows, and automation pipelines.",
+    "Open-source engineering skills and specialist guidance for Claude Code and Codex. Investigate issues, make focused fixes, verify changes, and prepare pull requests.",
   keywords: [
-    "AI Agents",
-    "Developer Platform",
-    "Multi-Agent Orchestration",
-    "MCP",
-    "DevOps Automation",
-    "AI Engineering",
+    "Claude Code",
+    "Codex",
+    "Agent Skills",
+    "Engineering Workflows",
+    "GitHub Issues",
+    "Code Review",
     "Nexus"
   ],
   openGraph: {
-    title: "Nexus | Agentify Your Terminal",
-    description: "Build autonomous engineering systems with composable AI agents, skills, and workflows.",
+    title: "Nexus | Engineering Workflows",
+    description: "Reusable skills for issue investigation, verified fixes, and pull requests in Claude Code and Codex.",
     type: "website",
     url: "https://nexus-ai.aayushostwal.com"
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nexus | AI Engineering OS",
-    description: "Open-source operating system for AI engineering teams."
+    title: "Nexus | Engineering Workflows",
+    description: "Open-source skills and specialist guidance for Claude Code and Codex."
   }
 };
 
@@ -47,14 +47,14 @@ const jsonLd = {
   "@type": "SoftwareApplication",
   name: "Nexus",
   applicationCategory: "DeveloperApplication",
-  operatingSystem: "Web",
+  operatingSystem: "Cross-platform; requires a compatible AI host",
   creator: {
     "@type": "Person",
     name: "Aayush Ostwal",
     url: "https://github.com/aayushostwal"
   },
   description:
-    "A modern AI agents platform for discovering and orchestrating skills, workflows, and autonomous developer automation.",
+    "An open-source plugin toolkit with engineering skills for Claude Code and Codex, plus Claude-specific specialist agent definitions.",
   softwareHelp: {
     "@type": "CreativeWork",
     url: "https://nexus-ai.aayushostwal.com/docs"
