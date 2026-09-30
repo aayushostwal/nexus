@@ -1,46 +1,56 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { usePathname } from "next/navigation";
+import { BookOpen, ChevronDown, Search } from "lucide-react";
+import { useId, useMemo, useRef, useState } from "react";
 import type { DocMeta } from "@/lib/docs";
-import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 export function DocsSidebar({ docs }: { docs: DocMeta[] }) {
   const [query, setQuery] = useState("");
-
+  const pathname = usePathname();
+  const searchId = useId();
+  const mobile = useRef<HTMLDetailsElement>(null);
   const grouped = useMemo(() => {
-    const filtered = docs.filter((d) => `${d.title} ${d.description}`.toLowerCase().includes(query.toLowerCase()));
+    const filtered = docs.filter((doc) => `${doc.title} ${doc.description}`.toLowerCase().includes(query.toLowerCase().trim()));
     return filtered.reduce<Record<string, DocMeta[]>>((acc, doc) => {
-      if (!acc[doc.category]) acc[doc.category] = [];
-      acc[doc.category].push(doc);
+      (acc[doc.category] ??= []).push(doc);
       return acc;
     }, {});
   }, [docs, query]);
 
-  return (
-    <aside className="sticky top-20 hidden h-[calc(100vh-6rem)] w-72 shrink-0 rounded-xl border border-zinc-700/70 bg-zinc-950/60 p-3 lg:block">
-      <Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search docs" className="mb-3" />
-      <ScrollArea className="h-[calc(100%-3rem)] pr-2">
-        <div className="space-y-4">
-          {Object.entries(grouped).map(([category, entries]) => (
-            <div key={category}>
-              <p className="mb-2 text-xs uppercase tracking-wide text-zinc-500">{category}</p>
-              <div className="flex flex-col gap-1">
-                {entries.map((doc) => (
-                  <Link
-                    key={doc.slug.join("/")}
-                    href={`/docs/${doc.slug.join("/")}`}
-                    className="rounded-md px-2 py-1.5 text-sm text-zinc-300 hover:bg-zinc-800/70 hover:text-zinc-100"
-                  >
-                    {doc.title}
-                  </Link>
-                ))}
-              </div>
+  const navigation = (suffix: string) => (
+    <>
+      <label htmlFor={`${searchId}-${suffix}`} className="sr-only">Search documentation</label>
+      <div className="relative mb-6">
+        <Search aria-hidden="true" className="absolute left-3 top-3.5 size-4 text-muted-foreground" />
+        <input id={`${searchId}-${suffix}`} type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Find a guide…" className="h-11 w-full rounded-lg border border-border bg-background pl-9 pr-3 text-sm placeholder:text-muted-foreground" />
+      </div>
+      <nav aria-label="Documentation" className="space-y-6">
+        {Object.entries(grouped).map(([category, entries]) => (
+          <div key={category}>
+            <p className="mb-2 px-3 text-[11px] font-semibold uppercase tracking-[0.15em] text-muted-foreground">{category}</p>
+            <div className="flex flex-col gap-1">
+              {entries.map((doc) => {
+                const href = `/docs/${doc.slug.join("/")}`;
+                const active = href === pathname;
+                return <Link key={href} href={href} aria-current={active ? "page" : undefined} onClick={() => { if (mobile.current) mobile.current.open = false; }} className={`rounded-lg px-3 py-2.5 text-sm transition-colors ${active ? "bg-primary/10 font-medium text-primary" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}>{doc.title}</Link>;
+              })}
             </div>
-          ))}
-        </div>
-      </ScrollArea>
-    </aside>
+          </div>
+        ))}
+        {Object.keys(grouped).length === 0 && <div role="status" className="px-3 text-sm text-muted-foreground">No guides match. <button type="button" onClick={() => setQuery("")} className="text-primary underline">Clear search</button></div>}
+      </nav>
+    </>
+  );
+
+  return (
+    <>
+      <details ref={mobile} className="rounded-xl border border-border bg-card p-4 lg:hidden">
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-medium [&::-webkit-details-marker]:hidden"><span className="flex items-center gap-2"><BookOpen aria-hidden="true" className="size-4 text-primary" /> Browse documentation</span><ChevronDown aria-hidden="true" className="size-4" /></summary>
+        <div className="mt-5 max-h-[60vh] overflow-y-auto">{navigation("mobile")}</div>
+      </details>
+      <aside className="sticky top-24 hidden max-h-[calc(100dvh-7rem)] w-64 shrink-0 overflow-y-auto py-1 pr-4 lg:block">{navigation("desktop")}</aside>
+    </>
   );
 }
