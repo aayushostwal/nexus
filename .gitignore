@@ -16,6 +16,8 @@ dist/
 build/
 *.tsbuildinfo
 apps/nexus-web/.next/
+apps/nexus-web/test-results/
+apps/nexus-web/playwright-report/
 
 # Agent memory (per-repo; opt-in to commit if desired)
 .claude/agent-memory/

@@ -3,9 +3,9 @@ import type { DocMeta } from "@/lib/docs";
 
 export function DocumentationLayout({ docs, children }: { docs: DocMeta[]; children: React.ReactNode }) {
   return (
-    <div className="nexus-container flex gap-6 py-8">
+    <div className="nexus-container flex flex-col gap-6 py-6 lg:flex-row lg:gap-10 lg:py-10">
       <DocsSidebar docs={docs} />
-      <main className="min-w-0 flex-1 rounded-xl border border-zinc-700/70 bg-zinc-900/40 p-6">{children}</main>
+      <main id="docs-content" className="min-w-0 flex-1 rounded-2xl border border-border bg-card p-5 sm:p-8 lg:p-10">{children}</main>
     </div>
   );
 }

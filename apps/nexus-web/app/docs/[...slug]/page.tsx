@@ -36,16 +36,18 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
   const { prev, next } = getPrevNext(slug);
 
   return (
-    <article className="prose prose-invert max-w-none">
-      <div className="mb-4 text-xs text-zinc-500">
+    <article className="prose max-w-none">
+      <div className="mb-5 text-xs text-muted-foreground">
         <span>Docs</span> / <span className="capitalize">{doc.meta.category}</span> / <span>{doc.meta.title}</span>
       </div>
+      <h1 className="mb-4 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">{doc.meta.title}</h1>
+      {doc.meta.description ? <p className="mb-8 text-muted-foreground">{doc.meta.description}</p> : null}
       {compiled.content}
-      <div className="mt-8 grid gap-3 border-t border-zinc-700/70 pt-6 sm:grid-cols-2">
+      <div className="mt-10 grid gap-3 border-t border-border pt-6 sm:grid-cols-2">
         {prev ? (
           <Link
             href={`/docs/${prev.slug.join("/")}`}
-            className="rounded-lg border border-zinc-700/70 bg-zinc-900/60 p-3 text-sm text-zinc-300 hover:border-cyan-400/50"
+            className="rounded-xl border border-border bg-background p-4 text-sm text-foreground no-underline hover:border-primary/50"
           >
             Previous: {prev.title}
           </Link>
@@ -55,7 +57,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
         {next ? (
           <Link
             href={`/docs/${next.slug.join("/")}`}
-            className="rounded-lg border border-zinc-700/70 bg-zinc-900/60 p-3 text-right text-sm text-zinc-300 hover:border-cyan-400/50"
+            className="rounded-xl border border-border bg-background p-4 text-right text-sm text-foreground no-underline hover:border-primary/50"
           >
             Next: {next.title}
           </Link>

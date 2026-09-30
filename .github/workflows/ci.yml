@@ -35,3 +35,9 @@ jobs:
       - name: Build website
         working-directory: apps/nexus-web
         run: npm run build
+      - name: Install browser for interface checks
+        working-directory: apps/nexus-web
+        run: npx playwright install --with-deps chromium
+      - name: Verify interface interactions and accessibility
+        working-directory: apps/nexus-web
+        run: npm run test:browser
