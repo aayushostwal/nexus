@@ -1,127 +1,78 @@
 name: Release
 
+# Releases are intentional. Choose patch for fixes, minor for compatible features,
+# and major for removed/renamed public commands or other breaking contracts.
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: 'Semver increment: patch=fix, minor=feature, major=breaking change'
+        required: true
+        default: patch
+        type: choice
+        options: [patch, minor, major]
 
 permissions:
-  contents: write
+  contents: read
+
+concurrency:
+  group: nexus-release
+  cancel-in-progress: false
 
 jobs:
-  # A: CI — lint, test, validate
   ci:
-    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/ci.yml
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Lint
-        run: |
-          node --check bin/nexus.js
-          node --check scripts/bootstrap-agent-docs.js
-          node --check scripts/core.js
-          node --check scripts/stats-viewer.js
-          node --check test/bootstrap-agent-docs.test.js
-          node --check test/core.test.js
-
-      - name: Test
-        run: node --test test/*.test.js
-
-      - name: Validate manifests
-        run: |
-          node -e "
-            const fs = require('fs');
-            const files = [
-              '.claude-plugin/plugin.json',
-              '.codex-plugin/plugin.json',
-              '.claude-plugin/marketplace.json',
-              '.agents/plugins/marketplace.json',
-            ];
-            const versions = new Set();
-            for (const f of files) {
-              const obj = JSON.parse(fs.readFileSync(f, 'utf8'));
-              versions.add(obj.version);
-              if (obj.plugins) obj.plugins.forEach(p => versions.add(p.version));
-              console.log(f, '->', obj.version);
-            }
-            if (versions.size !== 1) {
-              console.error('Version mismatch across manifests:', [...versions]);
-              process.exit(1);
-            }
-            console.log('All manifests valid and synced at', [...versions][0]);
-          "
-
-  # B-D: Bump version, changelog, tag — all in one run
   release:
     needs: ci
     runs-on: ubuntu-latest
-    # GITHUB_TOKEN pushes don't re-trigger workflows, so no infinite loop risk
-    # This guard skips the release job on any bot-initiated push (e.g. PAT)
-    if: github.actor != 'github-actions[bot]'
-
+    permissions:
+      contents: write
     steps:
-      # B: Bump minor version
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 20
-
-      - name: Bump minor version
+          node-version: 22
+      - name: Bump canonical version and synchronize manifests
         id: version
-        run: |
-          CURRENT=$(jq -r .version .claude-plugin/marketplace.json)
-          MAJOR=$(echo $CURRENT | cut -d. -f1)
-          MINOR=$(echo $CURRENT | cut -d. -f2)
-          NEW_VERSION="$MAJOR.$((MINOR + 1)).0"
-          echo "value=$NEW_VERSION" >> $GITHUB_OUTPUT
-          echo "Bumped $CURRENT → $NEW_VERSION"
-
-      - name: Sync version to plugin and marketplace JSONs
         env:
-          NEW_VERSION: ${{ steps.version.outputs.value }}
+          BUMP: ${{ inputs.bump }}
         run: |
-          node -e "
-            const fs = require('fs');
-            const files = [
-              '.claude-plugin/plugin.json',
-              '.codex-plugin/plugin.json',
-              '.claude-plugin/marketplace.json',
-              '.agents/plugins/marketplace.json',
-            ];
-            const version = process.env.NEW_VERSION;
-            for (const f of files) {
-              const obj = JSON.parse(fs.readFileSync(f, 'utf8'));
-              obj.version = version;
-              if (obj.plugins) obj.plugins.forEach(p => { p.version = version; });
-              fs.writeFileSync(f, JSON.stringify(obj, null, 2) + '\n');
-              console.log('Updated', f);
-            }
-          "
-
-      # C: Generate full CHANGELOG.md for the repo
+          node <<'NODE'
+          const fs = require('node:fs');
+          const files = ['.claude-plugin/plugin.json', '.codex-plugin/plugin.json', '.claude-plugin/marketplace.json', '.agents/plugins/marketplace.json'];
+          const current = JSON.parse(fs.readFileSync(files[0], 'utf8')).version;
+          const values = current.split('.').map(Number);
+          const index = {major:0, minor:1, patch:2}[process.env.BUMP];
+          if (index === undefined || !/^\d+\.\d+\.\d+$/.test(current)) throw Error('Invalid increment/version');
+          values[index] += 1;
+          for (let i=index+1; i<3; i++) values[i]=0;
+          const version = values.join('.');
+          for (const file of files) {
+            const manifest=JSON.parse(fs.readFileSync(file,'utf8'));
+            manifest.version=version;
+            for (const plugin of manifest.plugins || []) plugin.version=version;
+            fs.writeFileSync(file,JSON.stringify(manifest,null,2)+'\n');
+          }
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, `value=${version}\n`);
+          NODE
+      - name: Refresh and validate generated content
+        run: |
+          node scripts/generate-catalog.js
+          node scripts/generate-catalog.js --check
+          node scripts/validate-content.js
+          node --test test/*.test.js
       - name: Generate changelog
         uses: orhun/git-cliff-action@v4
         with:
           config: cliff.toml
-          args: --verbose
+          args: --verbose --tag v${{ steps.version.outputs.value }}
         env:
           OUTPUT: CHANGELOG.md
           GITHUB_REPO: ${{ github.repository }}
-
-      # C: Generate release notes for this version only
       - name: Generate release notes
         uses: orhun/git-cliff-action@v4
         with:
@@ -130,24 +81,16 @@ jobs:
         env:
           OUTPUT: RELEASE_NOTES.md
           GITHUB_REPO: ${{ github.repository }}
-
-      # D: Commit version bump + changelog, push tag, create GitHub Release
-      - name: Commit, tag, and release
+      - name: Commit and publish tested release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.version.outputs.value }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add CHANGELOG.md \
-            .claude-plugin/plugin.json \
-            .codex-plugin/plugin.json \
-            .claude-plugin/marketplace.json \
-            .agents/plugins/marketplace.json
-          git commit -m "chore: bump version to ${{ steps.version.outputs.value }}" || echo "Nothing to commit"
-          git push origin main
-          git tag "v${{ steps.version.outputs.value }}"
-          git push origin "v${{ steps.version.outputs.value }}"
-          gh release create "v${{ steps.version.outputs.value }}" \
-            --title "v${{ steps.version.outputs.value }}" \
-            --notes-file RELEASE_NOTES.md \
-            --latest
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add CHANGELOG.md .claude-plugin/plugin.json .codex-plugin/plugin.json .claude-plugin/marketplace.json .agents/plugins/marketplace.json catalog/generated.json README.md apps/nexus-web/content/docs/getting-started/quickstart.mdx
+          git commit -m "chore: release v$VERSION"
+          git tag "v$VERSION"
+          # Atomic, fast-forward-only push refuses to publish over newer main changes.
+          git push --atomic origin HEAD:main "refs/tags/v$VERSION"
+          gh release create "v$VERSION" --title "v$VERSION" --notes-file RELEASE_NOTES.md --latest

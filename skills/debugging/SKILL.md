@@ -1,10 +1,9 @@
 ---
-name: nexus-debugging
+name: debugging
 description: >
   Use when something is failing, regressing, or behaving unexpectedly and the goal is root-cause analysis,
   narrowest fix, and verification. Covers CI/CD, tests, runtime, deployment, and tooling failures.
   Output should be RCA + fix + prevention, not design options.
-  When in doubt, use this skill.
 ---
 
 # Nexus Debugging

@@ -20,23 +20,19 @@ There is no npm package and no global `nexus` CLI. Nexus is distributed as a git
 /reload-plugins
 ```
 
-After the reload, the 10 skills, 14 agents, and 4 commands are available under the `nexus:` namespace.
+After reloading, use the [current generated catalog](/docs/getting-started/quickstart) to find shipped skills, agents, and commands.
 
 ## Install In Codex
 
-Codex installs use the third-party `codex-marketplace` tool:
+Use a Codex CLI with native plugin support (local installation tested on 0.157.1):
 
 ```bash
-npx codex-marketplace add aayushostwal/nexus --plugin --global
+codex plugin marketplace add aayushostwal/nexus
+codex plugin add nexus@nexus-marketplace
+codex plugin list --marketplace nexus-marketplace --json
 ```
 
-Project-scoped install:
-
-```bash
-npx codex-marketplace add aayushostwal/nexus --plugin --project
-```
-
-This is a direct repo install — you need the repo slug `aayushostwal/nexus`; the plugin is not listed in a central Codex index.
+The marketplace source may also be a local clone path. Our clean-profile smoke check used that local path; remote fetching, upgrades, and model-driven workflow execution were not exercised by that check. Exact skill invocation and component routing remain host-specific. If `codex plugin` is unavailable, upgrade or use a local clone's skill instructions with your host.
 
 ## Bundled Helper Scripts
 
@@ -48,15 +44,30 @@ node "${CLAUDE_PLUGIN_ROOT}/bin/nexus.js"
 
 No install step, no `node_modules` — Node 18 or newer is the only requirement.
 
-## Automatic Bootstrap
+## Optional Global Guidance
 
-On first active plugin run, Nexus creates or updates runtime-specific instruction files:
-
-- Claude runtime: `~/.claude/CLAUDE.md`
-- Codex runtime: `~/.codex/AGENT.md`
-
-If either file already exists, Nexus preserves your content and only appends/updates the Nexus-managed skills-first block. You can also trigger this manually from the plugin directory:
+Installing plugin files does not establish that a bootstrap hook ran. From a cloned or installed plugin directory, preview and apply guidance for one runtime explicitly:
 
 ```bash
-node scripts/bootstrap-agent-docs.js
+node scripts/bootstrap-agent-docs.js --runtime codex --dry-run
+node scripts/bootstrap-agent-docs.js --runtime codex
 ```
+
+Use `--runtime claude` for Claude Code. Guidance goes into `~/.codex/AGENTS.md` or `~/.claude/CLAUDE.md`. Existing content outside the managed block is preserved.
+
+To remove only the Nexus-managed guidance:
+
+```bash
+node scripts/bootstrap-agent-docs.js --runtime codex --remove --dry-run
+node scripts/bootstrap-agent-docs.js --runtime codex --remove
+```
+
+Use your host or installer's uninstall mechanism to remove plugin files. Review legacy singular `AGENT.md` files for personal content before any manual cleanup.
+
+## Compatibility And Verification
+
+Claude agents and memory settings are Claude-specific. Codex skill discovery and invocation depend on the host and installer; identical slash commands or subagent behavior are not guaranteed. Native Codex installation was checked in a temporary profile; individual skill routing was not established by the CLI install result.
+
+GitHub issue-to-PR workflows require authenticated repository access through `gh` or an available GitHub connector. Host permissions control tool execution; Markdown instructions do not provide isolation.
+
+A repository build and content validation do not prove a clean live install. Follow the [host smoke checks](https://github.com/aayushostwal/nexus/blob/main/docs/host-smoke-checks.md) before declaring a release verified.

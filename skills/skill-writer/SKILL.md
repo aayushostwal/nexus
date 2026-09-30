@@ -1,10 +1,9 @@
 ---
-name: nexus-skill-writer-md
+name: skill-writer
 description: >
   Use for creating, refactoring, or debugging skills and improving SKILL.md trigger quality.
   Trigger on "write/create/update/improve skill", trigger-miss complaints, pasted-skill feedback,
   or repeated workflows that should be skillized. Output production-ready skill structure and routing logic.
-  When in doubt, use this skill.
 ---
 
 # Nexus Skill Writer
@@ -30,12 +29,12 @@ Every SKILL.md must have YAML frontmatter:
 
 ```yaml
 ---
-name: nexus-{skill-name}          # kebab-case, unique, descriptive
+name: skill-name                  # must exactly match the containing directory
 description: >                    # THE TRIGGER MECHANISM — be explicit and dense
   Use this skill when ... [detailed trigger conditions].
   Trigger phrases include: "...", "...", "...".
   Also trigger when ... [edge cases].
-  When in doubt, use this skill.
+
 ---
 ```
 
@@ -102,7 +101,7 @@ Never assume answers to Q6, Q7, or Q8.
 Use this exact section order. Adapt depth to domain; do not drop sections.
 
 Required sections (in order):
-1. **YAML frontmatter** — `name` + `description` (5+ trigger phrases, ends with "When in doubt, use this skill.")
+1. **YAML frontmatter** — `name` + `description` (specific task triggers and exclusions)
 2. **One-liner** — what this skill does and why it exists.
 3. **Metadata table** — Category, Required Tools, Required Context, Expected Inputs, Expected Outputs.
 4. **Skill Philosophy** — Problem, Why it matters, 2-3 Engineering principles.

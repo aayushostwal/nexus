@@ -74,12 +74,12 @@ export default async function HomePage() {
 
         {/* ── Hero ───────────────────────────────────────────────────────── */}
         <section className="nexus-container relative py-16 sm:py-20 lg:py-24">
-          <Badge className="mb-6">14 Memory-Enabled Agents</Badge>
+          <Badge className="mb-6">{agents.length} Specialized Agents</Badge>
           <h1 className="text-balance text-3xl font-semibold leading-tight text-zinc-100 sm:text-5xl lg:text-6xl">
             Agentify Your Terminal
           </h1>
           <p className="mt-6 max-w-2xl text-base text-zinc-300 sm:text-lg">
-            Nexus ships 14 specialized agents — each focused on one domain, color-coded for fast orientation, and equipped with persistent memory that learns your conventions across sessions.
+            Nexus ships {agents.length} specialized agents — each focused on one domain, color-coded for fast orientation, and equipped with persistent memory that learns your conventions across sessions.
           </p>
           <p className="mt-2 text-sm text-zinc-400">
             <span className="text-purple-300">Product</span>
@@ -98,7 +98,7 @@ export default async function HomePage() {
           </p>
           <div className="mt-8 grid gap-3 sm:flex sm:flex-wrap">
             <Button asChild size="lg" className="w-full sm:w-auto">
-              <a href="#agent-system">Explore Agents</a>
+              <Link href="/docs/getting-started/quickstart">Fix your first issue</Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="w-full sm:w-auto">
               <a href="#skills-marketplace">Explore Skills</a>
@@ -152,7 +152,7 @@ export default async function HomePage() {
             <div>
               <h2 className="text-2xl font-semibold sm:text-3xl">Agents</h2>
               <p className="mt-2 max-w-2xl text-zinc-400">
-                14 specialized subagents with persistent memory. Each runs in its own context window,
+                {agents.length} specialized subagents with persistent memory. Each runs in its own context window,
                 owns a domain, and accumulates knowledge across sessions — project memory learns your repo,
                 user memory travels with you everywhere.
               </p>
@@ -166,7 +166,7 @@ export default async function HomePage() {
           <div className="mb-8">
             <h2 className="text-2xl font-semibold sm:text-3xl">Skills</h2>
             <p className="mt-2 text-zinc-400">
-              10 bundled skills for debugging, testing, reliability, observability, performance, content, and token efficiency.
+              {skills.length} bundled skills for debugging, testing, reliability, observability, performance, content, and token efficiency.
               Skills are always-on playbooks — invoke with <code>/nexus:skill-name</code>.
             </p>
           </div>
@@ -236,7 +236,7 @@ export default async function HomePage() {
             <p className="inline-flex w-full items-center justify-center gap-2 text-lg font-semibold text-zinc-100">
               <Image src="/logos/nexus.svg" alt="Nexus wordmark" width={96} height={24} className="h-6 w-auto" />
             </p>
-            <p className="text-sm text-zinc-400">14 agents. 10 skills. One plugin install.</p>
+            <p className="text-sm text-zinc-400">{agents.length} agents. {skills.length} skills. One plugin install.</p>
             <p className="mt-1 inline-flex w-full items-center justify-center gap-1 text-sm text-zinc-400">
               <Copyright className="size-3.5" />
               Maintained by Aayush Ostwal.

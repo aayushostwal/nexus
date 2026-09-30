@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "npm run typecheck && npm run check:docs",
+    "typecheck": "tsc --noEmit",
+    "prebuild": "node scripts/check-docs.mjs",
+    "check:docs": "node scripts/check-docs.mjs"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.2",

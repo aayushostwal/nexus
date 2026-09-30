@@ -3,11 +3,11 @@ export async function GET() {
 <rss version="2.0">
   <channel>
     <title>Nexus Platform Updates</title>
-    <link>https://nexus-agent-kit.vercel.app</link>
+    <link>https://nexus-ai.aayushostwal.com</link>
     <description>Latest Nexus docs and platform updates.</description>
     <item>
       <title>Nexus Skills and Agents Marketplace</title>
-      <link>https://nexus-agent-kit.vercel.app</link>
+      <link>https://nexus-ai.aayushostwal.com</link>
       <description>Explore installable skills, specialist agents, and token-efficient AI terminal workflows.</description>
       <pubDate>${new Date().toUTCString()}</pubDate>
     </item>

@@ -61,9 +61,10 @@ async function main(argv) {
 function readLimit(args) {
   const index = args.indexOf("--limit");
   if (index === -1) return 20;
-  const value = Number.parseInt(args[index + 1], 10);
-  if (!Number.isFinite(value) || value < 1) {
-    throw new Error("--limit must be a positive number");
+  const raw = args[index + 1] || "";
+  const value = Number(raw);
+  if (!/^\d+$/.test(raw) || !Number.isSafeInteger(value) || value < 1) {
+    throw new Error("--limit must be a positive integer");
   }
   return value;
 }

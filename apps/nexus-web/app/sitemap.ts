@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getAllDocs } from "@/lib/docs";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://nexus-agent-kit.vercel.app";
+  const base = "https://nexus-ai.aayushostwal.com";
   const docs = getAllDocs().map((doc) => ({
     url: `${base}/docs/${doc.slug.join("/")}`,
     lastModified: new Date(),

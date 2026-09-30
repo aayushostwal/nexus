@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/"
     },
-    sitemap: "https://nexus-agent-kit.vercel.app/sitemap.xml"
+    sitemap: "https://nexus-ai.aayushostwal.com/sitemap.xml"
   };
 }

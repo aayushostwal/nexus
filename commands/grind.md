@@ -1,3 +1,7 @@
+---
+description: Practice a technical or behavioral interview through targeted questions and evidence-based feedback.
+---
+
 # /grind — Interview Grinding Command
 
 **Purpose:** Turn any concept or document into a live, adversarial interview drilling session, tailored to a specific role and interview format.

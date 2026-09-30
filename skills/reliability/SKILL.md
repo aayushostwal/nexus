@@ -1,10 +1,9 @@
 ---
-name: nexus-reliability
+name: reliability
 description: >
   Use for production incidents, outages, and service degradations, plus release-readiness gate checks.
   Trigger on 500 spikes, SLA breaches, latency/error surges, on-call alerts, rollback decisions,
   and RCA/post-mortem requests. Prioritize stabilization, timeline reconstruction, and evidence-led actions.
-  When in doubt, use this skill.
 ---
 
 # Nexus Production Incident Investigator
