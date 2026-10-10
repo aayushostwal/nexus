@@ -20,13 +20,6 @@ apps/nexus-web/.next/
 # Agent memory (per-repo; opt-in to commit if desired)
 .claude/agent-memory/
 
-# Local package/cache output
-.npm-cache/
-nexus-agent-kit-*.tgz
-
-# Nexus local test data
-.tmp-nexus/
-
 # Environment/secrets
 .env
 .env.*

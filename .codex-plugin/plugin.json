@@ -1,7 +1,7 @@
 {
   "name": "nexus",
   "version": "1.34.0",
-  "description": "Plugin-first AI terminal workflows for Codex and Claude Code with planning, CI/CD debugging, reusable agents, TODOs, and MCP safety policies.",
+  "description": "Plugin-first AI terminal workflows for Codex and Claude Code with planning, CI/CD debugging, reusable agents, and MCP safety policies.",
   "author": {
     "name": "Aayush Ostwal",
     "email": "aayushostwal99@gmail.com",
@@ -15,7 +15,6 @@
     "claude",
     "mcp",
     "agents",
-    "todo",
     "workflow",
     "ai terminal",
     "ci cd debugging",
@@ -25,8 +24,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Nexus",
-    "shortDescription": "Planning, CI/CD debugging, TODOs, agents, and MCP guardrails.",
-    "longDescription": "Nexus provides plugin-first AI terminal workflows for Codex and Claude Code, including structured planning, CI/CD and codebase debugging flows, a global markdown TODO system, daily brief commands, specialized agents, response formatting, and MCP safety guidance for Slack, Outlook, Notion, Jira, and AWS.",
+    "shortDescription": "Planning, CI/CD debugging, agents, and MCP guardrails.",
+    "longDescription": "Nexus provides plugin-first AI terminal workflows for Codex and Claude Code, including structured planning, CI/CD and codebase debugging flows, daily brief commands, specialized agents, response formatting, and MCP safety guidance for Slack, Outlook, Notion, Jira, and AWS.",
     "developerName": "Aayush Ostwal",
     "category": "Productivity",
     "capabilities": [
@@ -37,8 +36,6 @@
     "privacyPolicyURL": "https://github.com/aayushostwal/nexus#privacy",
     "termsOfServiceURL": "https://github.com/aayushostwal/nexus#license",
     "defaultPrompt": [
-      "Show my Nexus TODOs.",
-      "Add this to Nexus TODOs.",
       "Run my Nexus daily brief."
     ],
     "brandColor": "#0F766E"
