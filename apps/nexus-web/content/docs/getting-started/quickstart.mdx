@@ -1,0 +1,100 @@
+---
+title: Quickstart
+description: Take a GitHub issue or a bug in chat through investigation, verification, and a pull request.
+category: Getting Started
+order: 2
+---
+
+## Fix Your First Issue
+
+[Install Nexus](/docs/getting-started/installation), open a local Git repository, and configure GitHub access through your host's connector or authenticated `gh` CLI. In Claude Code:
+
+```text
+/nexus:software-engineer fix issue #123 in the current repository and raise a PR
+```
+
+You can also give a local directory and a concrete bug:
+
+```text
+Use software-engineer in /path/to/repo. Saving an empty display name crashes. Reproduce the bug, fix it, run relevant checks, and raise a PR.
+```
+
+With a directory but no issue, the workflow inspects open GitHub issues and selects a bounded candidate according to its selection rules. It checks for existing work, protects unrelated changes, investigates, implements, verifies, and opens a focused PR. Missing authentication or failed checks are reported; a successful local check does not establish green CI. The workflow does not merge or deploy.
+
+In Codex, select the installed software-engineer skill or ask for it by name. Exact invocation and agent support depend on your host and installer.
+
+## Try A Small Command
+
+After staging a change intentionally, ask Claude Code to draft a commit message:
+
+```text
+/nexus:commit-message
+```
+
+The command drafts a message from the staged diff. If nothing is staged, it reports that condition.
+
+## Trigger A Skill Or Agent
+
+```text
+/nexus:debugging investigate the failing CI pipeline
+```
+
+In Claude Code, ask to use `code-reviewer` for a read-only PR review or `codebase-explorer` to locate an implementation. Agent memory and tool permissions are host-specific. Instructions to stay read-only do not replace host permission enforcement.
+
+## Current Catalog
+
+Generated from the shipped source files. Slash invocations below use Claude plugin syntax.
+
+{/* catalog:start */}
+
+**11 skills**, **14 agents**, and **2 commands**.
+
+### Skills
+
+| Claude invocation | Description |
+| --- | --- |
+| [`/nexus:debugging`](https://github.com/aayushostwal/nexus/blob/main/skills/debugging/SKILL.md) | Use when something is failing, regressing, or behaving unexpectedly and the goal is root-cause analysis, narrowest fix, and verification. |
+| [`/nexus:observability`](https://github.com/aayushostwal/nexus/blob/main/skills/observability/SKILL.md) | Use for correlated API failures, cascading errors, and distributed-system incident tracing. |
+| [`/nexus:performance`](https://github.com/aayushostwal/nexus/blob/main/skills/performance/SKILL.md) | Use for memory, CPU, latency, and query-performance investigations, plus dependency-upgrade blast-radius analysis. |
+| [`/nexus:prd`](https://github.com/aayushostwal/nexus/blob/main/skills/prd/SKILL.md) | Use to write, rewrite, or iterate on a PRD, design doc, technical proposal, or architecture write-up that other people will read and decide on. |
+| [`/nexus:reliability`](https://github.com/aayushostwal/nexus/blob/main/skills/reliability/SKILL.md) | Use for production incidents, outages, and service degradations, plus release-readiness gate checks. |
+| [`/nexus:shorts`](https://github.com/aayushostwal/nexus/blob/main/skills/shorts/SKILL.md) | Use to convert any input into a ready-to-record YouTube Shorts script. |
+| [`/nexus:skill-writer`](https://github.com/aayushostwal/nexus/blob/main/skills/skill-writer/SKILL.md) | Use for creating, refactoring, or debugging skills and improving SKILL.md trigger quality. |
+| [`/nexus:software-engineer`](https://github.com/aayushostwal/nexus/blob/main/skills/software-engineer/SKILL.md) | Resolve a GitHub issue or a concrete bug described in chat in a local repository, from reproduction through a verified fix and pull request. |
+| [`/nexus:testing`](https://github.com/aayushostwal/nexus/blob/main/skills/testing/SKILL.md) | Use for flaky or nondeterministic tests, especially local-vs-CI inconsistencies. |
+| [`/nexus:token-optimizer`](https://github.com/aayushostwal/nexus/blob/main/skills/token-optimizer/SKILL.md) | Always-on token optimization rules. |
+| [`/nexus:tutorial`](https://github.com/aayushostwal/nexus/blob/main/skills/tutorial/SKILL.md) | Use for creating executable Jupyter tutorials and AI engineering walkthroughs with runnable cells. |
+
+### Agents
+
+| Agent | Description |
+| --- | --- |
+| [`ai-product-engineer`](https://github.com/aayushostwal/nexus/blob/main/agents/ai-product-engineer.md) | Use this agent to design, build, or review LLM-powered features and products end-to-end: model selection, RAG architecture, agent design, eval pipelines, token economics, and LLM observability. |
+| [`cloud-cost-optimizer`](https://github.com/aayushostwal/nexus/blob/main/agents/cloud-cost-optimizer.md) | Use this agent for cloud cost audits, bill-spike investigations, cost monitoring setup, and "find me a cheaper alternative" requests. |
+| [`code-reviewer`](https://github.com/aayushostwal/nexus/blob/main/agents/code-reviewer.md) | Use this agent for senior-level review of a PR, branch, or diff. |
+| [`codebase-explorer`](https://github.com/aayushostwal/nexus/blob/main/agents/codebase-explorer.md) | Use this agent for token-efficient codebase exploration: mapping repo structure, finding where a feature lives, locating entry points and config files, or answering "where is the code for X". |
+| [`database-architect`](https://github.com/aayushostwal/nexus/blob/main/agents/database-architect.md) | Use this agent for database design and change work: schema design, indexing strategy, query optimization, migration safety, and engine selection. |
+| [`docs-app-builder`](https://github.com/aayushostwal/nexus/blob/main/agents/docs-app-builder.md) | Use this agent to build a documentation application as a React app — from a repo's README, docs folder, or code. |
+| [`event-driven-designer`](https://github.com/aayushostwal/nexus/blob/main/agents/event-driven-designer.md) | Use this agent to design or review asynchronous, event-driven systems: queues, streams, pub/sub, sagas, outbox patterns, DLQs. |
+| [`iac-engineer`](https://github.com/aayushostwal/nexus/blob/main/agents/iac-engineer.md) | Use this agent to design cloud architecture and write the Infrastructure-as-Code for it (Terraform, CDK in Python, CloudFormation), or to audit existing IaC for risk and waste. |
+| [`mobile-ux-designer`](https://github.com/aayushostwal/nexus/blob/main/agents/mobile-ux-designer.md) | Use this agent to design or review mobile UX for iOS, Android, React Native, or Flutter apps. |
+| [`prd-writer-critic`](https://github.com/aayushostwal/nexus/blob/main/agents/prd-writer-critic.md) | Use this agent to write or critique Product Requirements Documents. |
+| [`roadmap-planner`](https://github.com/aayushostwal/nexus/blob/main/agents/roadmap-planner.md) | Use this agent when direction is known and the user needs an execution-ready roadmap: scope, sequencing, dependencies, risks, validation, rollout, and rollback. |
+| [`scalability-planner`](https://github.com/aayushostwal/nexus/blob/main/agents/scalability-planner.md) | Use this agent to plan how a system scales from its current load to a growth target. |
+| [`system-architecture-reviewer`](https://github.com/aayushostwal/nexus/blob/main/agents/system-architecture-reviewer.md) | Use this agent for codebase architecture mapping, coupling analysis, bounded-context discovery, monolith-split planning, and deployment-safety review. |
+| [`uiux-reviewer`](https://github.com/aayushostwal/nexus/blob/main/agents/uiux-reviewer.md) | Use this agent for read-only UI/UX review of web apps — components, pages, flows, or screenshots. |
+
+### Commands
+
+| Claude invocation | Description |
+| --- | --- |
+| [`/nexus:commit-message`](https://github.com/aayushostwal/nexus/blob/main/commands/commit-message.md) | Draft a Conventional Commit message from the staged git diff. |
+| [`/nexus:grind`](https://github.com/aayushostwal/nexus/blob/main/commands/grind.md) | Practice a technical or behavioral interview through targeted questions and evidence-based feedback. |
+
+{/* catalog:end */}
+
+## Next
+
+- [Writing Skills](/docs/core/writing-skills)
+- [Writing Agents](/docs/core/writing-agents)
+- [Source on GitHub](https://github.com/aayushostwal/nexus)

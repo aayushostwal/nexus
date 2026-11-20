@@ -43,25 +43,31 @@ function buildCatalog() {
   return { schemaVersion: 1, name: manifest.name, version: manifest.version,
     skills: entries('skills', true), agents: entries('agents'), commands: entries('commands') };
 }
-function catalogMarkdown(catalog) {
+function catalogMarkdown(catalog, web = false) {
+  const prefix = web ? 'https://github.com/aayushostwal/nexus/blob/main/' : '';
   return `**${catalog.skills.length} skills**, **${catalog.agents.length} agents**, and **${catalog.commands.length} commands**.\n\n` +
-    ['skills', 'agents', 'commands'].map(kind => `### ${kind[0].toUpperCase() + kind.slice(1)}\n\n| ${kind === 'agents' ? 'Agent' : 'Claude invocation'} | Description |\n| --- | --- |\n` + catalog[kind].map(item => `| [\`${item.invocation || item.name}\`](${item.path}) | ${summary(item.description)} |`).join('\n')).join('\n\n');
+    ['skills', 'agents', 'commands'].map(kind => `### ${kind[0].toUpperCase() + kind.slice(1)}\n\n| ${kind === 'agents' ? 'Agent' : 'Claude invocation'} | Description |\n| --- | --- |\n` + catalog[kind].map(item => `| [\`${item.invocation || item.name}\`](${prefix}${item.path}) | ${summary(item.description)} |`).join('\n')).join('\n\n');
 }
+// Generated outputs: the JSON the landing page reads, plus marker blocks in the README and site quickstart.
+const MARKDOWN_TARGETS = [
+  { file: 'README.md', web: false, start: '<!-- catalog:start -->', end: '<!-- catalog:end -->' },
+  { file: 'apps/nexus-web/content/docs/getting-started/quickstart.mdx', web: true, start: '{/* catalog:start */}', end: '{/* catalog:end */}' }
+];
 // First sentence only, pipes escaped, so table rows stay readable.
 function summary(description) {
   const first = description.match(/^.*?[.!?](?=\s|$)/)?.[0] || description;
   return first.replace(/\|/g, '\\|');
 }
-// The README is the only generated output; the catalog lives between its markers.
 function generate(check = false) {
   const catalog = buildCatalog();
-  const outputs = new Map();
-  const file = 'README.md';
-  const source = read(file);
-  const start = '<!-- catalog:start -->';
-  const end = '<!-- catalog:end -->';
-  if (!source.includes(start) || !source.includes(end)) throw new Error(`Missing catalog markers: ${file}`);
-  outputs.set(file, source.slice(0, source.indexOf(start) + start.length) + '\n\n' + catalogMarkdown(catalog) + '\n\n' + source.slice(source.indexOf(end)));
+  const outputs = new Map([['catalog/generated.json', JSON.stringify(catalog, null, 2) + '\n']]);
+  for (const { file, web, start, end } of MARKDOWN_TARGETS) {
+    // The site is optional for the kit itself; skip its quickstart if the app is absent.
+    if (web && !fs.existsSync(path.join(root, file))) continue;
+    const source = read(file);
+    if (!source.includes(start) || !source.includes(end)) throw new Error(`Missing catalog markers: ${file}`);
+    outputs.set(file, source.slice(0, source.indexOf(start) + start.length) + '\n\n' + catalogMarkdown(catalog, web) + '\n\n' + source.slice(source.indexOf(end)));
+  }
   let stale = false;
   for (const [file, content] of outputs) {
     if (fs.existsSync(path.join(root, file)) && read(file) === content) continue;

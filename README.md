@@ -1,6 +1,6 @@
 # Nexus
 
-My personal collection of skills, agents, commands, and workflows for Claude Code and Codex. It has no app, no package, and no npm dependencies, just Markdown instructions and a few dependency-free Node scripts.
+My personal collection of skills, agents, commands, and workflows for Claude Code and Codex. The kit itself is Markdown instructions and a few dependency-free Node scripts: no package, nothing published to npm. The only npm-based part is the landing page in `apps/nexus-web`, which Vercel builds and deploys.
 
 ## Install
 
@@ -30,6 +30,8 @@ commands/   Slash commands
 scripts/    Dependency-free Node helpers (catalog, validation, global guidance)
 docs/tools/ Setup and safety notes for Slack, Outlook, Notion, Jira, and AWS
 test/       node:test suites for the scripts
+catalog/    generated.json, the catalog the landing page reads (generated, do not edit)
+apps/nexus-web/  Next.js landing page and docs, deployed on Vercel
 ```
 
 ## Workflows
@@ -99,7 +101,7 @@ The section between the markers is generated from the source files. Run `node sc
 Everything runs with Node 18+ and nothing to install:
 
 ```bash
-node scripts/generate-catalog.js          # refresh the catalog above
+node scripts/generate-catalog.js          # refresh the catalog above, the site quickstart, and catalog/generated.json
 node scripts/generate-catalog.js --check  # fail if the catalog is stale
 node scripts/validate-content.js          # check skill/agent frontmatter, links, manifests
 node --test test/*.test.js                # test the scripts
@@ -119,6 +121,18 @@ node scripts/bootstrap-agent-docs.js --runtime claude --remove
 2. Agent: create `agents/<name>.md` with `name` (matching the file) and `description` frontmatter.
 3. Command: create `commands/<name>.md` with a `description` frontmatter line.
 4. Run `node scripts/generate-catalog.js && node scripts/validate-content.js`, then commit.
+
+## Landing page
+
+`apps/nexus-web` is a Next.js site deployed on Vercel. It reads `catalog/generated.json`, so rerun the catalog script before pushing skill or agent changes.
+
+```bash
+cd apps/nexus-web
+npm ci
+npm run dev           # local preview
+npm run build         # what Vercel runs
+npm run test:browser  # Playwright checks (Node 20+)
+```
 
 ## Privacy
 

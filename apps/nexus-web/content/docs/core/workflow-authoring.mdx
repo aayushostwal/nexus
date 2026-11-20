@@ -1,0 +1,27 @@
+---
+title: Workflow Authoring
+description: Create DAG-like workflows with retries, branches, and approval gates.
+category: Core
+order: 3
+---
+
+## Basic DAG
+
+```yaml
+workflow:
+  name: pr-review
+  nodes:
+    - classify
+    - plan
+    - execute
+    - verify
+    - deliver
+```
+
+## Parallel Branches
+
+Use parallel nodes for non-overlapping ownership tracks.
+
+## Recovery Flows
+
+Define `on_failure` transitions and retry budgets.

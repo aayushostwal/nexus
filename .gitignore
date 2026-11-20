@@ -1,3 +1,12 @@
+# Dependencies (landing page only)
+node_modules/
+
+# Landing page build output
+apps/nexus-web/.next/
+apps/nexus-web/test-results/
+apps/nexus-web/playwright-report/
+*.tsbuildinfo
+
 # macOS
 .DS_Store
 

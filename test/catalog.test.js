@@ -16,6 +16,7 @@ function fixture(t) {
   write('agents/reviewer.md', '---\nname: reviewer\ndescription: Review changes\nmemory: project\ncolor: blue\n---\n');
   write('commands/commit-message.md', '---\ndescription: Draft a commit message\n---\n');
   write('README.md', '# User-authored introduction\n<!-- catalog:start -->\nold\n<!-- catalog:end -->\nRetain this footer.\n');
+  write('apps/nexus-web/content/docs/getting-started/quickstart.mdx', '# Quickstart\n{/* catalog:start */}\nold\n{/* catalog:end */}\n');
   const run = (...args) => spawnSync(process.execPath, [path.join(root, 'scripts/generate-catalog.js'), ...args], { encoding: 'utf8' });
   return { root, write, run };
 }
@@ -28,7 +29,10 @@ test('catalog generation reflects source inventory and preserves authored docs; 
   assert.equal(fs.readFileSync(readmePath, 'utf8'), before, 'check mode must not write');
   assert.equal(run().status, 0);
   assert.equal(run('--check').status, 0);
-  assert.equal(fs.existsSync(path.join(root, 'catalog')), false, 'no JSON catalog is generated');
+  const catalog = JSON.parse(fs.readFileSync(path.join(root, 'catalog/generated.json'), 'utf8'));
+  assert.equal(catalog.version, '2.0.0');
+  assert.equal(catalog.commands[0].invocation, '/nexus:commit-message');
+  assert.match(fs.readFileSync(path.join(root, 'apps/nexus-web/content/docs/getting-started/quickstart.mdx'), 'utf8'), /https:\/\/github\.com\/aayushostwal\/nexus\/blob\/main\/skills\/debugging\/SKILL\.md/);
   const readme = fs.readFileSync(readmePath, 'utf8');
   assert.ok(readme.startsWith('# User-authored introduction\n'));
   assert.ok(readme.endsWith('Retain this footer.\n'));
@@ -50,4 +54,11 @@ test('catalog generation rejects missing descriptions and missing managed marker
   write('commands/commit-message.md', '---\ndescription: Draft a message\n---\n');
   write('README.md', '# No markers\n');
   assert.match(run().stderr, /Missing catalog markers/);
+});
+
+test('catalog generation works without the landing page app', t => {
+  const { root, run } = fixture(t);
+  fs.rmSync(path.join(root, 'apps'), { recursive: true });
+  assert.equal(run().status, 0);
+  assert.ok(fs.existsSync(path.join(root, 'catalog/generated.json')));
 });

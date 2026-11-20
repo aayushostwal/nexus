@@ -67,6 +67,12 @@ function validate(root) {
       }
     }
   }
+  // The landing page's quickstart must only advertise shipped skills and commands.
+  const commands = new Set(files(path.join(root,'commands'),'.md').map(p=>path.basename(p,'.md')));
+  const quickstart = path.join(root,'apps/nexus-web/content/docs/getting-started/quickstart.mdx');
+  if (fs.existsSync(quickstart)) for (const match of fs.readFileSync(quickstart,'utf8').matchAll(/\/nexus:([a-z0-9-]+)/g)) {
+    if (!commands.has(match[1]) && !names.has(match[1])) fail(quickstart,`unshipped invocation /nexus:${match[1]}`);
+  }
   for (const file of files(path.join(root,'agents'),'.md')) {
     const front = fs.readFileSync(file,'utf8').match(/^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/)?.[1];
     if (!front) { fail(file,'YAML frontmatter is required'); continue; }
@@ -79,6 +85,6 @@ function validate(root) {
 if (require.main === module) {
   const errors = validate(path.resolve(__dirname,'..'));
   if (errors.length) { console.error(errors.join('\n')); process.exitCode = 1; }
-  else console.log('Content valid: manifests, skill and agent metadata, and supporting files.');
+  else console.log('Content valid: manifests, skill and agent metadata, supporting files, and quickstart invocations.');
 }
 module.exports = {validate};
