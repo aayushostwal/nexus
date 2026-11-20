@@ -32,17 +32,16 @@ codex plugin add nexus@nexus-marketplace
 codex plugin list --marketplace nexus-marketplace --json
 ```
 
-The marketplace source may also be a local clone path. Our clean-profile smoke check used that local path; remote fetching, upgrades, and model-driven workflow execution were not exercised by that check. Exact skill invocation and component routing remain host-specific. If `codex plugin` is unavailable, upgrade or use a local clone's skill instructions with your host.
+The marketplace source may also be a local clone path. Exact skill invocation and component routing remain host-specific. If `codex plugin` is unavailable, upgrade or use a local clone's skill instructions with your host.
 
-## Bundled Helper Scripts
+## Helper Scripts
 
-The plugin's helper scripts are dependency-free Node scripts. Commands run them with plain `node`:
+The repository's helper scripts are dependency-free Node scripts with no install step. From a clone:
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/bin/nexus.js"
+node scripts/validate-content.js
+node scripts/generate-catalog.js
 ```
-
-No install step, no `node_modules` — Node 18 or newer is the only requirement.
 
 ## Optional Global Guidance
 
@@ -62,7 +61,7 @@ node scripts/bootstrap-agent-docs.js --runtime codex --remove --dry-run
 node scripts/bootstrap-agent-docs.js --runtime codex --remove
 ```
 
-Use your host or installer's uninstall mechanism to remove plugin files. Review legacy singular `AGENT.md` files for personal content before any manual cleanup.
+Use your host or installer's uninstall mechanism to remove plugin files.
 
 ## Compatibility And Verification
 
@@ -70,4 +69,4 @@ Claude agents and memory settings are Claude-specific. Codex skill discovery and
 
 GitHub issue-to-PR workflows require authenticated repository access through `gh` or an available GitHub connector. Host permissions control tool execution; Markdown instructions do not provide isolation.
 
-A repository build and content validation do not prove a clean live install. Follow the [host smoke checks](https://github.com/aayushostwal/nexus/blob/main/docs/host-smoke-checks.md) before declaring a release verified.
+Content validation checks file structure and links; it does not prove a live install works. Try a skill in your host after installing.

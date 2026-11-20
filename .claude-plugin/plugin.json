@@ -1,7 +1,7 @@
 {
   "name": "nexus",
-  "version": "1.35.0",
-  "description": "Plugin-first Claude Code workflows with planning, CI/CD debugging, reusable agents, TODOs, and MCP safety policies.",
+  "version": "2.0.0",
+  "description": "Personal collection of Claude Code and Codex skills, agents, commands, and workflows for engineering work.",
   "author": {
     "name": "Aayush Ostwal",
     "email": "aayushostwal99@gmail.com"
@@ -12,12 +12,10 @@
   "keywords": [
     "claude-code",
     "codex",
-    "mcp",
+    "skills",
     "agents",
-    "todo",
-    "workflow",
-    "ci cd debugging",
-    "developer productivity",
-    "tool integrations"
+    "workflows",
+    "debugging",
+    "code-review"
   ]
 }

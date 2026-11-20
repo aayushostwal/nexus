@@ -143,7 +143,7 @@ const nodes: DiagramNode[] = [
     type: "system",
     x: 1276,
     y: 190,
-    detail: "Persists task history, TODO state, and prior decisions to improve continuity across sessions."
+    detail: "Host-managed agent memory keeps prior decisions and project context across sessions."
   },
   {
     id: "verification",

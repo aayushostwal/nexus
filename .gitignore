@@ -1,32 +1,20 @@
-# Dependencies
+# Dependencies (landing page only)
 node_modules/
+
+# Landing page build output
+apps/nexus-web/.next/
+apps/nexus-web/test-results/
+apps/nexus-web/playwright-report/
+*.tsbuildinfo
 
 # macOS
 .DS_Store
 
-# Logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
-# Test/build output
-coverage/
-dist/
-build/
-*.tsbuildinfo
-apps/nexus-web/.next/
-apps/nexus-web/test-results/
-apps/nexus-web/playwright-report/
-
-# Agent memory (per-repo; opt-in to commit if desired)
+# Agent memory and worktrees (per-repo; opt in to commit if desired)
 .claude/agent-memory/
+.claude/worktrees/
 
-# Local package/cache output
-.npm-cache/
-nexus-agent-kit-*.tgz
-
-# Nexus local test data
+# Local test data
 .tmp-nexus/
 
 # Environment/secrets
@@ -34,15 +22,9 @@ nexus-agent-kit-*.tgz
 .env.*
 !.env.example
 
-# VS Code
-.vscode/*
-!.vscode/extensions.json
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
+# Editors
+.vscode/
 
 # Temporary files
 *.tmp
 *.temp
-.claude/worktrees/
-.pruner/

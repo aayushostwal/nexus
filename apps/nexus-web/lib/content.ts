@@ -12,11 +12,12 @@ export type Skill = {
 // Optional presentation metadata; the generated catalog determines which skills exist.
 const skillDisplay: Pick<Skill, "name" | "tags" | "complexity" | "example">[] = [
   { name: "debugging", tags: ["debugging", "ci/cd", "rca"], complexity: "Intermediate", example: "/nexus:debugging fix production deployment issue" },
-  { name: "nexus", tags: ["todos", "briefs", "operations"], complexity: "Beginner", example: "/nexus:nexus show today's brief" },
   { name: "observability", tags: ["observability", "tracing", "incidents"], complexity: "Advanced", example: "/nexus:observability correlate these API failures" },
+  { name: "prd", tags: ["design docs", "prd", "diagrams"], complexity: "Intermediate", example: "/nexus:prd write a design doc for the search service" },
   { name: "performance", tags: ["performance", "profiling", "dependencies"], complexity: "Intermediate", example: "/nexus:performance find this memory leak" },
   { name: "reliability", tags: ["incidents", "releases", "sre"], complexity: "Advanced", example: "/nexus:reliability run a release readiness gate" },
   { name: "shorts", tags: ["content", "video", "scripts"], complexity: "Beginner", example: "/nexus:shorts script this article in 30 seconds" },
+  { name: "software-engineer", tags: ["workflow", "github", "pull requests"], complexity: "Advanced", example: "/nexus:software-engineer fix issue #123 in the current repository and raise a PR" },
   { name: "skill-writer", tags: ["skills", "authoring", "triggers"], complexity: "Intermediate", example: "/nexus:skill-writer improve this skill's triggers" },
   { name: "testing", tags: ["testing", "flaky", "ci"], complexity: "Intermediate", example: "/nexus:testing investigate this flaky suite" },
   { name: "token-optimizer", tags: ["tokens", "cost", "efficiency"], complexity: "Beginner", example: "Always on — applies to every response" },
@@ -65,7 +66,7 @@ export const skills: Skill[] = catalog.skills.map((entry) => {
   const display = skillDisplay.find((item) => item.name === entry.name);
   return { name: entry.name, description: entry.description,
     tags: display?.tags ?? ["engineering"], complexity: display?.complexity ?? "Intermediate",
-    example: entry.name === "software-engineer" ? `${entry.invocation} fix issue #123 in the current repository and raise a PR` : (display?.example ?? entry.invocation!),
+    example: display?.example ?? entry.invocation!,
     github: `https://github.com/aayushostwal/nexus/blob/main/${entry.path}` };
 });
 export const agents: Agent[] = catalog.agents.map((entry) => ({
@@ -85,8 +86,8 @@ export const workflowExamples = [
     steps: ["Classify severity", "Spawn debugger", "Patch + tests", "Reviewer verification", "Ship hotfix"]
   },
   {
-    name: "Release Workflow",
-    steps: ["Generate release plan", "Run QA matrix", "Approval gate", "Deploy gradually", "Observability watch"]
+    name: "Issue To PR Workflow",
+    steps: ["Pick the issue", "Reproduce", "Focused fix", "Run project checks", "Open the PR"]
   },
   {
     name: "PR Review Workflow",
@@ -105,7 +106,7 @@ export const workflowExamples = [
 export const mcpIntegrations = [
   {
     title: "GitHub MCP",
-    description: "Issue triage, PR reviews, branch insights, and release management from one terminal workflow.",
+    description: "Issue triage, PR reviews, and branch insights for the issue-to-PR workflow.",
     command: "claude mcp add github"
   },
   {

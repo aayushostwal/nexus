@@ -1,19 +1,13 @@
 {
   "schemaVersion": 1,
   "name": "nexus",
-  "version": "1.35.0",
+  "version": "2.0.0",
   "skills": [
     {
       "name": "debugging",
       "description": "Use when something is failing, regressing, or behaving unexpectedly and the goal is root-cause analysis, narrowest fix, and verification. Covers CI/CD, tests, runtime, deployment, and tooling failures. Output should be RCA + fix + prevention, not design options.",
       "path": "skills/debugging/SKILL.md",
       "invocation": "/nexus:debugging"
-    },
-    {
-      "name": "nexus",
-      "description": "Use for persistent TODO capture, daily brief retrieval, and shared Codex/Claude operating rules. Trigger on remember/track/follow-up requests, \"nexus add/show/brief\", or policy/workflow questions across Slack, Outlook, and Jira contexts.",
-      "path": "skills/nexus/SKILL.md",
-      "invocation": "/nexus:nexus"
     },
     {
       "name": "observability",
