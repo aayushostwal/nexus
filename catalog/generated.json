@@ -28,6 +28,12 @@
       "invocation": "/nexus:performance"
     },
     {
+      "name": "prd",
+      "description": "Use to write, rewrite, or iterate on a PRD, design doc, technical proposal, or architecture write-up that other people will read and decide on. Trigger on \"write a PRD\", \"create a design doc\", \"prepare a plan/proposal for X\", \"write this up for the team/my manager\", \"make the doc simpler\", \"add a diagram/LLD\", \"update the design doc\", \"send this proposal to <person>\", or when a Slack/Jira ask must become a reviewable proposal. Also trigger when the user says a doc is hard to read, too long, too many tables, or gives them no confidence in the implementation. Produces a short, plain-language doc built around one live worked example, with diagrams, verified claims, and a summarized Decisions log. When in doubt, use this skill.",
+      "path": "skills/prd/SKILL.md",
+      "invocation": "/nexus:prd"
+    },
+    {
       "name": "reliability",
       "description": "Use for production incidents, outages, and service degradations, plus release-readiness gate checks. Trigger on 500 spikes, SLA breaches, latency/error surges, on-call alerts, rollback decisions, and RCA/post-mortem requests. Prioritize stabilization, timeline reconstruction, and evidence-led actions.",
       "path": "skills/reliability/SKILL.md",
