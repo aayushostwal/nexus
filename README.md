@@ -80,7 +80,7 @@ This section and the website catalog are generated from manifests and source fil
 
 <!-- catalog:start -->
 
-Version **1.35.0** includes **11 skills**, **14 Claude agents**, and **2 commands**.
+Version **1.35.0** includes **12 skills**, **14 Claude agents**, and **2 commands**.
 
 ### Skills
 
@@ -90,6 +90,7 @@ Version **1.35.0** includes **11 skills**, **14 Claude agents**, and **2 command
 | `/nexus:nexus` | [nexus](skills/nexus/SKILL.md) |
 | `/nexus:observability` | [observability](skills/observability/SKILL.md) |
 | `/nexus:performance` | [performance](skills/performance/SKILL.md) |
+| `/nexus:prd` | [prd](skills/prd/SKILL.md) |
 | `/nexus:reliability` | [reliability](skills/reliability/SKILL.md) |
 | `/nexus:shorts` | [shorts](skills/shorts/SKILL.md) |
 | `/nexus:skill-writer` | [skill-writer](skills/skill-writer/SKILL.md) |
