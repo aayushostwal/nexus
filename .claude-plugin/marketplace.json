@@ -4,24 +4,22 @@
     "name": "Aayush Ostwal",
     "email": "aayushostwal99@gmail.com"
   },
-  "description": "Nexus plugins for AI terminal planning, CI/CD debugging, reusable agent workflows, TODOs, and MCP guardrails.",
-  "version": "1.35.0",
+  "description": "Personal collection of Claude Code and Codex skills, agents, commands, and workflows for engineering work.",
+  "version": "2.0.0",
   "plugins": [
     {
       "name": "nexus",
       "source": "./",
-      "description": "Planning, CI/CD debugging, reusable agent workflows, global TODOs, daily briefs, and MCP safety policies.",
-      "version": "1.35.0",
-      "category": "productivity",
+      "description": "Personal collection of Claude Code and Codex skills, agents, commands, and workflows for engineering work.",
+      "version": "2.0.0",
+      "category": "development",
       "tags": [
+        "skills",
         "agents",
-        "todos",
-        "mcp",
-        "workflow",
-        "ci-cd",
+        "workflows",
         "debugging",
-        "productivity",
-        "ai-terminal"
+        "code-review",
+        "claude-code"
       ]
     }
   ]

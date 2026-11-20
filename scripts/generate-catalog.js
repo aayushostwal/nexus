@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-// Dependency-free catalog generation. Source files, not website metadata, own identity.
+// Dependency-free README catalog generation. Skill, agent, and command files own their identity.
 const fs = require('node:fs');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
@@ -43,21 +43,25 @@ function buildCatalog() {
   return { schemaVersion: 1, name: manifest.name, version: manifest.version,
     skills: entries('skills', true), agents: entries('agents'), commands: entries('commands') };
 }
-function catalogMarkdown(catalog, web) {
-  const prefix = web ? 'https://github.com/aayushostwal/nexus/blob/main/' : '';
-  return `Version **${catalog.version}** includes **${catalog.skills.length} skills**, **${catalog.agents.length} Claude agents**, and **${catalog.commands.length} commands**.\n\n` +
-    ['skills', 'agents', 'commands'].map(kind => `### ${kind[0].toUpperCase() + kind.slice(1)}\n\n| ${kind === 'agents' ? 'Agent' : 'Claude invocation'} | Source |\n| --- | --- |\n` + catalog[kind].map(item => `| \`${item.invocation || item.name}\` | [${item.name}](${prefix}${item.path}) |`).join('\n')).join('\n\n');
+function catalogMarkdown(catalog) {
+  return `**${catalog.skills.length} skills**, **${catalog.agents.length} agents**, and **${catalog.commands.length} commands**.\n\n` +
+    ['skills', 'agents', 'commands'].map(kind => `### ${kind[0].toUpperCase() + kind.slice(1)}\n\n| ${kind === 'agents' ? 'Agent' : 'Claude invocation'} | Description |\n| --- | --- |\n` + catalog[kind].map(item => `| [\`${item.invocation || item.name}\`](${item.path}) | ${summary(item.description)} |`).join('\n')).join('\n\n');
 }
+// First sentence only, pipes escaped, so table rows stay readable.
+function summary(description) {
+  const first = description.match(/^.*?[.!?](?=\s|$)/)?.[0] || description;
+  return first.replace(/\|/g, '\\|');
+}
+// The README is the only generated output; the catalog lives between its markers.
 function generate(check = false) {
   const catalog = buildCatalog();
-  const outputs = new Map([['catalog/generated.json', JSON.stringify(catalog, null, 2) + '\n']]);
-  for (const [file, web] of [['README.md', false], ['apps/nexus-web/content/docs/getting-started/quickstart.mdx', true]]) {
-    const source = read(file);
-    const start = web ? '{/* catalog:start */}' : '<!-- catalog:start -->';
-    const end = web ? '{/* catalog:end */}' : '<!-- catalog:end -->';
-    if (!source.includes(start) || !source.includes(end)) throw new Error(`Missing catalog markers: ${file}`);
-    outputs.set(file, source.slice(0, source.indexOf(start) + start.length) + '\n\n' + catalogMarkdown(catalog, web) + '\n\n' + source.slice(source.indexOf(end)));
-  }
+  const outputs = new Map();
+  const file = 'README.md';
+  const source = read(file);
+  const start = '<!-- catalog:start -->';
+  const end = '<!-- catalog:end -->';
+  if (!source.includes(start) || !source.includes(end)) throw new Error(`Missing catalog markers: ${file}`);
+  outputs.set(file, source.slice(0, source.indexOf(start) + start.length) + '\n\n' + catalogMarkdown(catalog) + '\n\n' + source.slice(source.indexOf(end)));
   let stale = false;
   for (const [file, content] of outputs) {
     if (fs.existsSync(path.join(root, file)) && read(file) === content) continue;

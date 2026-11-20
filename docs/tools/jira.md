@@ -27,7 +27,7 @@ https://mcp.atlassian.com/v1/mcp/authv2
 - Reading Jira issues, boards, and sprints is allowed when configured.
 - Creating issues requires explicit approval.
 - Updating issue status, assignee, sprint, priority, or comments requires explicit approval.
-- Daily briefs may propose Jira updates, but must not apply them silently.
+- Skills and agents may propose Jira updates, but must not apply them silently.
 
 ## Official Docs
 

@@ -4,7 +4,6 @@ on:
   pull_request:
   push:
     branches: [main]
-  workflow_call:
 
 permissions:
   contents: read
@@ -17,27 +16,13 @@ jobs:
       - uses: actions/setup-node@v7.0.0
         with:
           node-version: 22
-          cache: npm
-          cache-dependency-path: apps/nexus-web/package-lock.json
       - name: Check JavaScript syntax
-        run: find bin scripts test -name '*.js' -type f -print0 | xargs -0 -n1 node --check
-      - name: Test helpers and content validation
+        run: find scripts test skills -name '*.js' -o -name '*.cjs' | xargs -n1 node --check
+      - name: Test helper scripts
         run: node --test test/*.test.js
-      - name: Verify software engineer regression fixture
+      - name: Verify software-engineer regression fixture
         run: node skills/software-engineer/evaluations/verify-fixture.cjs
-      - name: Validate content and manifests
+      - name: Validate skills, agents, and manifests
         run: node scripts/validate-content.js
-      - name: Check generated catalog
+      - name: Check README catalog is current
         run: node scripts/generate-catalog.js --check
-      - name: Install website dependencies
-        working-directory: apps/nexus-web
-        run: npm ci
-      - name: Build website
-        working-directory: apps/nexus-web
-        run: npm run build
-      - name: Install browser for interface checks
-        working-directory: apps/nexus-web
-        run: npx playwright install --with-deps chromium
-      - name: Verify interface interactions and accessibility
-        working-directory: apps/nexus-web
-        run: npm run test:browser

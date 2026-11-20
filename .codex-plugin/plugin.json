@@ -1,7 +1,7 @@
 {
   "name": "nexus",
-  "version": "1.35.0",
-  "description": "Plugin-first AI terminal workflows for Codex and Claude Code with planning, CI/CD debugging, reusable agents, TODOs, and MCP safety policies.",
+  "version": "2.0.0",
+  "description": "Personal collection of Claude Code and Codex skills, agents, commands, and workflows for engineering work.",
   "author": {
     "name": "Aayush Ostwal",
     "email": "aayushostwal99@gmail.com",
@@ -11,22 +11,19 @@
   "repository": "https://github.com/aayushostwal/nexus",
   "license": "MIT",
   "keywords": [
+    "claude-code",
     "codex",
-    "claude",
-    "mcp",
+    "skills",
     "agents",
-    "todo",
-    "workflow",
-    "ai terminal",
-    "ci cd debugging",
-    "developer productivity",
-    "tool integrations"
+    "workflows",
+    "debugging",
+    "code-review"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Nexus",
-    "shortDescription": "Planning, CI/CD debugging, TODOs, agents, and MCP guardrails.",
-    "longDescription": "Nexus provides plugin-first AI terminal workflows for Codex and Claude Code, including structured planning, CI/CD and codebase debugging flows, a global markdown TODO system, daily brief commands, specialized agents, response formatting, and MCP safety guidance for Slack, Outlook, Notion, Jira, and AWS.",
+    "shortDescription": "Skills, agents, and engineering workflows.",
+    "longDescription": "Nexus is a personal collection of skills and agents for Codex and Claude Code: an issue-to-PR software engineering workflow, debugging, performance, reliability, observability, and testing guides, plus specialist review and planning agents.",
     "developerName": "Aayush Ostwal",
     "category": "Productivity",
     "capabilities": [
@@ -37,9 +34,9 @@
     "privacyPolicyURL": "https://github.com/aayushostwal/nexus#privacy",
     "termsOfServiceURL": "https://github.com/aayushostwal/nexus#license",
     "defaultPrompt": [
-      "Show my Nexus TODOs.",
-      "Add this to Nexus TODOs.",
-      "Run my Nexus daily brief."
+      "Use software-engineer to fix issue #123 and raise a PR.",
+      "Use debugging to find why this test fails.",
+      "Review this branch with the code-reviewer agent."
     ],
     "brandColor": "#0F766E"
   }
